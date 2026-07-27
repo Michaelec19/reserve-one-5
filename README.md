@@ -1,21 +1,5 @@
 # Reserve-One - Sistema de Reservas para Club Lan Hua
 
-## Tabla de Contenidos
-
-- [Contexto del Proyecto](#-contexto-del-proyecto)
-- [MVP - Alcance del Proyecto](#-mvp-alcance-del-proyecto)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Diseño y UX](#-diseño-y-ux)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Instalación y Configuración](#-instalación-y-configuración)
-- [Uso del Sistema](#-uso-del-sistema)
-- [Desarrollo](#-desarrollo)
-- [Roadmap - Funcionalidades Futuras](#-roadmap-funcionalidades-futuras)
-- [Licencia](#-licencia)
-- [Equipo de Desarrollo](#-equipo-de-desarrollo)
-
----
-
 ## 📋 Contexto del Proyecto
 
 **Club Deportivo Lan Hua** es una escuela de artes marciales chinas ubicada en Medellín, Colombia, especializada en:
@@ -55,41 +39,6 @@ Reserve-One es un desarrollo exclusivo diseñado específicamente para el Club L
 - Seguimiento de asistencia y progreso
 - Notificaciones (email/SMS)
 - Dashboard administrativo avanzado
-
----
-
-## 🏗️ Estructura del Proyecto
-
-```
-reserve-one-5/
-├── assets/ # Recursos estáticos
-│ ├── fonts/ # Tipografías personalizadas
-│ ├── icons/ # Iconos del sistema
-│ └── images/ # Imágenes y gráficos
-├── css/ # Estilos CSS
-│ ├── base/ # Estilos base y reset
-│ ├── components/ # Componentes UI reutilizables
-│ ├── layout/ # Layouts y estructuras
-│ └── pages/ # Estilos específicos por página
-├── features/ # Módulos de funcionalidad
-│ ├── dashboard/ # Dashboard y estadísticas
-│ ├── reservations/ # Sistema de reservas
-│ └── users/ # Gestión de usuarios
-├── js/ # Lógica JavaScript
-│ ├── app.js # Punto de entrada principal
-│ ├── constants/ # Constantes y configuración
-│ ├── data/ # Datos y modelos
-│ ├── events/ # Manejo de eventos
-│ ├── services/ # Servicios y API
-│ ├── ui/ # Componentes UI
-│ └── utils/ # Utilidades y helpers
-├── pages/ # Páginas HTML
-│ ├── dashboard.html # Dashboard principal
-│ ├── new-reservations.html # Formulario de reservas
-│ ├── profile.html # Perfil de usuario
-│ └── reservations.html # Lista de reservas
-└── shared/ # Componentes compartidos
-```
 
 ---
 
