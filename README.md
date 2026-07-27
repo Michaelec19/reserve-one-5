@@ -53,7 +53,7 @@ El diseño del sistema se basa en los principios de:
 ### Figma
 
 El diseño visual y prototipos de interfaz están disponibles en Figma:
-- [Link al diseño de Figma] (https://www.figma.com/site/TasFM7Lj4KkAN9yRIDTGX5/Proyecto?node-id=0-1&t=SStItpGp0LhiIOZV-1
+- [Link al diseño de Figma](https://www.figma.com/site/TasFM7Lj4KkAN9yRIDTGX5/Proyecto?node-id=0-1&t=SStItpGp0LhiIOZV-1)
 
 ---
 
