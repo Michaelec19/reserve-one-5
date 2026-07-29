@@ -1,0 +1,30 @@
+{
+  "name": "reserve-one-5",
+  "version": "1.0.0",
+  "description": "**Club Deportivo Lan Hua** es una escuela de artes marciales chinas ubicada en Medellín, Colombia, especializada en: - Kung Fu tradicional (estilo Mizong Luohan) - Wushu competitivo para todas las edades",
+  "main": "index.js",
+  "scripts": {
+    "dev": "live-server src",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Michaelec19/reserve-one-5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Michaelec19/reserve-one-5/issues"
+  },
+  "homepage": "https://github.com/Michaelec19/reserve-one-5#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
