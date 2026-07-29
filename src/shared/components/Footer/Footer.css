@@ -1,0 +1,31 @@
+footer {
+  background-color: #BF2A37;
+  border-top: 4px solid #F2BE22;
+  color: #FFFFFF;
+}
+
+footer h4,
+footer h3,
+footer h5 {
+  color: #F2BE22;
+}
+
+footer a {
+  text-decoration: none;
+  color: #FFFFFF;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+footer a:hover {
+  opacity: 1;
+  color: #F2BE22;
+}
+
+footer .opacity-90 {
+  opacity: 0.9;
+}
+
+footer .border-top {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
