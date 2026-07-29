@@ -18,21 +18,62 @@
   <link rel="stylesheet" href="shared/css/reset.css">
   <link rel="stylesheet" href="shared/css/variables.css">
   <link rel="stylesheet" href="features/landing/landing.css">
+  <link rel="stylesheet" href="shared/components/Header/Header.css">
 </head>
 
 <body>
-  <header class="header">
+  <header class="header sticky-top">
     <div class="container">
-      <div class="row">
-        <div class="col-4">LAN HUA</div>
-        <div class="col-4">Menu</div>
-        <div class="col-4">CTAs</div>
-      </div>
+      <nav class="navbar navbar-expand-lg px-0">
+
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="/src/assets/LogoSinFondo.png" class="logo">
+          <span class="ms-2 fw-semibold brand-name">
+            LAN HUA
+          </span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#hero">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Nosotros</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contacto</a>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-column flex-lg-row gap-3">
+            <a href="#" class="flex-fill">
+              <button class="btnBooking w-100">
+                Reserva tu Clase
+              </button>
+            </a>
+
+            <a href="#" class="flex-fill">
+              <button class="btnLogin w-100">
+                Ingresar
+              </button>
+            </a>
+          </div>
+        </div>
+
+      </nav>
     </div>
   </header>
 
   <main id="app">
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="container">Hero</div>
     </section>
 
