@@ -1,0 +1,9 @@
+.header {
+  background-color: var(--background-color);
+  padding: var(--spacing-md) 0px;
+}
+
+.hero {
+  background-color: var(--primary-color);
+  height: 90vh;
+}
