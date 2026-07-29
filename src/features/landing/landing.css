@@ -1,4 +1,21 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.hero,
+.about,
+.contact {
+  height: 100vh;
+}
+
 .hero {
   background-color: var(--primary-color);
-  height: 90vh;
+}
+
+.about {
+  background-color: green;
+}
+
+.contact {
+  background-color: blue;
 }
