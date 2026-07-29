@@ -1,0 +1,62 @@
+.header {
+  background: var(--background-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.logo {
+  height: 50px;
+}
+
+.brand-name {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active {
+  color: var(--primary-color) !important;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: var(--spacing-sm);
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.btnBooking {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-sm);
+  color: var(--background-color);
+  padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.btnBooking:hover {
+  background: var(--background-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 8px 24px rgba(191, 42, 55, 0.12);
+}
+
+.btnLogin {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-color);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--background-color);
+}
+
+.btnLogin:hover {
+  background: var(--accent-color);
+  color: var(--background-color);
+  border: 1px solid var(--accent-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: 0 8px 24px rgba(242, 190, 34, 0.12);
+}
