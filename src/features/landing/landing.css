@@ -1,6 +1,11 @@
-.header {
-  background-color: var(--background-color);
-  padding: var(--spacing-md) 0px;
+html {
+  scroll-behavior: smooth;
+}
+
+.hero,
+.about,
+.contact {
+  height: 100vh;
 }
 
 .hero {
@@ -17,4 +22,12 @@
   transform: translateY(-8px);
   border-color: var(--primary-color) !important;
   box-shadow: 0 10px 20px rgba(191, 42, 55, 0.15) !important;
+}
+
+.about {
+  background-color: green;
+}
+
+.contact {
+  background-color: blue;
 }

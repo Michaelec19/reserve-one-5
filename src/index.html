@@ -18,21 +18,62 @@
   <link rel="stylesheet" href="shared/css/reset.css">
   <link rel="stylesheet" href="shared/css/variables.css">
   <link rel="stylesheet" href="features/landing/landing.css">
+  <link rel="stylesheet" href="shared/components/Header/Header.css">
 </head>
 
 <body>
-  <header class="header">
+  <header class="header sticky-top">
     <div class="container">
-      <div class="row">
-        <div class="col-4">LAN HUA</div>
-        <div class="col-4">Menu</div>
-        <div class="col-4">CTAs</div>
-      </div>
+      <nav class="navbar navbar-expand-lg px-0">
+
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="/src/assets/LogoSinFondo.png" class="logo">
+          <span class="ms-2 fw-semibold brand-name">
+            LAN HUA
+          </span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#hero">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Nosotros</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contacto</a>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-column flex-lg-row gap-3">
+            <a href="#" class="flex-fill">
+              <button class="btnBooking w-100">
+                Reserva tu Clase
+              </button>
+            </a>
+
+            <a href="#" class="flex-fill">
+              <button class="btnLogin w-100">
+                Ingresar
+              </button>
+            </a>
+          </div>
+        </div>
+
+      </nav>
     </div>
   </header>
 
   <main id="app">
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="container">Hero</div>
 
 
@@ -121,6 +162,201 @@
 
         </div>
       </div>
+    <section class="about" id="about">
+      <div class="container">Nosotros</div>
+      <section class="py-5" style="background-color: #0D0D0D; color: #FFFFFF;">
+        <div class="container">
+
+          <div class="mb-5">
+            <h3 class="h4 mb-4 text-center text-md-start" style="color: #BF2A37; font-weight: bold;">ENTRENADORES</h3>
+            <div class="row g-4 justify-content-center">
+
+              <div class="col-md-6">
+                <div class="card bg-dark border-secondary p-4 h-100">
+                  <div class="d-flex align-items-center gap-3 mb-3">
+                    <div
+                      class="rounded-circle bg-secondary d-flex align-items-center justify-content-center flex-shrink-0"
+                      style="width: 70px; height: 70px;">
+                      <i class="fas fa-user fa-2x text-light"></i>
+                    </div>
+                    <div>
+                      <h5 class="h5 mb-1 fw-bold text-warning">Ronald Infante Calle</h5>
+                      <p class="small text-muted mb-0">Maestro / +20 años de experiencia</p>
+                    </div>
+                  </div>
+                  <p class="small text-light mb-0" style="line-height: 1.5;">
+                    Profesional en Deporte del Politécnico Colombiano Jaime Isaza Cadavid. Con certificación de la
+                    Mizong Luohan School de Hong Kong y amplia trayectoria en artes marciales.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card bg-dark border-secondary p-4 h-100">
+                  <div class="d-flex align-items-center gap-3 mb-3">
+                    <div
+                      class="rounded-circle bg-secondary d-flex align-items-center justify-content-center flex-shrink-0"
+                      style="width: 70px; height: 70px;">
+                      <i class="fas fa-user fa-2x text-light"></i>
+                    </div>
+                    <div>
+                      <h5 class="h5 mb-1 fw-bold text-warning">Santiago Castrillón Rojo</h5>
+                      <p class="small text-muted mb-0">Profesor / 9 años de experiencia</p>
+                    </div>
+                  </div>
+                  <p class="small text-light mb-0" style="line-height: 1.5;">
+                    Profesional en Deporte del Politécnico Colombiano Jaime Isaza Cadavid. Certificado por la Mizong
+                    Luohan School de Hong Kong, enfocado en artes marciales chinas.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div>
+            <h3 class="h4 mb-4 text-center text-md-start" style="color: #BF2A37; font-weight: bold;">NUESTRAS
+              DISCIPLINAS: WUSHU - KUNG FU</h3>
+            <div class="row g-4">
+
+              <div class="col-md-4">
+                <div class="card bg-dark border-secondary p-3 h-100">
+                  <h5 class="h6 mb-2 fw-bold" style="color: #F2BE22;"><i class="fas fa-fist-raised me-2"></i>Moderno
+                  </h5>
+                  <p class="small text-muted mb-2">Práctica enfocada en alto rendimiento, agilidad y dinamismo corporal.
+                  </p>
+                  <ul class="small text-light ps-3 mb-0">
+                    <li>Changquan (Estilo del Norte)</li>
+                    <li>Nanquan (Estilo del Sur)</li>
+                    <li>Rutinas de Taolu y Sanda</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card bg-dark border-secondary p-3 h-100">
+                  <h5 class="h6 mb-2 fw-bold" style="color: #F2BE22;"><i class="fas fa-dragon me-2"></i>Tradicional</h5>
+                  <p class="small text-muted mb-2">Riqueza histórica y filosófica conservada a través de las
+                    generaciones.</p>
+                  <ul class="small text-light ps-3 mb-0">
+                    <li>Linaje Mizong Luohan de Hong Kong</li>
+                    <li>Aplicación marcial profunda</li>
+                    <li>Formas tradicionales (Taolu)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card bg-dark border-secondary p-3 h-100">
+                  <h5 class="h6 mb-2 fw-bold" style="color: #F2BE22;"><i class="fas fa-yin-yang me-2"></i>Tai Chi</h5>
+                  <p class="small text-muted mb-2">Salud, control mental, respiración y armonía corporal.</p>
+                  <ul class="small text-light ps-3 mb-0">
+                    <li>Estilo Yang</li>
+                    <li>Fluidez y equilibrio energético</li>
+                    <li>Bienestar para todas las edades</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="py-5" style="background-color: #0D0D0D; color: #FFFFFF; border-top: 2px solid #BF2A37;">
+        <div class="container">
+          <div class="row mb-5 justify-content-center text-center">
+            <div class="col-lg-8">
+              <h3 class="h3 mb-3" style="color: #F2BE22;">Sobre el Proyecto (Reserve One)</h3>
+              <p class="text-light" style="line-height: 1.6;">
+                Sistema centralizado de gestión de reservas desarrollado a la medida para el Club Deportivo LanHua.
+                Optimiza el control de cupos, disponibilidad de espacios y horarios de entrenamiento, mejorando la
+                experiencia de estudiantes y entrenadores.
+              </p>
+            </div>
+          </div>
+
+          <div class="row text-center mb-4">
+            <div class="col">
+              <h3 class="h3 mb-2" style="color: #F29B30;">Conoce al Equipo - NextGen Developers</h3>
+              <p class="text-secondary small">El talento detrás de la transformación digital del club</p>
+            </div>
+          </div>
+
+          <<div class="row g-4 justify-content-center">
+            <div class="col-md-4 col-lg-2">
+              <div class="card bg-dark border-secondary text-white text-center p-3 h-100">
+                <div
+                  class="rounded-circle mx-auto mb-3 overflow-hidden bg-secondary d-flex align-items-center justify-content-center"
+                  style="width: 80px; height: 80px;">
+                  <img src="assets/Foto_Vanessa.jpeg" alt="Deisy Matallana" class="w-100 h-100 object-fit-cover">
+                </div>
+                <h5 class="h6 mb-1 text-warning">Deisy Matallana</h5>
+                <p class="small fw-semibold mb-2" style="color: #F29B30;">Desarrollador Junior</p>
+                <p class="small text-light" style="font-size: 12px;">Apasionada por la tecnología y la creación de
+                  soluciones eficientes.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+              <div class="card bg-dark border-secondary text-white text-center p-3 h-100">
+                <div
+                  class="rounded-circle mx-auto mb-3 overflow-hidden bg-secondary d-flex align-items-center justify-content-center"
+                  style="width: 80px; height: 80px;">
+                  <img src="assets/Foto_Angelica.png" alt="Angelica García" class="w-100 h-100 object-fit-cover">
+                </div>
+                <h5 class="h6 mb-1 text-warning">Angelica García</h5>
+                <p class="small fw-semibold mb-2" style="color: #F29B30;">Desarrollador Junior</p>
+                <p class="small text-light" style="font-size: 12px;">Enfocada en la experiencia de usuario y diseño de
+                  interfaces intuitivas.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+              <div class="card bg-dark border-secondary text-white text-center p-3 h-100">
+                <div
+                  class="rounded-circle mx-auto mb-3 overflow-hidden bg-secondary d-flex align-items-center justify-content-center"
+                  style="width: 80px; height: 80px;">
+                  <img src="assets/Foto_Michael.png" alt="Michael Espinal" class="w-100 h-100 object-fit-cover">
+                </div>
+                <h5 class="h6 mb-1 text-warning">Michael Espinal</h5>
+                <p class="small fw-semibold mb-2" style="color: #F29B30;">Desarrollador Junior</p>
+                <p class="small text-light" style="font-size: 12px;">Dedicado a la lógica de negocio y robustez del
+                  sistema de reservas.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+              <div class="card bg-dark border-secondary text-white text-center p-3 h-100">
+                <div
+                  class="rounded-circle mx-auto mb-3 overflow-hidden bg-secondary d-flex align-items-center justify-content-center"
+                  style="width: 80px; height: 80px;">
+                  <img src="assets/Foto_Sebastian.jpeg" alt="Sebastian Cruz" class="w-100 h-100 object-fit-cover">
+                </div>
+                <h5 class="h6 mb-1 text-warning">Sebastian Cruz</h5>
+                <p class="small fw-semibold mb-2" style="color: #F29B30;">Desarrollador Junior</p>
+                <p class="small text-light" style="font-size: 12px;">Comprometido con la integración fluida entre base
+                  de datos e interfaz.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+              <div class="card bg-dark border-secondary text-white text-center p-3 h-100">
+                <div
+                  class="rounded-circle mx-auto mb-3 overflow-hidden bg-secondary d-flex align-items-center justify-content-center"
+                  style="width: 80px; height: 80px;">
+                  <img src="assets/Foto_Santiago.jpeg" alt="Santiago Castrillón" class="w-100 h-100 object-fit-cover">
+                </div>
+                <h5 class="h6 mb-1 text-warning">Santiago Castrillón</h5>
+                <p class="small fw-semibold mb-2" style="color: #F29B30;">Desarrollador Junior</p>
+                <p class="small text-light" style="font-size: 12px;">Especialista en la estructura de datos y
+                  rendimiento de la aplicación.</p>
+              </div>
+            </div>
+        </div>
+        </div>
+      </section>
     </section>
 
     <section class="contact" id="contact">
@@ -130,11 +366,59 @@
     </section>
   </main>
 
-  <footer>
+ <footer class="text-white py-5" style="background-color: #BF2A37; border-top: 4px solid #F2BE22;">
     <div class="container">
-      Footer
+      <div class="row g-4 justify-content-between align-items-start">
+        
+        <div class="col-md-4 text-center text-md-start">
+          <div class="mb-3">
+            <h4 class="h5 mb-1 fw-bold" style="color: #F2BE22;">Club Deportivo LanHua</h4>
+            <p class="small text-white opacity-90 mb-2">Escuela oficial de artes marciales chinas y disciplinas tradicionales.</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: #0D0D0D;">
+              <i class="fas fa-shield-alt small" style="color: #F2BE22;"></i>
+            </div>
+            <h3 class="h5 mb-0 fw-bold" style="color: #F2BE22;">RESERVE ONE</h3>
+          </div>
+          <p class="small text-white opacity-90 mb-0">Sistema oficial de reservas para el entrenamiento y disciplinas del club.</p>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h5 class="h6 mb-3 fw-bold text-uppercase" style="color: #F2BE22;">Navegación</h5>
+          <ul class="list-unstyled mb-0 small">
+            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Inicio</a></li>
+            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Disciplinas</a></li>
+            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Entrenadores</a></li>
+            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Login</a></li>
+            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Registro</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 text-center text-md-start">
+          <h5 class="h6 mb-3 fw-bold text-uppercase" style="color: #F2BE22;">Contacto y Horarios</h5>
+          <p class="small text-white opacity-90 mb-2"><i class="fas fa-map-marker-alt me-2" style="color: #0D0D0D;"></i> Valle de Aburrá, Colombia</p>
+          <p class="small text-white opacity-90 mb-2"><i class="fas fa-phone me-2" style="color: #F29B30;"></i> Teléfono: +57 (4) 123-4567</p>
+          <p class="small text-white opacity-90 mb-2"><i class="fas fa-envelope me-2" style="color: #0D0D0D;"></i> Correo: contacto@lanhua.com</p>
+          <p class="small text-white opacity-90 mb-3"><i class="fas fa-clock me-2" style="color: #F29B30;"></i> Lunes a Sábado, 6:00 a.m. - 9:00 p.m.</p>
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 fs-5">
+            <a href="#" class="text-white opacity-90"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white opacity-90"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white opacity-90"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="text-white opacity-90"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row mt-4 pt-3 border-top border-light border-opacity-25 text-center text-white opacity-90">
+        <div class="col">
+          <p class="mb-0 small">&copy; 2026 Club Deportivo LanHua - NextGen Developers. Todos los derechos reservados.</p>
+        </div>
+      </div>
     </div>
   </footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
