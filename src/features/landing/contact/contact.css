@@ -1,0 +1,26 @@
+/* 
+.contact-section {
+  position: relative;
+  width: 100%;
+  height: auto; 
+.contact-section .card {
+  height: auto !important;
+  transition: transform 0.3s ease;
+}
+
+.contact-section .form-control {
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-section .form-control:focus {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 190, 34, 0.25);
+  border-color: #F2BE22 !important;
+}
+
+@media (max-width: 991.98px) {
+  .contact-section .ratio {
+    min-height: 250px;
+} */

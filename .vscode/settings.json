@@ -4,5 +4,6 @@
     "javascript",
     "javascriptreact"
   ],
-  "standard.autoFixOnSave": true
+  "standard.autoFixOnSave": true,
+  "liveServer.settings.port": 5501
 }
