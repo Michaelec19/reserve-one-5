@@ -2,9 +2,9 @@ html {
   scroll-behavior: smooth;
 }
 
-.contact {
+/* .contact {
   height: 100vh;
-}
+} */
 
 .hero {
   background-color: var(--primary-color);
@@ -23,5 +23,5 @@ html {
 }
 
 .contact {
-  background-color: blue;
+  background-color: rgb(7, 7, 6);
 }
