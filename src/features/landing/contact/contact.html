@@ -15,9 +15,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
     integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   <link rel="stylesheet" href="../../../shared/css/reset.css">
   <link rel="stylesheet" href="../../../shared/css/variables.css">
   <link rel="stylesheet" href="../landing.css">
@@ -48,11 +48,11 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="../../../about.html">Nosotros</a>
+              <a class="nav-link" href="../about/about.html">Nosotros</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" href="">Contacto</a>
+              <a class="nav-link active" href="contact.html">Contacto</a>
             </li>
           </ul>
 
@@ -76,42 +76,48 @@
   </header>
 
   <main id="app">
-    
+
     <section class="contact py-5" id="contact">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            
+
             <div class="text-center mb-5">
               <h2 class="fw-bold" style="color: #F2BE22;">Contáctanos</h2>
-              <p class="text-light small">¿Tienes dudas sobre las clases o las reservas? Escríbenos y te responderemos pronto.</p>
+              <p class="text-light small">¿Tienes dudas sobre las clases o las reservas? Escríbenos y te responderemos
+                pronto.</p>
             </div>
 
             <div class="card bg-dark border-secondary p-4 p-md-5 shadow-lg text-white">
               <form id="contactForm" action="https://formspree.io/f/mdaqqqyv" method="POST">
-                
+
                 <div class="mb-3">
                   <label for="nombre" class="form-label small text-warning">Nombre completo</label>
-                  <input type="text" class="form-control bg-secondary text-white border-0" id="nombre" name="nombre" placeholder="Ej. Juan Pérez">
+                  <input type="text" class="form-control bg-secondary text-white border-0" id="nombre" name="nombre"
+                    placeholder="Ej. Juan Pérez">
                 </div>
 
                 <div class="mb-3">
                   <label for="correo" class="form-label small text-warning">Correo electrónico</label>
-                  <input type="email" class="form-control bg-secondary text-white border-0" id="correo" name="correo" placeholder="correo@ejemplo.com">
+                  <input type="email" class="form-control bg-secondary text-white border-0" id="correo" name="correo"
+                    placeholder="correo@ejemplo.com">
                 </div>
 
                 <div class="mb-3">
                   <label for="telefono" class="form-label small text-warning">Teléfono / Celular</label>
-                  <input type="tel" class="form-control bg-secondary text-white border-0" id="telefono" name="telefono" placeholder="+57 300 000 0000">
+                  <input type="tel" class="form-control bg-secondary text-white border-0" id="telefono" name="telefono"
+                    placeholder="+57 300 000 0000">
                 </div>
 
                 <div class="mb-4">
                   <label for="mensaje" class="form-label small text-warning">Mensaje</label>
-                  <textarea class="form-control bg-secondary text-white border-0" id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                  <textarea class="form-control bg-secondary text-white border-0" id="mensaje" name="mensaje" rows="4"
+                    placeholder="Escribe tu mensaje aquí..."></textarea>
                 </div>
 
                 <div class="d-grid">
-                  <button type="submit" class="btn fw-bold py-2" style="background-color: #F2BE22; color: #0D0D0D;">Enviar Mensaje</button>
+                  <button type="submit" class="btn fw-bold py-2"
+                    style="background-color: #F2BE22; color: #0D0D0D;">Enviar Mensaje</button>
                 </div>
 
               </form>
@@ -128,26 +134,25 @@
           <div class="col-lg-10">
             <div class="card bg-dark border-secondary p-4 p-md-5 shadow-lg text-white">
               <h3 class="h4 fw-bold text-center mb-4" style="color: #F2BE22;">¿Cómo Llegar?</h3>
-              
+
               <div class="row align-items-center g-4">
                 <div class="col-lg-6">
                   <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
-                    <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.19830571169!2d-75.65111740921404!3d6.244337678564267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428dfb80fad05%3A0x42137cfcc7b5e93!2sValle%20de%20Aburrr%C3%A1%2C%20Antioquia%2C%20Colombia!5e0!3m2!1ses!2sco!4v1650000000000!5m2!1ses!2sco" 
-                      width="100%" 
-                      height="100%" 
-                      style="border:0;" 
-                      allowfullscreen="" 
-                      loading="lazy">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.19830571169!2d-75.65111740921404!3d6.244337678564267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428dfb80fad05%3A0x42137cfcc7b5e93!2sValle%20de%20Aburrr%C3%A1%2C%20Antioquia%2C%20Colombia!5e0!3m2!1ses!2sco!4v1650000000000!5m2!1ses!2sco"
+                      width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                   </div>
                 </div>
 
                 <div class="col-lg-6 text-center text-lg-start">
                   <h4 class="h5 text-warning fw-bold mb-3">Sede Principal - Valle de Aburrá</h4>
-                  <p class="text-light small mb-3">Te esperamos en nuestras instalaciones diseñadas para la práctica de artes marciales y disciplinas tradicionales chinas.</p>
-                  <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Valle de Aburrá, Antioquia, Colombia</p>
-                  <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Horarios de atención: Lunes a Sábado</p>
+                  <p class="text-light small mb-3">Te esperamos en nuestras instalaciones diseñadas para la práctica de
+                    artes marciales y disciplinas tradicionales chinas.</p>
+                  <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Valle de
+                    Aburrá, Antioquia, Colombia</p>
+                  <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Horarios de atención:
+                    Lunes a Sábado</p>
                 </div>
               </div>
 
@@ -163,46 +168,59 @@
           <div class="col-lg-10">
             <div class="text-center mb-4">
               <h3 class="fw-bold" style="color: #F2BE22;">Preguntas Frecuentes</h3>
-              <p class="text-light small">Resuelve tus dudas más comunes sobre nuestras clases y el sistema de reservas.</p>
+              <p class="text-light small">Resuelve tus dudas más comunes sobre nuestras clases y el sistema de reservas.
+              </p>
             </div>
 
             <div class="accordion" id="faqAccordion">
-              
+
               <div class="accordion-item bg-dark text-white border-secondary mb-2">
                 <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button bg-dark text-warning fw-semibold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <button class="accordion-button bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
                     ¿Cómo puedo reservar una clase en el club?
                   </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#faqAccordion">
                   <div class="accordion-body text-light small">
-                    Puedes realizar tus reservas directamente a través de nuestro sistema <strong>Reserve One</strong> haciendo clic en el botón "Reserva tu Clase" ubicado en la barra de navegación superior.
+                    Puedes realizar tus reservas directamente a través de nuestro sistema <strong>Reserve One</strong>
+                    haciendo clic en el botón "Reserva tu Clase" ubicado en la barra de navegación superior.
                   </div>
                 </div>
               </div>
 
               <div class="accordion-item bg-dark text-white border-secondary mb-2">
                 <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
                     ¿Cuáles son los horarios de atención y entrenamiento?
                   </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#faqAccordion">
                   <div class="accordion-body text-light small">
-                    Atendemos de Lunes a Sábado en un horario de 6:00 a.m. a 9:00 p.m. Los horarios específicos de cada disciplina de artes marciales chinas los puedes consultar en el módulo de reservas.
+                    Atendemos de Lunes a Sábado en un horario de 6:00 a.m. a 9:00 p.m. Los horarios específicos de cada
+                    disciplina de artes marciales chinas los puedes consultar en el módulo de reservas.
                   </div>
                 </div>
               </div>
 
               <div class="accordion-item bg-dark text-white border-secondary mb-2">
                 <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                    aria-controls="collapseThree">
                     ¿Qué necesito llevar para mi primera clase?
                   </button>
                 </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#faqAccordion">
                   <div class="accordion-body text-light small">
-                    Recomendamos asistir con ropa deportiva cómoda (preferiblemente flexible), una botella con agua para mantenerte hidratada y muchas ganas de aprender sobre nuestras disciplinas tradicionales.
+                    Recomendamos asistir con ropa deportiva cómoda (preferiblemente flexible), una botella con agua para
+                    mantenerte hidratada y muchas ganas de aprender sobre nuestras disciplinas tradicionales.
                   </div>
                 </div>
               </div>
