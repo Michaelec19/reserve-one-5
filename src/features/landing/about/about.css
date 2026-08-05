@@ -1,0 +1,61 @@
+
+.programas-section {
+  background-color: #1e222b;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #352a2a;
+}
+
+.programas-title {
+  color: #ffb703;
+  letter-spacing: 1px;
+}
+
+.programas-subtitle {
+  color: #8b949e;
+  font-size: 0.95rem;
+  max-width: 600px;
+}
+
+.disciplina-card {
+  background-color: #21262d; 
+  border: 1px solid #363b44; 
+  border-radius: 10px;       
+  box-shadow: none;
+}
+
+.disciplina-card .card-title {
+  color: #ffb703; 
+  font-size: 1.25rem;
+}
+
+.disciplina-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.disciplina-list li:last-child {
+  margin-bottom: 0;
+}
+
+.disciplina-list li::before {
+  content: "•";
+  color: #ffb703;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: -2px;
+}
+
+.disciplina-list strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.disciplina-list .text-desc {
+  color: #c9d1d9; 
+  font-size: 0.85rem;
+  margin-top: 2px;
+  line-height: 1.4;
+}
