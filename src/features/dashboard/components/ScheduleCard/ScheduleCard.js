@@ -1,4 +1,4 @@
-export const CardSchedule = (schedule) => {
+export const ScheduleCard = (schedule) => {
   return `
     <article class="class-card border">
       <div class="position-relative">
