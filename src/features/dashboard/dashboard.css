@@ -1,0 +1,33 @@
+.btnAddSchedule {
+  background: var(--primary-color);
+  color: var(--surface-color) !important;
+  padding: 0.5rem 1.6rem;
+  border-radius: 8px;
+  border: none;
+}
+
+.btnAddSchedule:hover {
+  background: var(--primary-color);
+  transform: scale(1.01);
+  background-color: white;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color);
+}
+
+.form-control::placeholder {
+  color: #adb5bd;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  font-size: 0.9rem;
+}
+
+.form-select option {
+  color: #212529;
+}
+
+.form-control[type="date"],
+.form-control[type="time"] {
+  font-size: 0.9rem;
+}
