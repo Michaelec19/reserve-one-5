@@ -1,156 +1,140 @@
-# Reserve-One - Sistema de Reservas para Club Lan Hua
+# Reserve-One - Booking System for Club Lan Hua
 
-## 📋 Contexto del Proyecto
+## Project Context
 
-**Club Deportivo Lan Hua** es una escuela de artes marciales chinas ubicada en Medellín, Colombia, especializada en:
-- Kung Fu tradicional (estilo Mizong Luohan)
-- Wushu competitivo para todas las edades
+**Club Deportivo Lan Hua** is a Chinese martial arts school located in Medellín, Colombia, specializing in:
+- Traditional Kung Fu (Mizong Luohan style)
+- Competitive Wushu for all ages
 
-### Problema Resuelto
+### Problem Solved
 
-El Club Lan Hua enfrentaba desafíos significativos debido a su gestión completamente manual:
-- **Pérdida de clientes** por procesos de reserva ineficientes
-- **Baja retención de clientes** por falta de seguimiento y organización
-- **Gestión desorganizada** de clases, horarios y alumnos
-- **Falta de visibilidad** sobre la ocupación de clases y disponibilidad
+Club Lan Hua faced significant challenges due to its completely manual and decentralized management:
+- **Loss of clients** due to inefficient booking processes
+- **Low client retention** due to a lack of follow-up and organization
+- **Uncertain management** of classes, schedules, and students due to the lack of a confirmation system
+- **Lack of visibility** regarding class occupancy and availability
 
-### Solución: Reserve-One
+### Solution: Reserve-One
 
-Reserve-One es un desarrollo exclusivo diseñado específicamente para el Club Lan Hua que automatiza y optimiza todo el sistema de reservas y gestión del club.
-
----
-
-## 🎯 MVP - Alcance del Proyecto
-
-### Funcionalidades Incluidas en el MVP
-
-**Sistema de Reservas**
-- Reserva de clases de artes marciales en línea
-- Visualización de clases disponibles
-- Cancelación de reservas por parte de alumnos
-- Control de cupos por clase
-- Gestión de horarios y programación de clases
-- **Reservas SIN registro obligatorio de alumnos**
-
-### Funcionalidades NO Incluidas en el MVP (Futuras)
-
-- Sistema de registro y autenticación de usuarios
-- Gestión de membresías y pagos
-- Seguimiento de asistencia y progreso
-- Notificaciones (email/SMS)
-- Dashboard administrativo avanzado
+Reserve-One is an exclusive development designed specifically for Club Lan Hua that automates and optimizes the entire booking and management system of the club.
 
 ---
 
-## 🎨 Diseño y UX
+## MVP - Project Scope
 
-El diseño del sistema se basa en los principios de:
-- **Simplicidad**: Interfaz intuitiva para usuarios de todas las edades
-- **Accesibilidad**: Fácil navegación y uso en dispositivos móviles
-- **Identidad visual**: Diseño alineado con la filosofía de artes marciales chinas
-- **Eficiencia**: Flujos de reserva rápidos y sin fricción
+### Features Included in the MVP
 
-### Figma
+**Booking System**
+- General and specific information about the club
+- Online class booking
+- Real-time visualization and updating of available classes
+- Reservation cancellation by students
+- Quota control with real-time updates
+- Schedule management and class programming by the administrator
 
-El diseño visual y prototipos de interfaz están disponibles en Figma:
-- [Link al diseño de Figma](https://www.figma.com/site/TasFM7Lj4KkAN9yRIDTGX5/Proyecto?node-id=0-1&t=SStItpGp0LhiIOZV-1)
+### Features NOT Included in the MVP (Future)
+
+- Membership and payment management
+- Attendance and progress tracking
+- Notifications (email/direct message)
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+## Design and UX
+
+The system's design is based on the principles of:
+- **Simplicity**: Intuitive interface for users of all ages
+- **Accessibility**: Easy navigation and use on mobile devices
+- **Visual identity**: Design aligned with the philosophy and identity of Club Lan Hua
+- **Efficiency**: Fast booking flows
+
+### External Links
+
+- [Link to Figma design](https://www.figma.com/site/TasFM7Lj4KkAN9yRIDTGX5/Proyecto?node-id=0-1&t=SStItpGp0LhiIOZV-1)
+- [Deploy admin-dashboard view](https://michaelec19.github.io/reserve-one-5/)
+- [Trello](https://trello.com/b/dxG3PcvE/reserveone-group-5)
+
+---
+
+## Technologies Used
 
 ### Frontend
-- **HTML5**: Estructura semántica
-- **CSS3**: Estilos modernos y responsive
-- **JavaScript (ES6+)**: Lógica de aplicación
+- **HTML5**: Semantic structure
+- **CSS3**: Modern and responsive styles
+- **JavaScript (ES6+)**: Application logic
 
 ### Backend
 - **Spring Boot**: Backend
 
-### Base de Datos
-- **PostgreSQL**: Base de datos
+### Database
+- **PostgreSQL**: Database
 
-### Arquitectura
-- **Modular**: Organización por características y funcionalidades
-- **Component-based**: Reutilización de componentes UI
-- **Service-oriented**: Separación de lógica de negocio
+### Architecture
+- **Modular**: Organization by features and functionalities
 
 ---
 
-## 📦 Instalación y Configuración
+## Installation and Setup
 
-### Requisitos Previos
-- Navegador web moderno (Chrome, Firefox, Safari, Edge)
-- Servidor web local (opcional para desarrollo)
 
-### Pasos de Instalación
+### Installation
 
-1. **Clonar el repositorio**
+1. **Clone the repository**
+
 ```bash
-git clone [URL del repositorio]
+git clone https://github.com/Michaelec19/reserve-one-5.git
 cd reserve-one-5
 ```
-
-2. **Abrir el proyecto**
-- Abrir `index.html` directamente en el navegador
-- O usar un servidor local para desarrollo
-
-3. **Configuración inicial**
-- Revisar `js/constants/config.js` para ajustes de configuración
-- Personalizar datos iniciales en `js/data/`
+2. **Open the project**
+- Open `index.html` directly in the browser using extensions like LiveServer
 
 ---
 
-## 📖 Uso del Sistema
+## System Usage
 
-### Para Alumnos
-1. Navegar por las clases disponibles
-2. Reservar cupo en las clases deseadas (sin registro obligatorio)
+### For Students
+1. Browse available classes
+2. Book a spot in the desired classes
 
-### Para Administradores
-1. Gestionar instructores
-2. Asociar instructores a clases
-3. Ver reportes básicos de ocupación
-
----
-
-## 🔧 Desarrollo
-
-### Estructura de Código
-- **Modularidad**: Cada funcionalidad en su propio módulo
-- **Servicios**: Lógica de negocio separada de UI
-- **Eventos**: Sistema de eventos para comunicación entre componentes
-
-### Servicios Principales
-- `reservationService.js`: Gestión de reservas
+### For Administrators
+1. Class creation and publication
+2. Attendance monitoring
 
 ---
 
-## 🎯 Roadmap - Funcionalidades Futuras
+## Development
 
-- [ ] Gestión de membresías y pagos
-- [ ] Seguimiento de asistencia y progreso
-- [ ] Sistema de notificaciones (email/SMS)
-- [ ] Dashboard administrativo avanzado
-- [ ] Integración con pasarela de pagos
-- [ ] App móvil nativa
-- [ ] Sistema de gamificación para alumnos
-- [ ] Reportes avanzados y exportación
-- [ ] API para integraciones externas
+### Code Structure
+- **Modularity**: Each functionality in its own module
+- **Services**: Business logic separated from UI
+- **Events**: Event system for communication between components
+
+### Main Services
+- `reservationService.js`: Booking management
 
 ---
 
-## 📄 Licencia
-
-Este proyecto es un desarrollo exclusivo para el Club Deportivo Lan Hua.
-
----
-
-## 👥 Equipo de Desarrollo
-
-Reserve-One - Desarrollo exclusivo para Club Lan Hua
+## Roadmap - Future Features
+- [ ] Native mobile app
+- [ ] Membership and payment management
+- [ ] Progress tracking
+- [ ] Notification system (email/direct message)
+- [ ] Payment gateway integration
+- [ ] Advanced reporting and export
 
 ---
 
-**Versión**: 1.0.0
-**Última actualización**: Julio 2026
+## License
+
+This project is an exclusive development for Club Deportivo Lan Hua.
+
+---
+
+## Development Team
+
+Reserve-One - Exclusive development for Club Lan Hua
+
+---
+
+**Version**: 0.0.0
+**Last updated**: July 2026
