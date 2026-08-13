@@ -1,141 +1,211 @@
-import { ScheduleCard } from './components/ScheduleCard/ScheduleCard.js';
+/* eslint-disable no-undef */
+import { Alert } from '../../shared/components/Alert/Alert.js'
+import { setMinDateToday } from '../../shared/js/dateUtils.js'
+import { fileToBase64 } from '../../shared/js/utils.js'
+import { ScheduleCard } from './components/ScheduleCard/ScheduleCard.js'
 import { ScheduleModal } from './components/ScheduleModal/ScheduleModal.js'
 
-const LOCALSTORAGE_KEY = 'lanhua_classes';
+const LOCALSTORAGE_KEY = 'lanhua_classes'
 
 const defaultClasses = [
   {
     id: crypto.randomUUID(),
-    title: 'Rutina Base',
-    level: 'Principiante',
+    title: 'rutina',
+    level: 'principiante',
     capacity: 15,
     date: '2026-07-02T18:00',
     dateText: '2 Julio 2026 — Lunes 6 PM',
     location: 'Medellín',
-    modality: 'Grupal',
+    modality: 'grupal',
     image: '../../assets/1.png'
   },
   {
     id: crypto.randomUUID(),
-    title: 'Sanda / Combate',
-    level: 'Avanzado',
+    title: 'combate',
+    level: 'avanzado',
     capacity: 10,
     date: '2026-07-03T19:00',
     dateText: '3 Julio 2026 — Martes 7 PM',
     location: 'Medellín',
-    modality: 'Parejas',
-    image: '../../assets/1.png'
+    modality: 'grupal',
+    image: '../../assets/2.png'
   },
   {
     id: crypto.randomUUID(),
-    title: 'Wushu Tradicional',
-    level: 'Intermedio',
+    title: 'taichi',
+    level: 'intermedio',
     capacity: 20,
     date: '2026-07-04T17:00',
     dateText: '4 Julio 2026 — Miércoles 5 PM',
     location: 'Sabaneta',
-    modality: 'Grupal',
-    image: '../../assets/1.png'
+    modality: 'grupal',
+    image: '../../assets/3.png'
   }
-];
+]
 
-export const getClasses = () => {
-  const savedData = localStorage.getItem(LOCALSTORAGE_KEY);
+// crud
+const getClasses = () => {
+  const savedData = localStorage.getItem(LOCALSTORAGE_KEY)
 
   if (!savedData) {
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(defaultClasses));
-    return defaultClasses;
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(defaultClasses))
+    return defaultClasses
   }
-  return JSON.parse(savedData);
-};
 
-console.log('Loaded classes:', getClasses());
+  return JSON.parse(savedData)
+}
 
-export const renderClasses = () => {
-  const classes = getClasses();
-  const cardsContainer = document.querySelector('#schedules');
+const setClasses = (classes) => {
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(classes))
+}
 
-  cardsContainer.innerHTML = '';
+const deleteClass = (id) => {
+  const currentClasses = getClasses()
+  const updatedClasses = currentClasses.filter(classItem => classItem.id !== id)
+
+  setClasses(updatedClasses)
+  renderClasses()
+}
+
+// renders
+const renderModalContentForm = () => {
+  const modal = document.querySelector('#staticBackdrop')
+  modal.innerHTML = ScheduleModal()
+}
+
+const renderClasses = () => {
+  const classes = getClasses()
+  const cardsContainer = document.querySelector('#schedules')
+
+  cardsContainer.innerHTML = ''
+
+  if (classes.length === 0) {
+    cardsContainer.innerHTML = Alert({
+      variant: 'info',
+      title: 'Aún no tienes horarios agregados',
+      text: 'Haz clic en "Agregar Horario" para crear el primero.'
+    })
+    return
+  }
 
   classes.forEach(classItem => {
-    cardsContainer.innerHTML += ScheduleCard(classItem);
-  });
-};
+    cardsContainer.innerHTML += ScheduleCard(classItem)
+  })
+}
 
-renderClasses();
+// form: create / edit / reset
+const resetFormState = () => {
+  form.reset()
+  delete form.dataset.editId
+  form.image.required = true
+  document.querySelector('#imageHelpText').classList.add('d-none')
+  document.querySelector('#staticBackdropLabel').textContent = 'Agregar Horario'
 
-export const deleteClass = (id) => {
-  const currentClasses = getClasses();
+  const submitBtn = document.querySelector('#addSchedule')
+  submitBtn.textContent = 'Agregar Horario'
+}
 
-  const updatedClasses = currentClasses.filter(classItem => classItem.id !== id);
+const fillFormForEdit = (classToEdit, classId) => {
+  form.modality.value = classToEdit.modality.toLowerCase()
+  form.title.value = classToEdit.title.toLowerCase()
+  form.level.value = classToEdit.level.toLowerCase()
+  form.capacity.value = classToEdit.capacity
+  form.location.value = classToEdit.location
 
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(updatedClasses));
+  const [dateStr, timeStr] = classToEdit.date.split('T')
+  form.date.value = dateStr
+  form.time.value = timeStr
+  form.dataset.editId = classId
 
-  renderClasses();
-};
+  // Imagen opcional en modo edición
+  form.image.required = false
+  document.querySelector('#imageHelpText').classList.remove('d-none')
 
-export const setupEventListeners = () => {
-  const cardsContainer = document.querySelector('.cards');
+  document.querySelector('#staticBackdropLabel').textContent = 'Actualizar Horario'
 
-  cardsContainer.addEventListener('click', (event) => {
-    const deleteBtn = event.target.closest('.delete-btn');
+  const submitBtn = document.querySelector('#addSchedule')
+  submitBtn.textContent = 'Actualizar Horario'
+  submitBtn.disabled = false
+}
 
-    if (deleteBtn) {
-      const classId = deleteBtn.getAttribute('data-id');
+const handleSubmitSchedule = () => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
 
-      const isConfirmed = confirm('¿Estás seguro de que deseas eliminar esta clase?');
+    const formData = new FormData(form)
+    const imageFile = formData.get('image')
+    const hasNewImage = imageFile && imageFile.size > 0
 
-      if (isConfirmed) {
-        deleteClass(classId);
+    const schedule = Object.fromEntries(formData)
+
+    const currentClasses = getClasses()
+    const editId = form.dataset.editId
+
+    if (editId) {
+      const classIndex = currentClasses.findIndex(c => c.id === editId)
+
+      if (classIndex !== -1) {
+        const existingClass = currentClasses[classIndex]
+
+        const image = hasNewImage
+          ? await fileToBase64(imageFile)
+          : existingClass.image
+
+        currentClasses[classIndex] = {
+          ...existingClass,
+          title: schedule.title,
+          level: schedule.level,
+          capacity: schedule.capacity,
+          date: `${schedule.date}T${schedule.time}`,
+          dateText: `${schedule.date} — ${schedule.time}`,
+          location: schedule.location,
+          modality: schedule.modality,
+          image
+        }
+
+        setClasses(currentClasses)
+        renderClasses()
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Horario Actualizado',
+          text: 'El horario se actualizó correctamente.',
+          confirmButtonText: 'Aceptar'
+        })
       }
-      return;
+    } else {
+      const image = hasNewImage
+        ? await fileToBase64(imageFile)
+        : '../../assets/1.png'
+
+      const newClass = {
+        id: crypto.randomUUID(),
+        title: schedule.title,
+        level: schedule.level,
+        capacity: schedule.capacity,
+        date: `${schedule.date}T${schedule.time}`,
+        dateText: `${schedule.date} — ${schedule.time}`,
+        location: schedule.location,
+        modality: schedule.modality,
+        image
+      }
+
+      currentClasses.unshift(newClass)
+      setClasses(currentClasses)
+      renderClasses()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Horario agregado',
+        text: 'El horario se agregó correctamente.',
+        confirmButtonText: 'Aceptar'
+      })
     }
 
-    const editBtn = event.target.closest('.edit-btn');
-    if (editBtn) {
-      const classId = editBtn.getAttribute('data-id');
-      const currentClasses = getClasses();
-      const classToEdit = currentClasses.find(c => c.id === classId);
-
-      if (classToEdit) {
-
-        form.modalidad.value = classToEdit.modality.toLowerCase();
-
-        form.disciplina.value = classToEdit.title.toLowerCase();
-        form.nivel.value = classToEdit.level.toLowerCase();
-        form.cupos.value = classToEdit.capacity;
-        form.ubicacion.value = classToEdit.location;
-
-        const [fechaStr, horaStr] = classToEdit.date.split('T');
-        form.fecha.value = fechaStr;
-        form.hora.value = horaStr;
-
-        form.dataset.editId = classId;
-
-        document.querySelector('#staticBackdropLabel').textContent = 'Actualizar Horario';
-        const submitBtn = document.querySelector('#addSchedule');
-        submitBtn.textContent = 'Actualizar Horario';
-        submitBtn.disabled = false;
-
-        const modalElement = document.querySelector('#staticBackdrop');
-        const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement);
-        bootstrapModal.show();
-      }
-    }
-  });
-};
-
-setupEventListeners();
-
-
-const modal = document.querySelector('#staticBackdrop')
-modal.innerHTML = ScheduleModal()
-
-const form = document.querySelector('#scheduleForm')
-
-const validateDate = () => {
-  const today = new Date().toISOString().split('T')[0]
-  document.querySelector('#fecha').min = today
+    const modalElement = document.querySelector('#staticBackdrop')
+    const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
+    bootstrapModal.hide()
+  })
 }
 
 const validateForm = () => {
@@ -150,77 +220,53 @@ const validateForm = () => {
   })
 }
 
-const btnAddSchedule = document.querySelector('.btnAddSchedule');
-btnAddSchedule.addEventListener('click', () => {
-  form.reset();
-  delete form.dataset.editId;
-  document.querySelector('#staticBackdropLabel').textContent = 'Agregar Horario';
-  document.querySelector('#addSchedule').textContent = 'Agregar Horario';
-  document.querySelector('#addSchedule').disabled = true;
-});
+// listeners
+const setupModalReset = () => {
+  const modalElement = document.querySelector('#staticBackdrop')
+  modalElement.addEventListener('hidden.bs.modal', resetFormState)
+}
 
-const createSchedule = () => {
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+const setupEventListeners = () => {
+  const cardsContainer = document.querySelector('.cards')
 
-    const formData = new FormData(form);
-    const scheduleData = Object.fromEntries(formData);
-    console.log('Datos del formulario:', scheduleData);
-
-    const currentClasses = getClasses();
-
-    const isEditingId = form.dataset.editId;
-
-    if (isEditingId) {
-      const classIndex = currentClasses.findIndex(c => c.id === isEditingId);
-
-      if (classIndex !== -1) {
-        currentClasses[classIndex] = {
-          ...currentClasses[classIndex],
-          title: scheduleData.disciplina,
-          level: scheduleData.nivel,
-          capacity: scheduleData.cupos,
-          date: `${scheduleData.fecha}T${scheduleData.hora}`,
-          dateText: `${scheduleData.fecha} — ${scheduleData.hora}`,
-          location: scheduleData.ubicacion,
-          modality: scheduleData.modalidad,
-        };
+  cardsContainer.addEventListener('click', (event) => {
+    const deleteBtn = event.target.closest('.delete-btn')
+    if (deleteBtn) {
+      const classId = deleteBtn.getAttribute('data-id')
+      const isConfirmed = confirm('¿Estás seguro de que deseas eliminar esta clase?')
+      if (isConfirmed) {
+        deleteClass(classId)
       }
-    } else {
-      const newClass = {
-        id: crypto.randomUUID(),
-        title: scheduleData.disciplina,
-        level: scheduleData.nivel,
-        capacity: scheduleData.cupos,
-        date: `${scheduleData.fecha}T${scheduleData.hora}`,
-        dateText: `${scheduleData.fecha} — ${scheduleData.hora}`,
-        location: scheduleData.ubicacion,
-        modality: scheduleData.modalidad,
-        image: '../../assets/1.png'
-      };
-      currentClasses.unshift(newClass);
+      return
     }
 
+    const editBtn = event.target.closest('.edit-btn')
+    if (editBtn) {
+      const classId = editBtn.getAttribute('data-id')
+      const currentClasses = getClasses()
+      const classToEdit = currentClasses.find(c => c.id === classId)
 
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(currentClasses));
+      if (classToEdit) {
+        fillFormForEdit(classToEdit, classId)
 
-    renderClasses();
-
-    form.reset();
-    delete form.dataset.editId;
-
-    const modalElement = document.querySelector('#staticBackdrop');
-    const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement);
-    bootstrapModal.hide();
-
-    document.body.classList.remove('modal-open');
-    const modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-      modalBackdrop.remove();
+        const modalElement = document.querySelector('#staticBackdrop')
+        const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
+        bootstrapModal.show()
+      }
     }
-  });
-};
+  })
+}
 
-validateDate()
+// init
+console.log('Loaded classes:', getClasses())
+
+renderModalContentForm()
+
+const form = document.querySelector('#scheduleForm')
+
+renderClasses()
+setupEventListeners()
+setupModalReset()
+setMinDateToday('#fecha')
+handleSubmitSchedule()
 validateForm()
-createSchedule()

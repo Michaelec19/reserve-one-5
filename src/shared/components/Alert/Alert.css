@@ -1,0 +1,27 @@
+.app-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background-color: color-mix(in srgb, var(--alert-color) 15%, white);
+  border: var(--border-width) solid var(--alert-color);
+  border-left: 4px solid var(--alert-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  color: var(--text-color);
+}
+
+.app-alert-icon {
+  color: var(--alert-color);
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.app-alert-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.app-alert-text {
+  font-size: 14px;
+  opacity: 0.75;
+}

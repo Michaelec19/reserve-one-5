@@ -1,15 +1,15 @@
-// ScheduleCard.js
+import { capitalize } from '../../../../shared/js/utils.js'
 
 export const ScheduleCard = (classItem) => {
   return `
     <article class="class-card border">
       <div class="position-relative">
         <img src="${classItem.image}" alt="${classItem.title}" class="card-img-top">
-        <span class="badge position-absolute bottom-0 start-0 m-2 class-badge">${classItem.level}</span>
+        <span class="badge position-absolute bottom-0 start-0 m-2 class-badge">${capitalize(classItem.level)}</span>
       </div>
 
       <div class="card-body p-3 d-flex flex-column gap-2">
-        <h4 class="class-title h5 m-0 fw-bold">${classItem.title}</h4>
+        <h4 class="class-title h5 m-0 fw-bold">${capitalize(classItem.title)}</h4>
 
         <div class="d-flex flex-column gap-2 fs-6">
 
@@ -32,7 +32,7 @@ export const ScheduleCard = (classItem) => {
 
           <div class="class-item d-flex align-items-center gap-2">
             <i class="fa-solid fa-shoe-prints" aria-hidden="true"></i>
-            <span>Modalidad: ${classItem.modality}</span>
+            <span>Modalidad: ${capitalize(classItem.modality)}</span>
           </div>
         </div>
 
@@ -51,5 +51,5 @@ export const ScheduleCard = (classItem) => {
         </div>
       </div>
     </article>
-  `;
-};
+  `
+}

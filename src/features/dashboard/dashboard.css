@@ -31,3 +31,13 @@
 .form-control[type="time"] {
   font-size: 0.9rem;
 }
+
+#imageHelpText {
+  font-size: 12px !important;
+  font-style: italic;
+}
+
+.app-alert {
+  grid-column: 1 / -1;
+  width: 100%;
+}
