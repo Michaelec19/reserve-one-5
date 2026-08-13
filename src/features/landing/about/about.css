@@ -1,4 +1,3 @@
-
 .programas-section {
   background-color: #1e222b;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -17,14 +16,14 @@
 }
 
 .disciplina-card {
-  background-color: #21262d; 
-  border: 1px solid #363b44; 
-  border-radius: 10px;       
+  background-color: #21262d;
+  border: 1px solid #363b44;
+  border-radius: 10px;
   box-shadow: none;
 }
 
 .disciplina-card .card-title {
-  color: #ffb703; 
+  color: #ffb703;
   font-size: 1.25rem;
 }
 
@@ -54,8 +53,86 @@
 }
 
 .disciplina-list .text-desc {
-  color: #c9d1d9; 
+  color: #c9d1d9;
   font-size: 0.85rem;
   margin-top: 2px;
   line-height: 1.4;
+}
+
+/* TARJETAS ACERCA DE NOSOTROS */
+.custom-click-card {
+  position: relative;
+  height: 320px;
+  /* Borde usando tu variable amarilla */
+  border: 2px solid var(--secondary-color) !important;
+  border-radius: var(--radius-md);
+  /* Fondo oscuro */
+  background-color: #111111;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-click-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(242, 190, 34, 0.15) !important;
+}
+
+.custom-click-card .card-bg-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.custom-click-card .card-front,
+.custom-click-card .card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-click-card .card-front {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.custom-click-card .card-back {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  background-color: rgba(17, 17, 17, 0.9);
+}
+
+/* Estado al dar clic */
+.custom-click-card.activa .card-bg-logo {
+  opacity: 0.05;
+}
+
+.custom-click-card.activa .card-front {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.custom-click-card.activa .card-back {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
