@@ -1,0 +1,54 @@
+#schedules .card {
+  background-color: var(--surface-color, #212529) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#schedules .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#schedules .card-title {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+#schedules .card-text {
+  color: #adb5bd;
+}
+
+.modal-content {
+  background-color: var(--surface-color, #212529) !important;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+  background-color: #1a1d20 !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb, 255, 193, 7), 0.25);
+}
+
+.modal-body .form-label {
+  color: var(--primary-color);
+  font-weight: 500;
+}
