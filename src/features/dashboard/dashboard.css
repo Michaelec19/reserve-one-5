@@ -1,6 +1,6 @@
 .btnAddSchedule {
   background: var(--primary-color);
-  color: var(--surface-color) !important;
+  color: white !important;
   padding: 0.5rem 1.6rem;
   border-radius: 8px;
   border: none;
