@@ -41,9 +41,14 @@ export const ScheduleModal = (schedule = null) => {
               <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Ej. 10" min="1" required>
             </div>
             <div class="mb-3">
-              <label for="location" class="form-label fw-semibold small">Ubicación</label>
-              <input type="text" class="form-control" id="location" name="location" placeholder="Ej. Medellín" required>
-            </div>
+  <label for="location" class="form-label fw-semibold small">Ubicación</label>
+  <select class="form-select" id="location" name="location" required>
+    <option value="" selected disabled>Ej. Sede Laureles</option>
+    <option value="Sede Laureles">Sede Laureles</option>
+    <option value="Sede Monterrey">Sede Monterrey</option>
+    <option value="Sede Haru no Hinata">Sede Haru no Hinata</option>
+  </select>
+</div>
             <div class="mb-3">
               <label for="image" class="form-label fw-semibold small">Imagen</label>
               <input
