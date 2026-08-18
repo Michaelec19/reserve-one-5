@@ -1,12 +1,11 @@
 document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evita el envío por defecto para validar primero
-
+    event.preventDefault();
+    
     let nombre = document.getElementById("nombre").value.trim();
     let correo = document.getElementById("correo").value.trim();
     let telefono = document.getElementById("telefono").value.trim();
     let mensaje = document.getElementById("mensaje").value.trim();
 
-    // 1. Validar campos vacíos
     if (!nombre || !correo || !telefono || !mensaje) {
         Swal.fire({
             icon: 'warning',
@@ -29,7 +28,6 @@ document.getElementById("contactForm").addEventListener("submit", function(event
         return;
     }
 
-    // 3. Enviar a Formspree vía Fetch
     let formData = new FormData(this);
 
     fetch(this.action, {
