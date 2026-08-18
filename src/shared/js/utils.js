@@ -22,3 +22,11 @@ export const fileToBase64 = (file) => {
     reader.readAsDataURL(file)
   })
 }
+
+export const formatPrice = (price) => {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0
+  }).format(price)
+}

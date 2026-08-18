@@ -258,8 +258,6 @@ const setupEventListeners = () => {
 }
 
 // init
-console.log('Loaded classes:', getClasses())
-
 renderModalContentForm()
 
 const form = document.querySelector('#scheduleForm')

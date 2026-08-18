@@ -120,7 +120,6 @@
   background-color: rgba(17, 17, 17, 0.9);
 }
 
-/* Estado al dar clic */
 .custom-click-card.activa .card-bg-logo {
   opacity: 0.05;
 }
@@ -135,4 +134,58 @@
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+.trainers-title {
+  font-size: calc(1.275rem + 0.3vw);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #ffb703;
+  font-weight: bold;
+}
+
+.trainer-card {
+  background-color: var(--bs-dark, #212529);
+  border: 1px solid var(--bs-border-color-translucent, #6c757d);
+  padding: 1.5rem;
+  height: 100%;
+  border-radius: 0.375rem;
+}
+
+.trainer-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.avatar-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--bs-secondary, #6c757d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trainer-name {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  color: var(--bs-warning, #ffc107);
+}
+
+.trainer-role {
+  font-size: 0.875em;
+  color: var(--bs-secondary-color, #6c757d);
+  margin-bottom: 0;
+}
+
+
+.trainer-bio {
+  font-size: 0.875em;
+  color: var(--bs-light, #f8f9fa);
+  margin-bottom: 0;
+  line-height: 1.5;
 }

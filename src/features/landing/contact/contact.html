@@ -57,7 +57,8 @@
           </ul>
 
           <div class="d-flex flex-column flex-lg-row gap-3">
-            <a href="#" class="flex-fill">
+            <a class="nav-item" href="../catalog_users/catalog_user.html  ">
+            <!-- <a href="#" class="flex-fill"> -->
               <button class="btnBooking w-100">
                 Reserva tu Clase
               </button>
@@ -76,6 +77,81 @@
   </header>
 
   <main id="app">
+    <section class="hero-contact py-5 text-center text-white"
+      style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../../assets/tu-imagen-fondo.jpg'); background-size: cover; background-position: center;">
+      <h1 class="fw-bold" style="color: #F2BE22;">Contáctanos</h1>
+      <p>Estamos aquí para resolver todas tus dudas sobre Reserve One</p>
+    </section>
+
+    <section class="faq py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="text-center mb-4">
+              <h3 class="fw-bold" style="color: #F2BE22;">Preguntas Frecuentes</h3>
+              <p class="text-light small">Resuelve tus dudas más comunes sobre nuestras clases y el sistema de reservas.
+              </p>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    ¿Cómo puedo reservar una clase en el club?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Puedes realizar tus reservas directamente a través de nuestro sistema <strong>Reserve One</strong>
+                    haciendo clic en el botón "Reserva tu Clase" ubicado en la barra de navegación superior.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    ¿Cuáles son los horarios de atención y entrenamiento?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Atendemos de Lunes a Sábado en un horario de 7:00 a.m. a 9:00 p.m. Los horarios específicos de cada
+                    disciplina de artes marciales chinas los puedes consultar en el módulo de reservas.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                    aria-controls="collapseThree">
+                    ¿Qué necesito llevar para mi primera clase?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Recomendamos asistir con ropa deportiva cómoda (preferiblemente flexible), una botella con agua para
+                    mantenerte hidratada y muchas ganas de aprender sobre nuestras disciplinas tradicionales.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <section class="contact py-5" id="contact">
       <div class="container">
@@ -83,7 +159,6 @@
           <div class="col-lg-8">
 
             <div class="text-center mb-5">
-              <h2 class="fw-bold" style="color: #F2BE22;">Contáctanos</h2>
               <p class="text-light small">¿Tienes dudas sobre las clases o las reservas? Escríbenos y te responderemos
                 pronto.</p>
             </div>
@@ -133,107 +208,100 @@
         <div class="row justify-content-center">
           <div class="col-lg-10">
             <div class="card bg-dark border-secondary p-4 p-md-5 shadow-lg text-white">
-              <h3 class="h4 fw-bold text-center mb-4" style="color: #F2BE22;">¿Cómo Llegar?</h3>
+              <h3 class="h4 fw-bold text-center mb-4" style="color: #F2BE22;">¿Cómo Llegar a nuestras Sedes?</h3>
 
-              <div class="row align-items-center g-4">
-                <div class="col-lg-6">
-                  <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.19830571169!2d-75.65111740921404!3d6.244337678564267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428dfb80fad05%3A0x42137cfcc7b5e93!2sValle%20de%20Aburrr%C3%A1%2C%20Antioquia%2C%20Colombia!5e0!3m2!1ses!2sco!4v1650000000000!5m2!1ses!2sco"
-                      width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
+              <ul class="nav nav-tabs justify-content-center border-0 mb-4" id="sedeTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active text-warning fw-semibold" id="laureles-tab" data-bs-toggle="tab"
+                    data-bs-target="#laureles" type="button" role="tab">Laureles Estadio</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link text-warning fw-semibold" id="monterrey-tab" data-bs-toggle="tab"
+                    data-bs-target="#monterrey" type="button" role="tab">Monterrey</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link text-warning fw-semibold" id="haru-tab" data-bs-toggle="tab"
+                    data-bs-target="#haru" type="button" role="tab">Haru No Hinata</button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="sedeTabsContent">
+
+                <div class="tab-pane fade show active" id="laureles" role="tabpanel" aria-labelledby="laureles-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.071744652254!2d-75.594739!3d6.248611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44290325026937%3A0x7d6a5c68b7596046!2sCl.%2048b%20%2378a-47%2C%20La%20Floresta%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Principal - Laureles Estadio</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cll 48b
+                        #78a-47 Piso 5</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> A una cuadra de
+                        Estación Floresta del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Clases generales y
+                        especializadas según programación.</p>
+                    </div>
                   </div>
                 </div>
 
-                <div class="col-lg-6 text-center text-lg-start">
-                  <h4 class="h5 text-warning fw-bold mb-3">Sede Principal - Valle de Aburrá</h4>
-                  <p class="text-light small mb-3">Te esperamos en nuestras instalaciones diseñadas para la práctica de
-                    artes marciales y disciplinas tradicionales chinas.</p>
-                  <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Valle de
-                    Aburrá, Antioquia, Colombia</p>
-                  <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Horarios de atención:
-                    Lunes a Sábado</p>
+                <div class="tab-pane fade" id="monterrey" role="tabpanel" aria-labelledby="monterrey-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.195612345!2d-75.571234!3d6.210456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ3JhLiA0OCAjMTAtNDUs Piso 2, Local 232!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Monterrey Hayeshi (Lan Hua Sur)</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cra. 48
+                        #10-45, Piso 2, Local 232.</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> Estación Poblado
+                        del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Horarios
+                        específicos de Clase General de Wushu (Grupo Sur).</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="haru" role="tabpanel" aria-labelledby="haru-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.350123!2d-75.580123!3d6.190123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ3JhIDQ4QSAjMTYgc3VyIC0gMDEsIFBpc28gMQ!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Haru No Hinata (Lan Hua Sur)</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cra 48A
+                        #16 sur - 01, Piso 1</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> Cerca de Estación
+                        La Aguacatala del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Clases según
+                        programación de la sede sur.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
             </div>
+
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="faq py-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="text-center mb-4">
-              <h3 class="fw-bold" style="color: #F2BE22;">Preguntas Frecuentes</h3>
-              <p class="text-light small">Resuelve tus dudas más comunes sobre nuestras clases y el sistema de reservas.
-              </p>
-            </div>
-
-            <div class="accordion" id="faqAccordion">
-
-              <div class="accordion-item bg-dark text-white border-secondary mb-2">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button bg-dark text-warning fw-semibold shadow-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
-                    ¿Cómo puedo reservar una clase en el club?
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                  data-bs-parent="#faqAccordion">
-                  <div class="accordion-body text-light small">
-                    Puedes realizar tus reservas directamente a través de nuestro sistema <strong>Reserve One</strong>
-                    haciendo clic en el botón "Reserva tu Clase" ubicado en la barra de navegación superior.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item bg-dark text-white border-secondary mb-2">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
-                    aria-controls="collapseTwo">
-                    ¿Cuáles son los horarios de atención y entrenamiento?
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                  data-bs-parent="#faqAccordion">
-                  <div class="accordion-body text-light small">
-                    Atendemos de Lunes a Sábado en un horario de 6:00 a.m. a 9:00 p.m. Los horarios específicos de cada
-                    disciplina de artes marciales chinas los puedes consultar en el módulo de reservas.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item bg-dark text-white border-secondary mb-2">
-                <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
-                    aria-controls="collapseThree">
-                    ¿Qué necesito llevar para mi primera clase?
-                  </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                  data-bs-parent="#faqAccordion">
-                  <div class="accordion-body text-light small">
-                    Recomendamos asistir con ropa deportiva cómoda (preferiblemente flexible), una botella con agua para
-                    mantenerte hidratada y muchas ganas de aprender sobre nuestras disciplinas tradicionales.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
   </main>
 
-    <div id="footer-container"></div>
+  <div id="footer-container"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
