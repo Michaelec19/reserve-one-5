@@ -1,0 +1,64 @@
+.class-card {
+  border-color: var(--surface-color) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px !important;
+}
+
+.class-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 18px color-mix(in srgb, var(--state-color) 14%, transparent);
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, .25),
+    0 0 20px rgba(242, 190, 34, .18);
+  border: 1px solid var(--secondary-color);
+}
+
+.card-img-top {
+  border-radius: 8px 8px 0 0;
+  height: 200px;
+  object-fit: cover;
+}
+
+.class-title {
+  color: var(--primary-color);
+}
+
+.class-badge-Clase {
+  background-color: var(--accent-color);
+  font-size: 13px;
+}
+
+.class-badge-Membresía {
+  background-color: var(--primary-color);
+
+}
+
+.class-item {
+  font-size: 14px;
+  color: #563304;
+}
+
+.class-item i {
+  font-size: 13px;
+  width: 16px;
+  text-align: center;
+}
+
+.btn-action,
+.btn-action-danger {
+  width: 36px;
+  height: 36px;
+  border: none;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-action:hover,
+.btn-action-danger:hover {
+  opacity: 0.9;
+  color: white;
+  transform: scale(1.05);
+  background-color: var(--primary-color);
+}
