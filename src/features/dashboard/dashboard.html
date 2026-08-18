@@ -30,7 +30,7 @@
       <nav class="navbar navbar-expand-lg px-0">
 
         <a class="navbar-brand d-flex align-items-center" href="#">
-          <img src="../../assets/LogoSinFondo.png" class="logo">
+          <img src="../..//assets/LogoSinFondo.png" class="logo">
           <span class="ms-2 fw-semibold brand-name">
             LAN HUA
           </span>
@@ -85,50 +85,16 @@
 
       <div class="cards mt-4" id="schedules"> </div>
 
-      <!-- MODAL CON EL FORMULARIO INTEGRADO -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Gestionar Horario</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-              <!-- FORMULARIO -->
-              <form id="formularioHorario">
-
-                <!-- Otros campos (puedes agregar o quitar según tu necesidad) -->
-                <div class="mb-3">
-                  <label for="nombreClase" class="form-label">Nombre de la clase</label>
-                  <input type="text" class="form-control" id="nombreClase" placeholder="Ej. Kung Fu" required>
-                </div>
-
-                <!-- ESTE ES EL CAMPO DE UBICACIÓN CORREGIDO (Menú desplegable) -->
-                <div class="mb-3">
-                  <label for="ubicacionSede" class="form-label">Ubicación</label>
-                  <select class="form-select" id="ubicacionSede" name="ubicacionSede" required>
-                    <option value="" selected disabled>Selecciona una sede...</option>
-                    <option value="Sede Laureles">Sede Laureles</option>
-                    <option value="Sede Monterrey">Sede Monterrey</option>
-                    <option value="Sede Haru no Hinata">Sede Haru no Hinata</option>
-                  </select>
-                </div>
-
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" form="formularioHorario" class="btn btn-primary"
-                style="background-color: #BF2A37; border: none;">Guardar</button>
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
+
+
+
   </main>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

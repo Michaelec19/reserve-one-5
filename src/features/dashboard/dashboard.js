@@ -15,7 +15,7 @@ const defaultClasses = [
     capacity: 15,
     date: '2026-07-02T18:00',
     dateText: '2 Julio 2026 — Lunes 6 PM',
-    location: 'Sede Laureles',
+    location: 'Medellín',
     modality: 'grupal',
     image: '../../assets/1.png'
   },
@@ -26,7 +26,7 @@ const defaultClasses = [
     capacity: 10,
     date: '2026-07-03T19:00',
     dateText: '3 Julio 2026 — Martes 7 PM',
-    location: 'Sede Monterrey',
+    location: 'Medellín',
     modality: 'grupal',
     image: '../../assets/2.png'
   },
@@ -37,7 +37,7 @@ const defaultClasses = [
     capacity: 20,
     date: '2026-07-04T17:00',
     dateText: '4 Julio 2026 — Miércoles 5 PM',
-    location: 'Sede Haru no Hinata',
+    location: 'Sabaneta',
     modality: 'grupal',
     image: '../../assets/3.png'
   }
