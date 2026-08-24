@@ -94,96 +94,44 @@ const setupEventListeners = () => {
       if (!selectedClass) return
 
       Swal.fire({
-        title: `<strong>Reservar: ${capitalize(selectedClass.title)}</strong>`,
-        icon: 'info',
+        title: `<strong>Confirmar Reserva</strong>`,
+        icon: 'question',
         html: `
-          <div class="text-start mt-3 d-flex flex-column gap-3">
-            <div>
-              <p class="mb-1"><strong>Horario:</strong> ${selectedClass.dateText}</p>
-            </div>
-
-            <!-- Menú Desplegable: Sedes -->
-            <div>
-              <label for="branchLocation" class="form-label fw-bold mb-1">Sede:</label>
-              <select id="branchLocation" class="form-select">
-                <option value="" selected disabled>-- Selecciona una sede --</option>
-                <optgroup label="Lan Hua Sur">
-                  <option value="Sede Monterrey Hayeshi">Sede Monterrey Hayeshi (Cra. 48 #10-45, Piso 2, Local 232)</option>
-                  <option value="Sede Haru No Hinata">Sede Haru No Hinata (Cra 48A #16 sur - 01, Piso 1)</option>
-                </optgroup>
-                <optgroup label="Lan Hua Laureles Estadio">
-                  <option value="Sede Principal - Laureles Estadio">Sede Principal - Laureles Estadio (Cll 48b #78a-47 Piso 5)</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <!-- Menú Desplegable: Tipo de Plan / Servicio -->
-            <div>
-              <label for="planType" class="form-label fw-bold mb-1">Tipo de Plan / Servicio:</label>
-              <select id="planType" class="form-select">
-                <option value="" selected disabled>-- Selecciona un plan --</option>
-                <option value="Mensualidad (Estudiantes) - $120.000">Mensualidad Colegio / Universidad — $120.000</option>
-                <option value="Mensualidad Tarifa Regular - $150.000">Mensualidad Tarifa Regular — $150.000</option>
-                <option value="Kids (6 a 11 años) - $120.000">Kids (6 a 11 años) — $120.000</option>
-                <option value="Clase Individual Adicional - $15.000">Clase Individual Adicional (Alumnos activos) — $15.000</option>
-                <option value="Clase Individual Sin Mensualidad - $32.500">Clase Individual Sin Mensualidad (Especializada) — $32.500</option>
-                <option value="Full Pass - $190.000">Full Pass (Acceso ilimitado) — $190.000</option>
-              </select>
-            </div>
-
-            <!-- Menú Desplegable: Método de Pago -->
-            <div>
-              <label for="paymentMethod" class="form-label fw-bold mb-1">Método de pago:</label>
-              <select id="paymentMethod" class="form-select">
-                <option value="" selected disabled>-- Selecciona una opción --</option>
-                <option value="nequi">Nequi / Daviplata</option>
-                <option value="tarjeta">Tarjeta de Crédito / Débito</option>
-                <option value="efectivo">Pagar en Sede (Efectivo)</option>
-                <option value="transferencia">Transferencia Bancaria</option>
-              </select>
-            </div>
+          <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
+            <p class="mb-1"><strong>Clase:</strong> ${capitalize(selectedClass.title)}</p>
+            <p class="mb-1"><strong>Nivel:</strong> ${capitalize(selectedClass.level)}</p>
+            <p class="mb-1"><strong>Horario:</strong> ${selectedClass.dateText}</p>
+            <p class="mb-1"><strong>Ubicación:</strong> ${selectedClass.location}</p>
+            <p class="mb-0"><strong>Modalidad:</strong> ${capitalize(selectedClass.modality)}</p>
           </div>
         `,
         showCancelButton: true,
         confirmButtonText: 'Confirmar Reserva',
         cancelButtonText: 'Cancelar',
-        focusConfirm: false,
-        preConfirm: () => {
-          const branchLocation = document.getElementById('branchLocation').value
-          const planType = document.getElementById('planType').value
-          const paymentMethod = document.getElementById('paymentMethod').value
-
-          if (!branchLocation) {
-            Swal.showValidationMessage('Por favor selecciona una sede')
-            return false
-          }
-          if (!planType) {
-            Swal.showValidationMessage('Por favor selecciona el tipo de plan')
-            return false
-          }
-          if (!paymentMethod) {
-            Swal.showValidationMessage('Por favor selecciona un método de pago')
-            return false
-          }
-
-          return { branchLocation, planType, paymentMethod }
+        buttonsStyling: true,
+        customClass: {
+          confirmButton: 'btn btn-primary px-4',
+          cancelButton: 'btn btn-secondary px-4'
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          const { branchLocation, planType, paymentMethod } = result.value
-
           Swal.fire({
+            title: '¡Reserva Confirmada!',
+            text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
             icon: 'success',
-            title: '¡Reserva Registrada!',
-            html: `
-              <div class="text-start">
-                <p><strong>Clase:</strong> ${capitalize(selectedClass.title)}</p>
-                <p><strong>Sede:</strong> ${branchLocation}</p>
-                <p><strong>Plan:</strong> ${planType}</p>
-                <p><strong>Pago:</strong> ${paymentMethod.toUpperCase()}</p>
-              </div>
-            `,
-            confirmButtonText: 'Aceptar'
+            showCancelButton: true,
+            confirmButtonText: 'Ver mis reservas',
+            cancelButtonText: 'Continuar reservando',
+            reverseButtons: true,
+            customClass: {
+              confirmButton: 'btn btn-success px-3',
+              cancelButton: 'btn btn-outline-dark px-3'
+            }
+          }).then((navigationResult) => {
+            if (navigationResult.isConfirmed) {
+              // Redirección a la sección de reservas
+              window.location.href = '../reservations/reservations.html'
+            }
           })
         }
       })
