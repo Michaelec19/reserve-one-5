@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { classesService } from '../../../services/classesService.js'
+import { reservationsService } from '../../../services/reservationsService.js'
 import { Alert } from '../../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../../shared/js/utils.js'
 
@@ -94,7 +95,7 @@ const setupEventListeners = () => {
       if (!selectedClass) return
 
       Swal.fire({
-        title: `<strong>Confirmar Reserva</strong>`,
+        title: '<strong>Confirmar Reserva</strong>',
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
@@ -115,24 +116,40 @@ const setupEventListeners = () => {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: '¡Reserva Confirmada!',
-            text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: 'Ver mis reservas',
-            cancelButtonText: 'Continuar reservando',
-            reverseButtons: true,
-            customClass: {
-              confirmButton: 'btn btn-success px-3',
-              cancelButton: 'btn btn-outline-dark px-3'
-            }
-          }).then((navigationResult) => {
-            if (navigationResult.isConfirmed) {
-              // Redirección a la sección de reservas
-              window.location.href = '../reservations/reservations.html'
-            }
-          })
+          // Intentar agregar la reserva usando el servicio
+          const reservationResult = reservationsService.addReservation(selectedClass)
+
+          if (reservationResult.success) {
+            Swal.fire({
+              title: '¡Reserva Confirmada!',
+              text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
+              icon: 'success',
+              showCancelButton: true,
+              confirmButtonText: 'Ver mis reservas',
+              cancelButtonText: 'Continuar reservando',
+              reverseButtons: true,
+              customClass: {
+                confirmButton: 'btn btn-success px-3',
+                cancelButton: 'btn btn-outline-dark px-3'
+              }
+            }).then((navigationResult) => {
+              if (navigationResult.isConfirmed) {
+                // Redirección a la sección de reservas
+                window.location.href = '../../reservations/reservations.html'
+              }
+            })
+          } else {
+            // La clase ya está reservada
+            Swal.fire({
+              title: 'Clase ya reservada',
+              text: reservationResult.message,
+              icon: 'warning',
+              confirmButtonText: 'Entendido',
+              customClass: {
+                confirmButton: 'btn btn-warning px-4'
+              }
+            })
+          }
         }
       })
     }

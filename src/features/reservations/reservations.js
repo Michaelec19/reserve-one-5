@@ -1,120 +1,158 @@
-// Límite máximo de cupos por clase
-const LIMITE_MAXIMO_CUPOS = 5;
-
-let misReservas = JSON.parse(localStorage.getItem('reservasClub')) || [];
+/* eslint-disable no-undef */
+import { reservationsService } from '../../services/reservationsService.js'
+import { getImagePath } from '../../shared/js/config.js'
+import { capitalize } from '../../shared/js/utils.js'
 
 function renderizarReservas() {
-    const contenedor = document.getElementById('lista-reservas');
-    const totalElemento = document.getElementById('total-reservas');
-    const contadorBadge = document.getElementById('contador-badge');
-    const resumenCantidad = document.getElementById('resumen-cantidad');
-    const contenedorVaciar = document.getElementById('contenedor-vaciar');
-    
-    if (!contenedor) return;
+  const contenedor = document.getElementById('lista-reservas')
+  const totalElemento = document.getElementById('total-reservas')
+  const contadorBadge = document.getElementById('contador-badge')
+  const resumenCantidad = document.getElementById('resumen-cantidad')
+  const contenedorVaciar = document.getElementById('contenedor-vaciar')
 
-    contenedor.innerHTML = '';
-    let totalClasesAgendadas = 0;
+  if (!contenedor) return
 
-    if (misReservas.length === 0) {
-        contenedor.innerHTML = `
+  const misReservas = reservationsService.getReservations()
+  contenedor.innerHTML = ''
+
+  if (misReservas.length === 0) {
+    contenedor.innerHTML = `
             <div class="card p-5 text-center bg-dark text-muted border-secondary">
                 <h5 class="text-warning mb-2">No tienes reservas activas</h5>
                 <p class="small mb-3">Parece que aún no has agendado ninguna clase en el club.</p>
-                <a href="index.html" class="btn btn-outline-warning btn-sm w-50 mx-auto fw-bold">Ver Cartelera de Clases</a>
-            </div>`;
-        totalElemento.textContent = '0';
-        contadorBadge.textContent = '0 clases';
-        resumenCantidad.textContent = '0';
-        contenedorVaciar.classList.add('d-none');
-        return;
-    }
+                <a href="../landing/catalog_users/catalog_user.html" class="btn btn-outline-warning btn-sm w-50 mx-auto fw-bold">Ver Cartelera de Clases</a>
+            </div>`
+    totalElemento.textContent = '0'
+    contadorBadge.textContent = '0 clases'
+    resumenCantidad.textContent = '0'
+    contenedorVaciar.classList.add('d-none')
+    return
+  }
 
-    contenedorVaciar.classList.remove('d-none');
+  contenedorVaciar.classList.remove('d-none')
 
-    misReservas.forEach((item, index) => {
-        totalClasesAgendadas += item.cantidad;
-
-        let alertaLleno = '';
-        if (item.cantidad >= LIMITE_MAXIMO_CUPOS) {
-            alertaLleno = `<span class="badge bg-danger mt-1 d-inline-block">Cupos al límite (Máx. ${LIMITE_MAXIMO_CUPOS})</span>`;
-        }
-
-        contenedor.innerHTML += `
+  misReservas.forEach((item) => {
+    contenedor.innerHTML += `
             <div class="card p-3 bg-dark border-secondary">
                 <div class="row align-items-center">
                     <div class="col-md-3 mb-2 mb-md-0">
-                        <img src="${item.imagen || 'https://via.placeholder.com/150'}" class="img-fluid rounded object-fit-cover" alt="${item.nombre}" style="height: 80px; width: 100%;">
+                        <img src="${getImagePath(item.image.split('/').pop())}" class="img-fluid rounded object-fit-cover" alt="${item.title}" style="height: 80px; width: 100%;">
                     </div>
                     <div class="col-md-5">
                         <div class="d-flex align-items-center gap-2 mb-1">
-                            <h5 class="text-light m-0 fs-6 fw-bold">${item.nombre}</h5>
-                            <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">Próxima Clase</span>
+                            <h5 class="text-light m-0 fs-6 fw-bold">${capitalize(item.title)}</h5>
+                            <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">${capitalize(item.level)}</span>
                         </div>
-                        <p class="text-muted small mb-1">${item.descripcion}</p>
-                        ${alertaLleno}
+                        <p class="text-light small mb-1">${item.dateText}</p>
+                        <p class="text-light small mb-1">Ubicación: ${item.location}</p>
+                        <p class="text-light small mb-0">Modalidad: ${capitalize(item.modality)}</p>
                     </div>
                     <div class="col-md-2 my-2 my-md-0">
-                        <label class="text-muted small d-block mb-1">Cupos:</label>
-                        <div class="input-group input-group-sm">
-                            <button class="btn btn-outline-warning" onclick="cambiarCantidad(${index}, -1)">-</button>
-                            <input type="text" class="form-control text-center bg-secondary text-light border-0 fw-bold" value="${item.cantidad}" readonly>
-                            <button class="btn btn-outline-warning" onclick="cambiarCantidad(${index}, 1)">+</button>
-                        </div>
+                        <label class="text-light small d-block mb-1">Cupos disponibles:</label>
+                        <div class="form-control text-center bg-secondary text-light border-0 fw-bold">${item.capacity}</div>
                     </div>
                     <div class="col-md-2 text-end">
-                        <button class="btn btn-sm btn-outline-danger px-2 py-1" onclick="eliminarItem(${index})">Cancelar</button>
+                        <button class="btn btn-sm btn-outline-danger px-2 py-1" onclick="eliminarItem('${item.id}')">Cancelar</button>
                     </div>
                 </div>
             </div>
-        `;
-    });
+        `
+  })
 
-    totalElemento.textContent = totalClasesAgendadas;
-    contadorBadge.textContent = `${totalClasesAgendadas} clase${totalClasesAgendadas !== 1 ? 's' : ''}`;
-    resumenCantidad.textContent = misReservas.length;
+  totalElemento.textContent = misReservas.length
+  contadorBadge.textContent = `${misReservas.length} clase${misReservas.length !== 1 ? 's' : ''}`
+  resumenCantidad.textContent = misReservas.length
 }
 
-function cambiarCantidad(index, cambio) {
-    if (cambio > 0 && misReservas[index].cantidad >= LIMITE_MAXIMO_CUPOS) {
-        alert(`Has alcanzado el límite máximo de ${LIMITE_MAXIMO_CUPOS} cupos para esta clase.`);
-        return;
+function eliminarItem(classId) {
+  Swal.fire({
+    title: '¿Cancelar reserva?',
+    text: '¿Estás seguro de que deseas cancelar esta reserva?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, cancelar',
+    cancelButtonText: 'No, mantener',
+    customClass: {
+      confirmButton: 'btn btn-danger px-4',
+      cancelButton: 'btn btn-secondary px-4'
     }
-
-    misReservas[index].cantidad += cambio;
-    
-    if (misReservas[index].cantidad <= 0) {
-        misReservas[index].cantidad = 1;
+  }).then((result) => {
+    if (result.isConfirmed) {
+      reservationsService.removeReservation(classId)
+      renderizarReservas()
+      Swal.fire({
+        title: 'Reserva cancelada',
+        text: 'Tu reserva ha sido cancelada exitosamente.',
+        icon: 'success',
+        confirmButtonText: 'Entendido',
+        customClass: {
+          confirmButton: 'btn btn-success px-4'
+        }
+      })
     }
-    
-    guardarYActualizar();
-}
-
-function eliminarItem(index) {
-    misReservas.splice(index, 1);
-    guardarYActualizar();
+  })
 }
 
 function vaciarReservas() {
-    if (confirm("¿Estás segura de que deseas cancelar todas tus reservas de clases?")) {
-        misReservas = [];
-        guardarYActualizar();
+  Swal.fire({
+    title: '¿Cancelar todas las reservas?',
+    text: '¿Estás segura de que deseas cancelar todas tus reservas de clases?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, cancelar todo',
+    cancelButtonText: 'No, mantener',
+    customClass: {
+      confirmButton: 'btn btn-danger px-4',
+      cancelButton: 'btn btn-secondary px-4'
     }
-}
-
-function guardarYActualizar() {
-    localStorage.setItem('reservasClub', JSON.stringify(misReservas));
-    renderizarReservas();
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem('lanhua_reservations')
+      renderizarReservas()
+      Swal.fire({
+        title: 'Reservas canceladas',
+        text: 'Todas tus reservas han sido canceladas.',
+        icon: 'success',
+        confirmButtonText: 'Entendido',
+        customClass: {
+          confirmButton: 'btn btn-success px-4'
+        }
+      })
+    }
+  })
 }
 
 function confirmarReservas() {
-    if (misReservas.length === 0) {
-        alert("No tienes clases seleccionadas para confirmar.");
-        return;
+  const misReservas = reservationsService.getReservations()
+  if (misReservas.length === 0) {
+    Swal.fire({
+      title: 'Sin reservas',
+      text: 'No tienes clases seleccionadas para confirmar.',
+      icon: 'warning',
+      confirmButtonText: 'Entendido',
+      customClass: {
+        confirmButton: 'btn btn-warning px-4'
+      }
+    })
+    return
+  }
+  Swal.fire({
+    title: '¡Reservas confirmadas!',
+    text: '¡Tus reservas han sido registradas con éxito en el sistema del club!',
+    icon: 'success',
+    confirmButtonText: 'Entendido',
+    customClass: {
+      confirmButton: 'btn btn-success px-4'
     }
-    alert("¡Tus reservas han sido registradas con éxito en el sistema del club!");
-    localStorage.removeItem('reservasClub');
-    misReservas = [];
-    renderizarReservas();
+  }).then(() => {
+    localStorage.removeItem('lanhua_reservations')
+    renderizarReservas()
+  })
 }
 
-document.addEventListener('DOMContentLoaded', renderizarReservas);
+// Exponer funciones al objeto window para que puedan ser llamadas desde HTML
+window.eliminarItem = eliminarItem
+window.vaciarReservas = vaciarReservas
+window.confirmarReservas = confirmarReservas
+
+document.addEventListener('DOMContentLoaded', renderizarReservas)
