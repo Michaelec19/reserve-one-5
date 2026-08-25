@@ -30,12 +30,16 @@ const renderModalContentForm = () => {
 
 const renderClasses = () => {
   const classes = getClasses()
-  const cardsContainer = document.querySelector('#schedules')
+  
+  const grupalContainer = document.querySelector('#schedules-grupal')
+  const individualContainer = document.querySelector('#schedules-individual')
 
-  cardsContainer.innerHTML = ''
+  // Limpiamos ambos contenedores antes de renderizar
+  grupalContainer.innerHTML = ''
+  individualContainer.innerHTML = ''
 
   if (classes.length === 0) {
-    cardsContainer.innerHTML = Alert({
+    grupalContainer.innerHTML = Alert({
       variant: 'info',
       title: 'Aún no tienes horarios agregados',
       text: 'Haz clic en "Agregar Horario" para crear el primero.'
@@ -43,9 +47,24 @@ const renderClasses = () => {
     return
   }
 
+
   classes.forEach(classItem => {
-    cardsContainer.innerHTML += ScheduleCard(classItem)
+
+    const modalidad = classItem.modality ? classItem.modality.toLowerCase() : 'grupal'
+
+    if (modalidad === 'grupal') {
+      grupalContainer.innerHTML += ScheduleCard(classItem)
+    } else {
+      individualContainer.innerHTML += ScheduleCard(classItem)
+    }
   })
+
+  if (grupalContainer.innerHTML === '') {
+    grupalContainer.innerHTML = '<p class="text-muted small">No hay clases grupales registradas.</p>'
+  }
+  if (individualContainer.innerHTML === '') {
+    individualContainer.innerHTML = '<p class="text-muted small">No hay clases individuales registradas.</p>'
+  }
 }
 
 // form: create / edit / reset
@@ -61,7 +80,7 @@ const resetFormState = () => {
 }
 
 const fillFormForEdit = (classToEdit, classId) => {
-  form.modality.value = classToEdit.modality.toLowerCase()
+  form.modality.value = classToEdit.modality ? classToEdit.modality.toLowerCase() : 'grupal'
   form.title.value = classToEdit.title.toLowerCase()
   form.level.value = classToEdit.level.toLowerCase()
   form.capacity.value = classToEdit.capacity
@@ -182,33 +201,35 @@ const setupModalReset = () => {
 }
 
 const setupEventListeners = () => {
-  const cardsContainer = document.querySelector('.cards')
+  const cardsContainers = document.querySelectorAll('.cards') // Selecciona ambos contenedores
 
-  cardsContainer.addEventListener('click', (event) => {
-    const deleteBtn = event.target.closest('.delete-btn')
-    if (deleteBtn) {
-      const classId = deleteBtn.getAttribute('data-id')
-      const isConfirmed = confirm('¿Estás seguro de que deseas eliminar esta clase?')
-      if (isConfirmed) {
-        deleteClass(classId)
+  cardsContainers.forEach(container => {
+    container.addEventListener('click', (event) => {
+      const deleteBtn = event.target.closest('.delete-btn')
+      if (deleteBtn) {
+        const classId = deleteBtn.getAttribute('data-id')
+        const isConfirmed = confirm('¿Estás seguro de que deseas eliminar esta clase?')
+        if (isConfirmed) {
+          deleteClass(classId)
+        }
+        return
       }
-      return
-    }
 
-    const editBtn = event.target.closest('.edit-btn')
-    if (editBtn) {
-      const classId = editBtn.getAttribute('data-id')
-      const currentClasses = getClasses()
-      const classToEdit = currentClasses.find(c => c.id === classId)
+      const editBtn = event.target.closest('.edit-btn')
+      if (editBtn) {
+        const classId = editBtn.getAttribute('data-id')
+        const currentClasses = getClasses()
+        const classToEdit = currentClasses.find(c => c.id === classId)
 
-      if (classToEdit) {
-        fillFormForEdit(classToEdit, classId)
+        if (classToEdit) {
+          fillFormForEdit(classToEdit, classId)
 
-        const modalElement = document.querySelector('#staticBackdrop')
-        const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
-        bootstrapModal.show()
+          const modalElement = document.querySelector('#staticBackdrop')
+          const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
+          bootstrapModal.show()
+        }
       }
-    }
+    })
   })
 }
 
