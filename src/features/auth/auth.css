@@ -1,1 +1,31 @@
-/* Auth styles */
+body {
+  background-color: var(--background-color);
+  font-family: 'Inter', sans-serif;
+}
+
+.input-group .btn-outline-secondary {
+  background-color: var(--bs-secondary);
+  color: #adb5bd;
+}
+
+.input-group .btn-outline-secondary:hover {
+  color: #f2be22;
+}
+
+.auth-tabs .nav-link {
+  color: #adb5bd;
+  background-color: transparent !important;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  padding-bottom: 10px;
+}
+
+.auth-tabs .nav-link:hover {
+  color: #f2be22;
+}
+
+.auth-tabs .nav-link.active {
+  color: #f2be22 !important;
+  border-bottom: 2px solid #f2be22;
+}
