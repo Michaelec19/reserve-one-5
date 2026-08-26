@@ -1,7 +1,9 @@
+/* eslint-disable no-undef */
 import { Alert } from '../../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../../shared/js/utils.js'
 
 const LOCALSTORAGE_KEY = 'lanhua_classes'
+const USER_SESSION_KEY = 'lanhua_user' 
 
 const defaultClasses = [
   {
@@ -38,6 +40,11 @@ const defaultClasses = [
     image: '../../../assets/3.png'
   }
 ]
+
+const isAuthenticated = () => {
+  const user = localStorage.getItem(USER_SESSION_KEY) || sessionStorage.getItem(USER_SESSION_KEY)
+  return Boolean(user)
+}
 
 const ScheduleCardUser = (classItem) => {
   return `
@@ -130,6 +137,27 @@ const setupEventListeners = () => {
   cardsContainer.addEventListener('click', (event) => {
     const reserveBtn = event.target.closest('.reserve-btn')
     if (reserveBtn) {
+
+      if (!isAuthenticated()) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Iniciar Sesión Requerido',
+          text: 'Debes ingresar a tu cuenta o registrarte para poder reservar una clase.',
+          showCancelButton: true,
+          confirmButtonText: 'Iniciar Sesión / Registrarse',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            confirmButton: 'btn btn-primary px-3',
+            cancelButton: 'btn btn-secondary px-3'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '../../auth/login.html'
+          }
+        })
+        return
+      }
+
       const classId = reserveBtn.getAttribute('data-id')
       const classes = getClasses()
       const selectedClass = classes.find(c => c.id === classId)
@@ -172,8 +200,7 @@ const setupEventListeners = () => {
             }
           }).then((navigationResult) => {
             if (navigationResult.isConfirmed) {
-              // Redirección a la sección de reservas
-              window.location.href = '../reservations/reservations.html'
+              window.location.href = '../my_reservations/my_reservations.html'
             }
           })
         }
