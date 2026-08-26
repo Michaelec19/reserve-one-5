@@ -2,101 +2,116 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserve One 5 - Catalogo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
-        integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve One 5 - Catalogo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+    integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="stylesheet" href="../../../shared/css/reset.css">
-    <link rel="stylesheet" href="../../../shared/css/variables.css">
-    <link rel="stylesheet" href="../landing.css">
-    <link rel="stylesheet" href="../../../shared/components/Header/Header.css">
-    <link rel="stylesheet" href="../../dashboard/components/ScheduleCard/ScheduleCard.css">
+  <link rel="stylesheet" href="../../../shared/css/reset.css">
+  <link rel="stylesheet" href="../../../shared/css/variables.css">
+  <link rel="stylesheet" href="../landing.css">
+  <link rel="stylesheet" href="../../../shared/components/Header/Header.css">
+  <link rel="stylesheet" href="../../dashboard/components/ScheduleCard/ScheduleCard.css">
+  <link rel="stylesheet" href="../../../shared/components/Alert/Alert.css">
+  <link rel="stylesheet" href="catalog_user.css">
 </head>
 
 <body>
 
-    <header class="header sticky-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg px-0">
+  <header class="header sticky-top">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg px-0">
 
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="../../../assets/LogoSinFondo.png" class="logo">
-                    <span class="ms-2 fw-semibold brand-name">
-                        LAN HUA
-                    </span>
-                </a>
+        <a class="navbar-brand d-flex align-items-center" href="../../../index.html">
+          <img src="../../../assets/LogoSinFondo.png" class="logo">
+          <span class="ms-2 fw-semibold brand-name">
+            LAN HUA
+          </span>
+        </a>
 
-                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbar">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../../index.html">Inicio</a>
-                        </li>
+        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../../../index.html">Inicio</a>
+            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../about/about.html">Nosotros</a>
-                        </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../about/about.html">Nosotros</a>
+            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contact/contact.html">Contacto</a>
-                        </li>
-                    </ul>
+            <li class=" nav-item">
+              <a class="nav-link active" href="catalog_user.html">Clases</a>
+            </li>
 
-                    <div class="d-flex flex-column flex-lg-row gap-3">
-                        <a class="nav-item" href="catalog_user.html">
-                            <button class="btnBooking w-100">
-                                Reserva tu Clase
-                            </button>
-                        </a>
+            <li class="nav-item">
+              <a class="nav-link" href="../contact/contact.html">Contacto</a>
+            </li>
+          </ul>
 
-                        <a href="#" class="flex-fill">
-                            <button class="btnLogin w-100">
-                                Ingresar
-                            </button>
-                        </a>
-                    </div>
-                </div>
+          <div class="d-flex flex-column flex-lg-row gap-3">
+            <a class="nav-item" href="catalog_user.html">
+              <button class="btnBooking w-100">
+                Reserva tu Clase
+              </button>
+            </a>
 
-            </nav>
+            <a href="#" class="flex-fill">
+              <button class="btnLogin w-100">
+                Ingresar
+              </button>
+            </a>
+          </div>
         </div>
-    </header>
-    <main class="bg-white text-light min-vh-100 py-5">
-        <div class="container">
-            <h1 class="text-center text-dark fw-bold mb-5">Disciplinas</h1>
 
-            <div class="row g-4" id="disciplinesContainer"></div>
-        </div>
-    </main>
-    <div id="footer-container"></div>
+      </nav>
+    </div>
+  </header>
+  <main class="bg-white min-vh-100 ">
+    <section class="hero-contact py-5 text-center text-white"
+      style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../../assets/lanhua_banner_programas.jpg'); background-size: cover; background-position: center;">
+      <div class="container py-4">
+        <h1 class="fw-bold display-5 mb-2" style="color: #F2BE22;">Nuestras Clases</h1>
+        <p class="lead text-light">
+          Explora nuestras nuestra oferta de clases, diseñadas para todos los niveles: desde quienes dan sus
+          primeros pasos hasta quienes buscan perfeccionar su técnica.
+        </p>
+      </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+    <div class="container" id="mainContainer">
+      <div class="row g-4 mt-4 mb-5" id="disciplinesContainer"></div>
+    </div>
+  </main>
+  <div id="footer-container"></div>
 
-    <script type="module">
-        import { loadFooter } from '../../../shared/components/Footer/Footer.js';
-        document.addEventListener("DOMContentLoaded", () => {
-            loadFooter();
-        });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 
-    <script src="../catalog_users/catalog_user.js" type="module"></script>
+  <script type="module">
+    import { loadFooter } from '../../../shared/components/Footer/Footer.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFooter();
+    });
+  </script>
+
+  <script src="catalog_user.js" type="module"></script>
 </body>
 
 </html>

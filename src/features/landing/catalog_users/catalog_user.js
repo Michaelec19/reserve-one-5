@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+<<<<<<< HEAD
 import { Alert } from '../../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../../shared/js/utils.js'
 
@@ -96,16 +97,43 @@ const ScheduleCardUser = (classItem) => {
     </div>
   `
 }
+=======
+import { classesService } from '../../../services/classesService.js'
+import { reservationsService } from '../../../services/reservationsService.js'
+import { Alert } from '../../../shared/components/Alert/Alert.js'
+import { capitalize } from '../../../shared/js/utils.js'
+import { ScheduleCardUser } from './components/ScheduleCardUser.js'
+import { Filter, initFilter } from './components/Filter.js'
+>>>>>>> 559c469bb93707c45e568137892c54fecc2c8ac0
 
 const getClasses = () => {
-  const savedData = localStorage.getItem(LOCALSTORAGE_KEY)
+  return classesService.getClasses()
+}
 
-  if (!savedData) {
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(defaultClasses))
-    return defaultClasses
+const renderFilter = () => {
+  const container = document.querySelector('#mainContainer')
+  const filterContainer = document.createElement('div')
+  filterContainer.innerHTML = Filter()
+  container.insertBefore(filterContainer, container.querySelector('#disciplinesContainer'))
+}
+
+const renderFilteredClasses = (classes) => {
+  const cardsContainer = document.querySelector('#disciplinesContainer')
+
+  cardsContainer.innerHTML = ''
+
+  if (classes.length === 0) {
+    cardsContainer.innerHTML = Alert({
+      variant: 'info',
+      title: 'No se encontraron clases',
+      text: 'Intenta con otros filtros o borra los filtros actuales.'
+    })
+    return
   }
 
-  return JSON.parse(savedData)
+  classes.forEach(classItem => {
+    cardsContainer.innerHTML += ScheduleCardUser(classItem)
+  })
 }
 
 const renderClasses = () => {
@@ -165,7 +193,7 @@ const setupEventListeners = () => {
       if (!selectedClass) return
 
       Swal.fire({
-        title: `<strong>Confirmar Reserva</strong>`,
+        title: '<strong>Confirmar Reserva</strong>',
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
@@ -186,6 +214,7 @@ const setupEventListeners = () => {
         }
       }).then((result) => {
         if (result.isConfirmed) {
+<<<<<<< HEAD
           Swal.fire({
             title: '¡Reserva Confirmada!',
             text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
@@ -203,6 +232,42 @@ const setupEventListeners = () => {
               window.location.href = '../my_reservations/my_reservations.html'
             }
           })
+=======
+          // Intentar agregar la reserva usando el servicio
+          const reservationResult = reservationsService.addReservation(selectedClass)
+
+          if (reservationResult.success) {
+            Swal.fire({
+              title: '¡Reserva Confirmada!',
+              text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
+              icon: 'success',
+              showCancelButton: true,
+              confirmButtonText: 'Ver mis reservas',
+              cancelButtonText: 'Continuar reservando',
+              reverseButtons: true,
+              customClass: {
+                confirmButton: 'btn btn-success px-3',
+                cancelButton: 'btn btn-outline-dark px-3'
+              }
+            }).then((navigationResult) => {
+              if (navigationResult.isConfirmed) {
+                // Redirección a la sección de reservas
+                window.location.href = '../../reservations/reservations.html'
+              }
+            })
+          } else {
+            // La clase ya está reservada
+            Swal.fire({
+              title: 'Clase ya reservada',
+              text: reservationResult.message,
+              icon: 'warning',
+              confirmButtonText: 'Entendido',
+              customClass: {
+                confirmButton: 'btn btn-warning px-4'
+              }
+            })
+          }
+>>>>>>> 559c469bb93707c45e568137892c54fecc2c8ac0
         }
       })
     }
@@ -210,6 +275,8 @@ const setupEventListeners = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderFilter()
+  initFilter(renderFilteredClasses, renderClasses)
   renderClasses()
   setupEventListeners()
 })
