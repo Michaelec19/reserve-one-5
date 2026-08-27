@@ -11,7 +11,7 @@ const getClasses = () => {
 }
 
 const setClasses = (classes) => {
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(classes))
+  classesService.saveClasses(classes)
 }
 
 const deleteClass = (id) => {
@@ -30,7 +30,7 @@ const renderModalContentForm = () => {
 
 const renderClasses = () => {
   const classes = getClasses()
-  
+
   const grupalContainer = document.querySelector('#schedules-grupal')
   const individualContainer = document.querySelector('#schedules-individual')
 
@@ -47,9 +47,7 @@ const renderClasses = () => {
     return
   }
 
-
   classes.forEach(classItem => {
-
     const modalidad = classItem.modality ? classItem.modality.toLowerCase() : 'grupal'
 
     if (modalidad === 'grupal') {
