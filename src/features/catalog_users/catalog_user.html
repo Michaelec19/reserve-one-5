@@ -18,12 +18,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <link rel="stylesheet" href="../../../shared/css/reset.css">
-  <link rel="stylesheet" href="../../../shared/css/variables.css">
-  <link rel="stylesheet" href="../landing.css">
-  <link rel="stylesheet" href="../../../shared/components/Header/Header.css">
-  <link rel="stylesheet" href="../../dashboard/components/ScheduleCard/ScheduleCard.css">
-  <link rel="stylesheet" href="../../../shared/components/Alert/Alert.css">
+  <link rel="stylesheet" href="../../shared/css/reset.css">
+  <link rel="stylesheet" href="../../shared/css/variables.css">
+  <link rel="stylesheet" href="../../shared/components/Header/Header.css">
+  <link rel="stylesheet" href="../dashboard/dashboard.css">
+  <link rel="stylesheet" href="../dashboard/components/ScheduleCard/ScheduleCard.css">
+  <link rel="stylesheet" href="../../shared/components/Alert/Alert.css">
   <link rel="stylesheet" href="catalog_user.css">
 </head>
 
@@ -33,8 +33,8 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg px-0">
 
-        <a class="navbar-brand d-flex align-items-center" href="../../../index.html">
-          <img src="../../../assets/LogoSinFondo.png" class="logo">
+        <a class="navbar-brand d-flex align-items-center" href="../../index.html">
+          <img src="../../assets/LogoSinFondo.png" class="logo">
           <span class="ms-2 fw-semibold brand-name">
             LAN HUA
           </span>
@@ -48,7 +48,7 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbar">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../../../index.html">Inicio</a>
+              <a class="nav-link" href="../../index.html">Inicio</a>
             </li>
 
             <li class="nav-item">
@@ -89,7 +89,7 @@
   </header>
   <main class="bg-white min-vh-100 ">
     <section class="hero-contact py-5 text-center text-white"
-      style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../../assets/lanhua_banner_programas.jpg'); background-size: cover; background-position: center;">
+      style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../assets/lanhua_banner_programas.jpg'); background-size: cover; background-position: center;">
       <div class="container py-4">
         <h1 class="fw-bold display-5 mb-2" style="color: #F2BE22;">Nuestras Clases</h1>
         <p class="lead text-light">
@@ -110,7 +110,7 @@
     crossorigin="anonymous"></script>
 
   <script type="module">
-    import { loadFooter } from '../../../shared/components/Footer/Footer.js';
+    import { loadFooter } from '../../shared/components/Footer/Footer.js';
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
     });

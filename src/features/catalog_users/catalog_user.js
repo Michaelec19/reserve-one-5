@@ -1,7 +1,7 @@
-import { classesService } from '../../../services/classesService.js'
-import { reservationsService } from '../../../services/reservationsService.js'
-import { Alert } from '../../../shared/components/Alert/Alert.js'
-import { capitalize } from '../../../shared/js/utils.js'
+import { classesService } from '../../services/classesService.js'
+import { reservationsService } from '../../services/reservationsService.js'
+import { Alert } from '../../shared/components/Alert/Alert.js'
+import { capitalize } from '../../shared/js/utils.js'
 import { ScheduleCardUser } from './components/ScheduleCardUser.js'
 import { Filter, initFilter } from './components/Filter.js'
 
@@ -73,7 +73,6 @@ const setupEventListeners = () => {
   cardsContainer.addEventListener('click', async (event) => {
     const reserveBtn = event.target.closest('.reserve-btn')
     if (reserveBtn) {
-
       if (!isAuthenticated()) {
         Swal.fire({
           icon: 'warning',
@@ -88,7 +87,7 @@ const setupEventListeners = () => {
           }
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '../../auth/auth.html'
+            window.location.href = '../auth/auth.html'
           }
         })
         return
@@ -139,7 +138,7 @@ const setupEventListeners = () => {
               }
             }).then((navigationResult) => {
               if (navigationResult.isConfirmed) {
-                window.location.href = '../../reservations/reservations.html'
+                window.location.href = '../reservations/reservations.html'
               }
             })
           } else {
