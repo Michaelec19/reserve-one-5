@@ -1,4 +1,4 @@
-import { classesService } from '../../../../services/classesService.js'
+import { classesService } from '../../../services/classesService.js'
 
 const getClasses = () => {
   return classesService.getClasses()

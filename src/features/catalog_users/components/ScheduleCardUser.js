@@ -1,4 +1,4 @@
-import { capitalize } from '../../../../shared/js/utils.js'
+import { capitalize } from '../../../shared/js/utils.js'
 
 export const ScheduleCardUser = (classItem) => {
   return `
