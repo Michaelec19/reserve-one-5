@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="../../shared/css/variables.css">
   <link rel="stylesheet" href="../../shared/components/Header/Header.css">
   <link rel="stylesheet" href="pricing.css">
+  <link rel="stylesheet" href="../../shared/components/UserMenu/UserMenu.css">
 </head>
 
 <body class="dojo-theme-body bg-dark text-white">
@@ -58,14 +59,15 @@
             </li>
           </ul>
 
-          <div class="d-flex flex-column flex-lg-row gap-3">
-            <a href="/src/features/catalog_users/catalog_user.html" class="flex-fill">
-              <button class="btnBooking w-100">Reserva tu Clase</button>
+          <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+            <a href="features/catalog_users/catalog_user.html" class="flex-fill">
+              <button class="btnBooking w-100">
+                Reserva tu Clase
+              </button>
             </a>
-            <a href="/src/features/auth/auth.html" class="flex-fill">
-              <button class="btnLogin w-100">Ingresar</button>
-            </a>
+            <div class="flex-fill" id="authNavContainer"></div>
           </div>
+
         </div>
 
       </nav>
@@ -195,8 +197,13 @@
 
   <script type="module">
     import { loadFooter } from '../../shared/components/Footer/Footer.js';
+    import { initAuthNav } from '../../shared/js/authNav.js';
+    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
+
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
+      initAuthNav();
+      loadUserMenu();
     });
   </script>
 

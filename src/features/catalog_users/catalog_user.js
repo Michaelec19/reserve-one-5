@@ -1,16 +1,20 @@
+/* eslint-disable no-undef */
 import { classesService } from '../../services/classesService.js'
 import { reservationsService } from '../../services/reservationsService.js'
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../shared/js/utils.js'
 import { ScheduleCardUser } from './components/ScheduleCardUser.js'
 import { Filter, initFilter } from './components/Filter.js'
+import { initAuthNav } from '../../shared/js/authNav.js'
 
-const USER_SESSION_KEY = 'lanhua_user'
+const SESSION_KEY = 'lanhua_session'
 
-const isAuthenticated = () => {
-  const user = localStorage.getItem(USER_SESSION_KEY) || sessionStorage.getItem(USER_SESSION_KEY)
-  return Boolean(user)
+const getSession = () => {
+  const session = localStorage.getItem(SESSION_KEY)
+  return session ? JSON.parse(session) : null
 }
+
+const isAuthenticated = () => Boolean(getSession())
 
 const getClasses = async () => {
   return await classesService.getClasses()
@@ -159,6 +163,7 @@ const setupEventListeners = () => {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  initAuthNav()
   renderFilter()
   initFilter(renderFilteredClasses, renderClasses)
   await renderClasses()

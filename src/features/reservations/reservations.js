@@ -107,7 +107,7 @@ function vaciarReservas() {
     }
   }).then((result) => {
     if (result.isConfirmed) {
-      localStorage.removeItem('lanhua_reservations')
+      reservationsService.removeAllReservations()
       renderizarReservas()
       Swal.fire({
         title: 'Reservas canceladas',
@@ -145,7 +145,7 @@ function confirmarReservas() {
       confirmButton: 'btn btn-success px-4'
     }
   }).then(() => {
-    localStorage.removeItem('lanhua_reservations')
+    reservationsService.removeAllReservations()
     renderizarReservas()
   })
 }
