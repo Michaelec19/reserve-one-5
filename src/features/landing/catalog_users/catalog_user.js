@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { classesService } from '../../../services/classesService.js'
 import { reservationsService } from '../../../services/reservationsService.js'
 import { Alert } from '../../../shared/components/Alert/Alert.js'
@@ -6,12 +5,21 @@ import { capitalize } from '../../../shared/js/utils.js'
 import { ScheduleCardUser } from './components/ScheduleCardUser.js'
 import { Filter, initFilter } from './components/Filter.js'
 
-const getClasses = () => {
-  return classesService.getClasses()
+const USER_SESSION_KEY = 'lanhua_user'
+
+const isAuthenticated = () => {
+  const user = localStorage.getItem(USER_SESSION_KEY) || sessionStorage.getItem(USER_SESSION_KEY)
+  return Boolean(user)
+}
+
+const getClasses = async () => {
+  return await classesService.getClasses()
 }
 
 const renderFilter = () => {
   const container = document.querySelector('#mainContainer')
+  if (!container) return
+
   const filterContainer = document.createElement('div')
   filterContainer.innerHTML = Filter()
   container.insertBefore(filterContainer, container.querySelector('#disciplinesContainer'))
@@ -19,10 +27,11 @@ const renderFilter = () => {
 
 const renderFilteredClasses = (classes) => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
+  if (!cardsContainer) return
 
   cardsContainer.innerHTML = ''
 
-  if (classes.length === 0) {
+  if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
       title: 'No se encontraron clases',
@@ -36,15 +45,14 @@ const renderFilteredClasses = (classes) => {
   })
 }
 
-const renderClasses = () => {
-  const classes = getClasses()
+const renderClasses = async () => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
-
   if (!cardsContainer) return
 
+  const classes = await getClasses()
   cardsContainer.innerHTML = ''
 
-  if (classes.length === 0) {
+  if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
       title: 'No hay clases disponibles',
@@ -62,12 +70,33 @@ const setupEventListeners = () => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
   if (!cardsContainer) return
 
-  cardsContainer.addEventListener('click', (event) => {
+  cardsContainer.addEventListener('click', async (event) => {
     const reserveBtn = event.target.closest('.reserve-btn')
     if (reserveBtn) {
+
+      if (!isAuthenticated()) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Iniciar Sesión Requerido',
+          text: 'Debes ingresar a tu cuenta o registrarte para poder reservar una clase.',
+          showCancelButton: true,
+          confirmButtonText: 'Iniciar Sesión / Registrarse',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            confirmButton: 'btn btn-primary px-3',
+            cancelButton: 'btn btn-secondary px-3'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '../../auth/auth.html'
+          }
+        })
+        return
+      }
+
       const classId = reserveBtn.getAttribute('data-id')
-      const classes = getClasses()
-      const selectedClass = classes.find(c => c.id === classId)
+      const classes = await getClasses()
+      const selectedClass = classes.find(c => String(c.id) === String(classId))
 
       if (!selectedClass) return
 
@@ -91,10 +120,9 @@ const setupEventListeners = () => {
           confirmButton: 'btn btn-primary px-4',
           cancelButton: 'btn btn-secondary px-4'
         }
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          // Intentar agregar la reserva usando el servicio
-          const reservationResult = reservationsService.addReservation(selectedClass)
+          const reservationResult = await reservationsService.addReservation(selectedClass)
 
           if (reservationResult.success) {
             Swal.fire({
@@ -111,12 +139,10 @@ const setupEventListeners = () => {
               }
             }).then((navigationResult) => {
               if (navigationResult.isConfirmed) {
-                // Redirección a la sección de reservas
                 window.location.href = '../../reservations/reservations.html'
               }
             })
           } else {
-            // La clase ya está reservada
             Swal.fire({
               title: 'Clase ya reservada',
               text: reservationResult.message,
@@ -133,9 +159,9 @@ const setupEventListeners = () => {
   })
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   renderFilter()
   initFilter(renderFilteredClasses, renderClasses)
-  renderClasses()
+  await renderClasses()
   setupEventListeners()
 })
