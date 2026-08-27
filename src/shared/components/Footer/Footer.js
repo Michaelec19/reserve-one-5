@@ -28,7 +28,7 @@ export function loadFooter() {
                             <li class="mb-2"><a href="/src/index.html" class="text-decoration-none text-white opacity-90">Inicio</a></li>
                             <li class="mb-2"><a href="/src/features/about/about.html" class="text-decoration-none text-white opacity-90">Nosotros</a></li>
                             <li class="mb-2"><a href="/src/features/landing/contact/contact.html" class="text-decoration-none text-white opacity-90">Contacto</a></li>
-                            <li class="mb-2"><a href="/src/features/landing/contact/contact.html#ubicacion" class="text-decoration-none text-white opacity-90">Sedes</a></li>
+                            <li class="mb-2"><a href="/src/features/contact/contact.html#ubicacion" class="text-decoration-none text-white opacity-90">Sedes</a></li>
                             <li class="mb-2"><a href="/src/features/auth/auth.html" class="text-decoration-none text-white opacity-90">Login</a></li>
                             <li class="mb-2"><a href="/src/features/auth/auth.html#register" class="text-decoration-none text-white opacity-90">Registro</a></li>
                         </ul>

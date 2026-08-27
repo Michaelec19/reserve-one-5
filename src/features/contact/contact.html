@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lan Hua - Contacto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link rel="stylesheet" href="../../shared/css/reset.css">
+  <link rel="stylesheet" href="../../shared/css/variables.css">
+  <link rel="stylesheet" href="contact.css">
+  <link rel="stylesheet" href="../../shared/components/Header/Header.css">
+</head>
+
+<body class="bg-dark text-white">
+  <header class="header sticky-top">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg px-0">
+
+        <a class="navbar-brand d-flex align-items-center" href="../../index.html">
+          <img src="../../assets/LogoSinFondo.png" class="logo" alt="Logo Lan Hua">
+          <span class="ms-2 fw-semibold brand-name">
+            LAN HUA
+          </span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../../index.html">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="../about/about.html">Nosotros</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="contact.html">Contacto</a>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-column flex-lg-row gap-3">
+            <a href="#" class="flex-fill">
+              <button class="btnBooking w-100">
+                Reserva tu Clase
+              </button>
+            </a>
+
+            <a href="#" class="flex-fill">
+              <button class="btnLogin w-100">
+                Ingresar
+              </button>
+            </a>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <main id="app">
+    <section class="hero-contact py-5 text-center text-white"
+      style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../../assets/Contactenos\ LanHua.jpg'); background-size: cover; background-position: center;">
+      <div class="container py-4">
+        <h1 class="fw-bold display-5 mb-2" style="color: #F2BE22;">Contáctanos</h1>
+        <p class="lead text-light">Estamos aquí para resolver todas tus dudas sobre nuestras clases y reservas</p>
+      </div>
+    </section>
+
+    <section class="faq py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="text-center mb-4">
+              <h3 class="fw-bold" style="color: #F2BE22;">Preguntas Frecuentes</h3>
+              <p class="text-light small">Resuelve tus dudas más comunes sobre nuestras clases y el sistema de reservas.
+              </p>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    ¿Cómo puedo reservar una clase en el club?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Puedes realizar tus reservas directamente a través de nuestro sistema <strong>Reserve One</strong>
+                    haciendo clic en el botón "Reserva tu Clase" ubicado en la barra de navegación superior.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    ¿Cuáles son los horarios de atención y entrenamiento?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Atendemos de Lunes a Sábado en un horario de 7:00 a.m. a 9:00 p.m. Los horarios específicos de cada
+                    disciplina de artes marciales los puedes consultar en el módulo de reservas.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item bg-dark text-white border-secondary mb-2">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed bg-dark text-warning fw-semibold shadow-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                    aria-controls="collapseThree">
+                    ¿Qué necesito llevar para mi primera clase?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body text-light small">
+                    Recomendamos asistir con ropa deportiva cómoda (preferiblemente flexible), una botella con agua para
+                    mantenerte hidratada y muchas ganas de aprender sobre nuestras disciplinas tradicionales.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact py-5 bg-black bg-opacity-25" id="contact">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+
+            <div class="text-center mb-4">
+              <h3 class="fw-bold" style="color: #F2BE22;">Envíanos un Mensaje</h3>
+              <p class="text-light small">¿Tienes dudas adicionales o no encontraste lo que buscabas en las preguntas
+                frecuentes? <br> Escríbenos y te responderemos pronto.</p>
+            </div>
+
+            <div class="card bg-dark border-secondary p-4 p-md-5 shadow-lg text-white">
+              <form id="contactForm" action="https://formspree.io/f/mdeonbwe" method="POST">
+
+                <div class="mb-3">
+                  <label for="nombre" class="form-label small text-warning fw-semibold">Nombre completo</label>
+                  <input type="text" class="form-control bg-secondary text-white border-0" id="nombre" name="nombre"
+                    placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="correo" class="form-label small text-warning fw-semibold">Correo electrónico</label>
+                  <input type="email" class="form-control bg-secondary text-white border-0" id="correo" name="correo"
+                    placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="telefono" class="form-label small text-warning fw-semibold">Teléfono / Celular</label>
+                  <input type="tel" class="form-control bg-secondary text-white border-0" id="telefono" name="telefono"
+                    placeholder="+57 300 000 0000">
+                </div>
+
+                <div class="mb-4">
+                  <label for="mensaje" class="form-label small text-warning fw-semibold">Mensaje</label>
+                  <textarea class="form-control bg-secondary text-white border-0" id="mensaje" name="mensaje" rows="4"
+                    placeholder="Escribe tu mensaje aquí..." required></textarea>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn fw-bold py-2 shadow-sm"
+                    style="background-color: #F2BE22; color: #0D0D0D;">Enviar Mensaje</button>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+  <p class="text-light small mb-3">¿Prefieres una atención más directa e inmediata?</p>
+  <div class="d-flex justify-content-center gap-3">
+    <a href="https://api.whatsapp.com/send/?phone=573136816166&text=%C2%A1Hola%21%20Quisiera%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Club%20Deportivo%20Lan%20Hua.&type=phone_number&app_absent=0" target="_blank" class="btn btn-outline-warning btn-sm px-3 rounded-pill">
+      <i class="fab fa-whatsapp me-2"></i>Escríbenos por WhatsApp
+    </a>
+    <a href="https://www.instagram.com/lanhuaclub/?hl=es" target="_blank" class="btn btn-outline-warning btn-sm px-3 rounded-pill">
+      <i class="fab fa-instagram me-2"></i>Síguenos en Instagram
+    </a>
+  </div>
+</div>
+    </section>
+
+    <section id="ubicacion" class="location py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="card bg-dark border-secondary p-4 p-md-5 shadow-lg text-white">
+              <h3 class="h4 fw-bold text-center mb-4" style="color: #F2BE22;">¿Cómo Llegar a nuestras Sedes?</h3>
+
+              <ul class="nav nav-tabs justify-content-center border-0 mb-4 gap-2" id="sedeTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active text-warning fw-semibold px-3 py-2 rounded-pill bg-secondary bg-opacity-10"
+                    id="laureles-tab" data-bs-toggle="tab" data-bs-target="#laureles" type="button" role="tab">
+                    <i class="fas fa-building me-2"></i>Laureles Estadio
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link text-warning fw-semibold px-3 py-2 rounded-pill bg-secondary bg-opacity-10"
+                    id="monterrey-tab" data-bs-toggle="tab" data-bs-target="#monterrey" type="button" role="tab">
+                    <i class="fas fa-store me-2"></i>Monterrey
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link text-warning fw-semibold px-3 py-2 rounded-pill bg-secondary bg-opacity-10"
+                    id="haru-tab" data-bs-toggle="tab" data-bs-target="#haru" type="button" role="tab">
+                    <i class="fas fa-sun me-2"></i>Haru No Hinata
+                  </button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="sedeTabsContent">
+
+                <!-- Sede Laureles -->
+                <div class="tab-pane fade show active" id="laureles" role="tabpanel" aria-labelledby="laureles-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.071744652254!2d-75.594739!3d6.248611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44290325026937%3A0x7d6a5c68b7596046!2sCl.%2048b%20%2378a-47%2C%20La%20Floresta%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Principal - Laureles Estadio</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cll 48b
+                        #78a-47 Piso 5</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> A una cuadra de
+                        Estación Floresta del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Clases generales y
+                        especializadas según programación.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sede Monterrey -->
+                <div class="tab-pane fade" id="monterrey" role="tabpanel" aria-labelledby="monterrey-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.195612345!2d-75.571234!3d6.210456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ3JhLiA0OCAjMTAtNDUs Piso 2, Local 232!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Monterrey Hayeshi (Lan Hua Sur)</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cra. 48
+                        #10-45, Piso 2, Local 232.</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> Estación Poblado
+                        del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Horarios
+                        específicos de Clase General de Wushu (Grupo Sur).</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sede Haru No Hinata -->
+                <div class="tab-pane fade" id="haru" role="tabpanel" aria-labelledby="haru-tab">
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <div class="ratio ratio-4x3 rounded overflow-hidden border border-secondary">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.350123!2d-75.580123!3d6.190123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ3JhIDQ4QSAjMTYgc3VyIC0gMDEsIFBpc28gMQ!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-start">
+                      <h4 class="h5 text-warning fw-bold mb-3">Sede Haru No Hinata (Lan Hua Sur)</h4>
+                      <p class="text-light small mb-2"><i class="fas fa-map-marker-alt text-warning me-2"></i> Cra 48A
+                        #16 sur - 01, Piso 1</p>
+                      <p class="text-light small mb-3"><i class="fas fa-subway text-warning me-2"></i> Cerca de Estación
+                        La Aguacatala del Metro.</p>
+                      <p class="text-light small mb-0"><i class="fas fa-clock text-warning me-2"></i> Clases según
+                        programación de la sede sur.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+  <script type="module">
+    import { loadFooter } from '../../shared/components/Footer/Footer.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFooter();
+    });
+  </script>
+
+  <script src="contact.js" type="module"></script>
+</body>
+
+</html>
