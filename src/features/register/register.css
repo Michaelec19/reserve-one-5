@@ -52,13 +52,12 @@
 .btn-submit-custom:hover {
   background-color: #e0a711;
 }
-/* Enlace "Inicia Sesión" en rojo */
 .link-custom {
-  color: #dc3545 !important; /* Rojo principal */
+  color: #dc3545 !important; 
   transition: color 0.2s ease;
 }
 
 .link-custom:hover {
-  color: #bb2d3b !important; /* Rojo un poco más oscuro al pasar el mouse */
+  color: #bb2d3b !important; 
   text-decoration: underline !important;
 }
