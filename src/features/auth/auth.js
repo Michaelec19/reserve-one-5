@@ -1,40 +1,48 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash
+  if (hash) {
+    const triggerEl = document.querySelector(`button[data-bs-target="${hash}"]`)
+    if (triggerEl) {
+      const tab = new bootstrap.Tab(triggerEl)
+      tab.show()
+    }
+  }
 
-  const toggleButtons = document.querySelectorAll(".toggle-password");
+  const toggleButtons = document.querySelectorAll('.toggle-password')
   toggleButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      const targetId = this.getAttribute("data-target");
-      const inputElement = document.getElementById(targetId);
-      const icon = this.querySelector("i");
+    button.addEventListener('click', function () {
+      const targetId = this.getAttribute('data-target')
+      const inputElement = document.getElementById(targetId)
+      const icon = this.querySelector('i')
 
-      if (inputElement.type === "password") {
-        inputElement.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+      if (inputElement.type === 'password') {
+        inputElement.type = 'text';
+        icon.classList.remove('fa-eye')
+        icon.classList.add('fa-eye-slash')
       } else {
-        inputElement.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        inputElement.type = 'password';
+        icon.classList.remove('fa-eye-slash')
+        icon.classList.add('fa-eye')
       }
-    });
-  });
+    })
+  })
 
-  const loginForm = document.getElementById("loginForm");
+  const loginForm = document.getElementById('loginForm')
   if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault()
 
-      const email = document.getElementById("loginCorreo").value;
-      const password = document.getElementById("loginPassword").value;
-      const btn = loginForm.querySelector('button[type="submit"]');
-      const spinner = document.getElementById("loginSpinner");
+      const email = document.getElementById('loginCorreo').value
+      const password = document.getElementById('loginPassword').value
+      const btn = loginForm.querySelector('button[type="submit"]')
+      const spinner = document.getElementById('loginSpinner')
 
-      spinner.classList.remove("d-none");
-      btn.disabled = true;
+      spinner.classList.remove('d-none')
+      btn.disabled = true
 
       setTimeout(() => {
-        spinner.classList.add("d-none");
-        btn.disabled = false;
+        spinner.classList.add('d-none')
+        btn.disabled = false
 
         Swal.fire({
           icon: 'success',
@@ -44,20 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
           background: '#212529',
           color: '#fff'
         }).then(() => {
-        });
-      }, 1500);
-    });
+        })
+      }, 1500)
+    })
   }
 
-  const registerForm = document.getElementById("registerForm");
+  const registerForm = document.getElementById('registerForm')
   if (registerForm) {
-    registerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault()
 
-      const nombre = document.getElementById("regNombre").value;
-      const correo = document.getElementById("regCorreo").value;
-      const password = document.getElementById("regPassword").value;
-      const confirmPassword = document.getElementById("regConfirmPassword").value;
+      const nombre = document.getElementById('regNombre').value
+      const correo = document.getElementById('regCorreo').value
+      const password = document.getElementById('regPassword').value
+      const confirmPassword = document.getElementById('regConfirmPassword').value
 
       if (password !== confirmPassword) {
         Swal.fire({
@@ -67,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
           confirmButtonColor: '#f2be22',
           background: '#212529',
           color: '#fff'
-        });
+        })
         return;
       }
 
@@ -79,19 +87,19 @@ document.addEventListener("DOMContentLoaded", () => {
           confirmButtonColor: '#f2be22',
           background: '#212529',
           color: '#fff'
-        });
+        })
         return;
       }
 
-      const btn = registerForm.querySelector('button[type="submit"]');
-      const spinner = document.getElementById("registerSpinner");
+      const btn = registerForm.querySelector('button[type="submit"]')
+      const spinner = document.getElementById('registerSpinner')
 
-      spinner.classList.remove("d-none");
-      btn.disabled = true;
+      spinner.classList.remove('d-none')
+      btn.disabled = true
 
       setTimeout(() => {
-        spinner.classList.add("d-none");
-        btn.disabled = false;
+        spinner.classList.add('d-none')
+        btn.disabled = false
 
         Swal.fire({
           icon: 'success',
@@ -101,11 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
           background: '#212529',
           color: '#fff'
         }).then(() => {
-          registerForm.reset();
-          const loginTab = new bootstrap.Tab(document.getElementById('login-tab'));
-          loginTab.show();
-        });
-      }, 1500);
-    });
+          registerForm.reset()
+          const loginTab = new bootstrap.Tab(document.getElementById('login-tab'))
+          loginTab.show()
+        })
+      }, 1500)
+    })
   }
-});
+})
