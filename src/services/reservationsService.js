@@ -1,21 +1,45 @@
 /* eslint-disable no-undef */
 const LOCALSTORAGE_KEY = 'lanhua_reservations'
+const SESSION_KEY = 'lanhua_session'
+
+const getCurrentUserId = () => {
+  const session = localStorage.getItem(SESSION_KEY)
+  if (!session) return null
+  return JSON.parse(session).id
+}
+
+const getAllReservations = () => {
+  const savedData = localStorage.getItem(LOCALSTORAGE_KEY)
+  return savedData ? JSON.parse(savedData) : []
+}
+
+const saveAllReservations = (reservations) => {
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(reservations))
+}
 
 const getReservations = () => {
-  const savedData = localStorage.getItem(LOCALSTORAGE_KEY)
+  const userId = getCurrentUserId()
+  if (!userId) return []
 
-  if (!savedData) {
-    return []
-  }
-
-  return JSON.parse(savedData)
+  const allReservations = getAllReservations()
+  return allReservations.filter(reservation => reservation.userId === userId)
 }
 
 const addReservation = (classItem) => {
-  const reservations = getReservations()
+  const userId = getCurrentUserId()
 
-  // Verificar si la clase ya está reservada
-  const isAlreadyReserved = reservations.some(reservation => reservation.id === classItem.id)
+  if (!userId) {
+    return {
+      success: false,
+      message: 'Debes iniciar sesión para reservar una clase'
+    }
+  }
+
+  const allReservations = getAllReservations()
+
+  const isAlreadyReserved = allReservations.some(
+    reservation => reservation.id === classItem.id && reservation.userId === userId
+  )
 
   if (isAlreadyReserved) {
     return {
@@ -24,14 +48,14 @@ const addReservation = (classItem) => {
     }
   }
 
-  // Agregar la nueva reserva
   const newReservation = {
     ...classItem,
+    userId,
     reservedAt: new Date().toISOString()
   }
 
-  reservations.push(newReservation)
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(reservations))
+  allReservations.push(newReservation)
+  saveAllReservations(allReservations)
 
   return {
     success: true,
@@ -40,13 +64,31 @@ const addReservation = (classItem) => {
 }
 
 const removeReservation = (classId) => {
-  const reservations = getReservations()
-  const updatedReservations = reservations.filter(reservation => reservation.id !== classId)
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(updatedReservations))
+  const userId = getCurrentUserId()
+  if (!userId) return
+
+  const allReservations = getAllReservations()
+
+  const updatedReservations = allReservations.filter(
+    reservation => !(reservation.id === classId && reservation.userId === userId)
+  )
+
+  saveAllReservations(updatedReservations)
+}
+
+const removeAllReservations = () => {
+  const userId = getCurrentUserId()
+  if (!userId) return
+
+  const allReservations = getAllReservations()
+  const updatedReservations = allReservations.filter(reservation => reservation.userId !== userId)
+
+  saveAllReservations(updatedReservations)
 }
 
 export const reservationsService = {
   getReservations,
   addReservation,
-  removeReservation
+  removeReservation,
+  removeAllReservations
 }

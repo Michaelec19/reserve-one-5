@@ -83,6 +83,11 @@ const getClasses = () => {
   return JSON.parse(savedData)
 }
 
+const saveClasses = (classes) => {
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(classes))
+}
+
 export const classesService = {
-  getClasses
+  getClasses,
+  saveClasses
 }

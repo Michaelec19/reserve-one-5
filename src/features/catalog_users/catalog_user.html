@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="../dashboard/components/ScheduleCard/ScheduleCard.css">
   <link rel="stylesheet" href="../../shared/components/Alert/Alert.css">
   <link rel="stylesheet" href="catalog_user.css">
+  <link rel="stylesheet" href="../../shared/components/UserMenu/UserMenu.css">
+
 </head>
 
 <body>
@@ -70,17 +72,15 @@
           </ul>
 
           <div class="d-flex flex-column flex-lg-row gap-3">
+
             <a class="nav-item" href="catalog_user.html">
               <button class="btnBooking w-100">
                 Reserva tu Clase
               </button>
             </a>
 
-            <a href="/src/features/auth/auth.html" class="flex-fill">
-              <button class="btnLogin w-100">
-                Ingresar
-              </button>
-            </a>
+            <div class="flex-fill" id="authNavContainer"></div>
+
           </div>
         </div>
 
@@ -111,8 +111,13 @@
 
   <script type="module">
     import { loadFooter } from '../../shared/components/Footer/Footer.js';
+    import { initAuthNav } from '../../shared/js/authNav.js';
+    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
+
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
+      initAuthNav();
+      loadUserMenu();
     });
   </script>
 

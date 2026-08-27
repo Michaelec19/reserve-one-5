@@ -1,0 +1,115 @@
+.auth-nav-slot {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 992px) {
+  .auth-nav-slot {
+    justify-content: flex-start;
+  }
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: auto;
+  padding: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.user-chip__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--surface-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-chip__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-chip__name {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.user-chip__chevron {
+  margin-left: auto;
+  color: var(--text-color);
+  opacity: .5;
+  transition: transform .15s ease;
+}
+
+.user-chip[aria-expanded="true"] .user-chip__chevron {
+  transform: rotate(180deg);
+}
+
+.user-menu-panel {
+  min-width: 220px;
+  padding: 8px;
+  background: var(--background-color);
+  border: 1px solid var(--surface-color);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .12);
+  margin-top: 8px !important;
+}
+
+.user-menu-panel__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: .9rem;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background-color .12s ease;
+}
+
+.user-menu-panel__item:hover {
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+.user-menu-panel__item svg {
+  flex-shrink: 0;
+  opacity: .7;
+}
+
+.user-menu-panel__item--danger {
+  color: var(--primary-color);
+}
+
+.user-menu-panel__item--danger:hover {
+  background: rgba(220, 38, 38, .08);
+}
+
+.user-menu-panel__divider {
+  margin: 6px 4px;
+  border: none;
+  border-top: 1px solid var(--surface-color);
+}
+
+.user-chip:hover .user-chip__name,
+.user-chip:hover .user-chip__chevron {
+  color: var(--primary-color);
+}

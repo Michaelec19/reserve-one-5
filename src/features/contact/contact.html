@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="../../shared/css/variables.css">
   <link rel="stylesheet" href="contact.css">
   <link rel="stylesheet" href="../../shared/components/Header/Header.css">
+  <link rel="stylesheet" href="../../shared/components/UserMenu/UserMenu.css">
 </head>
 
 <body class="bg-dark text-white">
@@ -77,8 +78,13 @@
             </a>
           </div>
         </div>
+        <div class="flex-fill" id="authNavContainer"></div>
+    </div>
 
-      </nav>
+    </div>
+    </div>
+
+    </nav>
     </div>
   </header>
 
@@ -340,8 +346,13 @@
 
   <script type="module">
     import { loadFooter } from '../../shared/components/Footer/Footer.js';
+    import { initAuthNav } from '../../shared/js/authNav.js';
+    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
+
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
+      initAuthNav();
+      loadUserMenu();
     });
   </script>
 
