@@ -88,7 +88,7 @@ const setupEventListeners = () => {
           }
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '../../auth/login.html'
+            window.location.href = '../../register/register.html'
           }
         })
         return
