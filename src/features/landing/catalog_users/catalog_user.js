@@ -19,7 +19,7 @@ const getClasses = async () => {
 const renderFilter = () => {
   const container = document.querySelector('#mainContainer')
   if (!container) return
-  
+
   const filterContainer = document.createElement('div')
   filterContainer.innerHTML = Filter()
   container.insertBefore(filterContainer, container.querySelector('#disciplinesContainer'))
@@ -88,7 +88,7 @@ const setupEventListeners = () => {
           }
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '../../register/register.html'
+            window.location.href = '../../auth/auth.html'
           }
         })
         return

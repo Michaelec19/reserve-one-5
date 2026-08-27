@@ -16,11 +16,9 @@ html {
 .contact {
   background-color: rgb(7, 7, 6);
 }
-/* ==========================================
-   SECCIÓN NUESTROS PROGRAMAS
-   ========================================== */
+
 .programas-section {
-  background-color: #F4F4F4; /* Fondo gris muy claro */
+  background-color: #F4F4F4;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -39,7 +37,8 @@ html {
 }
 
 .link-ver-todos {
-  color: #B82835; /* Rojo vino / carmesí */
+  color: #B82835;
+  /* Rojo vino / carmesí */
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
@@ -75,12 +74,10 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 0%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.1) 100%);
   border-radius: 16px;
 }
 
@@ -95,12 +92,14 @@ html {
 }
 
 .badge-principiante {
-  background-color: #C02938; /* Rojo Carmesí */
+  background-color: #C02938;
+  /* Rojo Carmesí */
   color: #FFFFFF;
 }
 
 .badge-intermedio {
-  background-color: #7D5C06; /* Mostaza / Marrón dorado */
+  background-color: #7D5C06;
+  /* Mostaza / Marrón dorado */
   color: #FFFFFF;
 }
 
@@ -114,19 +113,35 @@ html {
   font-size: 0.85rem;
   opacity: 0.85;
 }
+
 html {
   scroll-behavior: smooth;
 }
 
 /* Si tienes una navbar fija en la parte superior, evita que tape el inicio de la sección */
 section {
-  scroll-margin-top: 80px; 
+  scroll-margin-top: 80px;
 }
 
 /** ----- Inicio Hero ----- */
+.hero {
+  height: calc(100vh - 80px);
+  min-height: 500px;
+  position: relative;
+}
+
+.hero-carousel,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+  width: 100%;
+}
+
 .carousel-item img {
-  height: 800px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .hero-overlay {
@@ -198,5 +213,3 @@ section {
   gap: 1rem;
   flex-wrap: wrap;
 }
-
-/** ----- Fin Hero ----- */

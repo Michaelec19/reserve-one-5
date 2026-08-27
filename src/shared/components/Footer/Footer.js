@@ -1,8 +1,8 @@
 export function loadFooter() {
-    const footerContainer = document.getElementById("footer-container");
-    if (!footerContainer) return;
+  const footerContainer = document.getElementById('footer-container')
+  if (!footerContainer) return
 
-    footerContainer.innerHTML = `
+  footerContainer.innerHTML = `
         <footer class="text-white py-5" style="background-color: #BF2A37; border-top: 4px solid #F2BE22; font-family: 'Inter', sans-serif;">
             <div class="container">
                 <div class="row g-4 justify-content-between align-items-start">
@@ -29,8 +29,8 @@ export function loadFooter() {
                             <li class="mb-2"><a href="/src/features/landing/about/about.html" class="text-decoration-none text-white opacity-90">Nosotros</a></li>
                             <li class="mb-2"><a href="/src/features/landing/contact/contact.html" class="text-decoration-none text-white opacity-90">Contacto</a></li>
                             <li class="mb-2"><a href="/src/features/landing/contact/contact.html#ubicacion" class="text-decoration-none text-white opacity-90">Sedes</a></li>
-                            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Login</a></li>
-                            <li class="mb-2"><a href="#" class="text-decoration-none text-white opacity-90">Registro</a></li>
+                            <li class="mb-2"><a href="/src/features/auth/auth.html" class="text-decoration-none text-white opacity-90">Login</a></li>
+                            <li class="mb-2"><a href="/src/features/auth/auth.html#register" class="text-decoration-none text-white opacity-90">Registro</a></li>
                         </ul>
                     </div>
 
@@ -57,5 +57,5 @@ export function loadFooter() {
                 </div>
             </div>
         </footer>
-    `;
+    `
 }
