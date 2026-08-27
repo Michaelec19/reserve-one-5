@@ -78,8 +78,8 @@
               </button>
             </a>
 
-            <a href="/src/features/auth/auth.html" class="flex-fill">
-              <button class="btnLogin w-100">
+            <a href="/src/features/auth/auth.html" class="flex-fill" id="authNavLink">
+              <button class="btnLogin w-100" id="authNavBtn">
                 Ingresar
               </button>
             </a>
@@ -139,8 +139,11 @@
 
   <script type="module">
     import { loadFooter } from '../../shared/components/Footer/Footer.js';
+    import { initAuthNav } from '../../shared/js/authNav.js';
+
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
+      initAuthNav();
     });
   </script>
 
