@@ -1,19 +1,39 @@
+const SESSION_KEY = 'lanhua_session'
+
+const getSession = () => {
+  try {
+    return JSON.parse(window.localStorage.getItem(SESSION_KEY))
+  } catch {
+    return null
+  }
+}
+
+const logout = () => {
+  window.localStorage.removeItem(SESSION_KEY)
+  window.location.href = '/src/index.html'
+}
+
 export const initAuthNav = () => {
-  const session = JSON.parse(window.localStorage.getItem('lanhua_session'))
+  const session = getSession()
 
   const authLink = document.getElementById('authNavLink')
-  const authBtn = document.getElementById('authNavBtn')
+  const userMenu = document.getElementById('userMenu')
+  const userMenuName = document.getElementById('userMenuName')
+  const logoutBtn = document.getElementById('logoutBtn')
 
-  if (!authLink || !authBtn) return
+  if (!authLink || !userMenu) return
 
-  if (session) {
-    authBtn.textContent = 'Cerrar Sesión'
-    authLink.setAttribute('href', '#')
+  const isLoggedIn = Boolean(session)
 
-    authLink.addEventListener('click', (e) => {
+  authLink.classList.toggle('d-none', isLoggedIn)
+  userMenu.classList.toggle('d-none', !isLoggedIn)
+
+  if (isLoggedIn) {
+    userMenuName.textContent = session.nombre || session.name || session.email || 'Mi cuenta'
+
+    logoutBtn?.addEventListener('click', (e) => {
       e.preventDefault()
-      window.localStorage.removeItem('lanhua_session')
-      window.location.href = '/src/index.html'
+      logout()
     })
   }
 }
