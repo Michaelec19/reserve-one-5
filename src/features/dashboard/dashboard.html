@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   <link rel="stylesheet" href="../../shared/css/reset.css">
   <link rel="stylesheet" href="../../shared/css/variables.css">
   <link rel="stylesheet" href="../../shared/components/Header/Header.css">
@@ -69,11 +69,12 @@
 
   <main>
     <div class="container">
-      <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mt-4 dashboardHeader">
+      <div
+        class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mt-4 dashboardHeader">
         <div>
           <h1 class="h2 mb-1">Horarios Disponibles</h1>
           <p class="fst-italic small text-muted mb-0">
-            Crea, organiza y administra las clases del Club LAN HUA de forma sencilla.
+            Crea, organiza y administra las clases del Club LanHua de forma sencilla.
           </p>
         </div>
         <button class="btnAddSchedule" id="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -84,14 +85,14 @@
 
       <section class="mt-5">
         <h3 class="section-title border-bottom pb-2 mb-3">Clases Grupales</h3>
-        <div class="cards row g-4" id="schedules-grupal"> 
+        <div class="cards row g-4" id="schedules-grupal">
           <!-- JS inyectará las clases grupales aquí -->
         </div>
       </section>
 
       <section class="mt-5 mb-5">
         <h3 class="section-title border-bottom pb-2 mb-3">Clases Individuales</h3>
-        <div class="cards row g-4" id="schedules-individual"> 
+        <div class="cards row g-4" id="schedules-individual">
         </div>
       </section>
 
@@ -108,4 +109,5 @@
   <script src="dashboard.js" type="module"></script>
 
 </body>
+
 </html>
