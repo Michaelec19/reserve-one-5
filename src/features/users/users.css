@@ -1,0 +1,42 @@
+.profile-management-area .card {
+  border-radius: 12px;
+}
+
+.profile-avatar-section .avatar-preview-wrapper {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-avatar-section .avatar-upload-badge {
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  right: 5px;
+  bottom: 5px;
+}
+
+.profile-avatar-section .avatar-upload-badge:hover {
+  transform: scale(1.1);
+  background-color: #dcb020 !important;
+}
+
+.document-upload-card {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border: 2px dashed #dee2e6 !important;
+}
+
+.document-upload-card:hover {
+  border-color: #F2BE22 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.profile-management-area .form-control:focus,
+.profile-management-area .form-select:focus {
+  border-color: #F2BE22;
+  box-shadow: 0 0 0 0.25rem rgba(242, 190, 34, 0.25);
+}
