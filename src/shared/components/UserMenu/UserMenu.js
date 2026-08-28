@@ -3,6 +3,7 @@ const DEFAULT_AVATAR = '/src/assets/default-avatar.png'
 const LOGIN_URL = '/src/features/auth/auth.html'
 const LOGOUT_REDIRECT = '/src/index.html'
 const RESERVATIONS_URL = '/src/features/reservations/reservations.html'
+const PROFILE_URL = '/src/features/users/users.html'
 
 const getSession = () => {
   try {
@@ -50,6 +51,15 @@ const template = (session) => {
           </svg>
           Mis reservas
         </a></li>
+
+        <li><a class="user-menu-panel__item" href="${PROFILE_URL}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Mi Perfil
+        </a></li>
+
         <li><hr class="user-menu-panel__divider"></li>
         <li><a class="user-menu-panel__item user-menu-panel__item--danger" href="#" id="logoutBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">

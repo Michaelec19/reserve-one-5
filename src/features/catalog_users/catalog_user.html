@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="../../shared/components/Alert/Alert.css">
   <link rel="stylesheet" href="catalog_user.css">
   <link rel="stylesheet" href="../../shared/components/UserMenu/UserMenu.css">
+  <link rel="stylesheet" href="../../shared/components/WarningUpdate/WarningUpdate.css">
 
 </head>
 
@@ -62,7 +63,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/src/features/pricing/princing.html">Precios</a>
+              <a class="nav-link" href="/src/features/pricing/pricing.html">Precios</a>
             </li>
 
             <li class="nav-item">
@@ -113,11 +114,13 @@
     import { loadFooter } from '../../shared/components/Footer/Footer.js';
     import { initAuthNav } from '../../shared/js/authNav.js';
     import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
+    import { initWarningUpdate } from '../../shared/components/WarningUpdate/WarningUpdate.js';
 
     document.addEventListener("DOMContentLoaded", () => {
       loadFooter();
       initAuthNav();
       loadUserMenu();
+      initWarningUpdate();
     });
   </script>
 
