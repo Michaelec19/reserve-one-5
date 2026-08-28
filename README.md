@@ -1,5 +1,22 @@
 # Reserve-One - Booking System for Club Lan Hua
 
+
+## Cómo probar la aplicación
+
+Para explorar el sistema y probar las diferentes vistas según el rol, dirígete a la ruta de inicio de sesión:
+`src/features/auth/auth.html`
+
+### Probar como Administrador
+Si deseas explorar las vistas y herramientas de administración sin necesidad de registrarte, puedes utilizar las siguientes credenciales provisionales preconfiguradas:
+* **Correo electrónico:** `admin@lanhua.com`
+* **Contraseña:** `Admin1234`
+
+### Probar como Usuario Regular (Estudiante / Cliente)
+Para probar la experiencia de un usuario común y el sistema de reservas:
+1. Haz clic en la opción **"Crear Cuenta"** y completa el formulario de registro con tus datos.
+2. Una vez registrado, ve a la sección de **"Ingresar"**.
+3. Inicia sesión normalmente con el correo y la contraseña que acabas de crear para acceder al catálogo, configurar tu perfil y gestionar tus reservas."
+
 ## Project Context
 
 **Club Deportivo Lan Hua** is a Chinese martial arts school located in Medellín, Colombia, specializing in:

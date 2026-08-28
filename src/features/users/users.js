@@ -1,12 +1,45 @@
 const USERS_COLLECTION = 'lanhua_users'
 const CURRENT_SESSION = 'lanhua_session'
 
+const seedDefaultAdmin = () => {
+  const USERS_KEY = 'lanhua_users'
+  const users = JSON.parse(localStorage.getItem(USERS_KEY)) || []
+
+  const defaultAdminEmail = 'admin@lanhua.com'
+  const adminExists = users.some(u => u.email === defaultAdminEmail)
+
+  if (!adminExists) {
+    const provisionalAdmin = {
+      id: 'admin-provisional-01',
+      nombre: 'Administrador',
+      apellidos: 'Sistema Lan Hua',
+      email: defaultAdminEmail,
+      password: 'Admin1234',
+      role: 'admin',
+      documento: '1000000000',
+      direccion: 'Sede Principal Laureles',
+      telefono: '3130000000',
+      contactoEmergenciaNombre: 'Soporte Técnico',
+      contactoEmergenciaParentesco: 'Sistema',
+      contactoEmergenciaTelefono: '3130000000',
+      eps: 'Sura',
+      rh: 'O+',
+      condicionesMedicas: 'Ninguna',
+      createdAt: new Date().toISOString()
+    }
+
+    users.push(provisionalAdmin)
+    localStorage.setItem(USERS_KEY, JSON.stringify(users))
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  seedDefaultAdmin()
   const currentSessionData = JSON.parse(localStorage.getItem(CURRENT_SESSION))
 
   if (!currentSessionData) {
     window.location.href = '../auth/auth.html'
-    return;
+    return
   }
 
   const clientHeaderNode = document.getElementById('clientHeader')
@@ -60,7 +93,7 @@ function handleAvatarPreview(event) {
     const reader = new FileReader()
     reader.onload = function (e) {
       document.getElementById('avatarPreview').src = e.target.result
-    };
+    }
     reader.readAsDataURL(file)
   }
 }
@@ -71,7 +104,7 @@ function saveProfileConfiguration(session) {
 
   if (userIndex === -1) {
     Swal.fire('Error', 'Usuario no encontrado en la base de datos.', 'error')
-    return;
+    return
   }
 
   const updatedUser = {
@@ -91,7 +124,6 @@ function saveProfileConfiguration(session) {
     condicionesMedicas: document.getElementById('textareaMedicalConditions').value.trim(),
     fotoPerfil: document.getElementById('avatarPreview').src
   }
-
 
   allUsers[userIndex] = updatedUser
   localStorage.setItem(USERS_COLLECTION, JSON.stringify(allUsers))
@@ -118,4 +150,3 @@ function setupAdminLogout() {
     })
   }
 }
-
