@@ -49,6 +49,15 @@ export const ScheduleModal = (schedule = null) => {
               </select>
             </div>
             <div class="mb-3">
+              <label for="professor" class="form-label fw-semibold small">Profesor Asignado</label>
+              <select class="form-select" id="professor" name="professor" required>
+                <option value="" selected disabled>Selecciona un profesor</option>
+                <option value="Ronald Infante Calle">Ronald Infante Calle</option>
+                <option value="Santiago Castrillón Rojo">Santiago Castrillón Rojo</option>
+                <option value="Profesor Suplente">Profesor Suplente</option>
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="image" class="form-label fw-semibold small">Imagen</label>
               <input
                 type="file"
