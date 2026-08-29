@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { classesService } from '../../services/classesService.js'
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { setMinDateToday } from '../../shared/js/dateUtils.js'
@@ -22,7 +21,6 @@ const deleteClass = (id) => {
   renderClasses()
 }
 
-// renders
 const renderModalContentForm = () => {
   const modal = document.querySelector('#staticBackdrop')
   modal.innerHTML = ScheduleModal()
@@ -34,7 +32,6 @@ const renderClasses = () => {
   const grupalContainer = document.querySelector('#schedules-grupal')
   const individualContainer = document.querySelector('#schedules-individual')
 
-  // Limpiamos ambos contenedores antes de renderizar
   grupalContainer.innerHTML = ''
   individualContainer.innerHTML = ''
 
@@ -65,7 +62,6 @@ const renderClasses = () => {
   }
 }
 
-// form: create / edit / reset
 const resetFormState = () => {
   form.reset()
   delete form.dataset.editId
@@ -83,13 +79,13 @@ const fillFormForEdit = (classToEdit, classId) => {
   form.level.value = classToEdit.level.toLowerCase()
   form.capacity.value = classToEdit.capacity
   form.location.value = classToEdit.location
+  form.professor.value = classToEdit.professor || ''
 
   const [dateStr, timeStr] = classToEdit.date.split('T')
   form.date.value = dateStr
   form.time.value = timeStr
   form.dataset.editId = classId
 
-  // Imagen opcional en modo edición
   form.image.required = false
   document.querySelector('#imageHelpText').classList.remove('d-none')
 
@@ -132,6 +128,7 @@ const handleSubmitSchedule = () => {
           dateText: `${schedule.date} — ${schedule.time}`,
           location: schedule.location,
           modality: schedule.modality,
+          professor: schedule.professor,
           image
         }
 
@@ -159,6 +156,7 @@ const handleSubmitSchedule = () => {
         dateText: `${schedule.date} — ${schedule.time}`,
         location: schedule.location,
         modality: schedule.modality,
+        professor: schedule.professor,
         image
       }
 
@@ -192,14 +190,13 @@ const validateForm = () => {
   })
 }
 
-// listeners
 const setupModalReset = () => {
   const modalElement = document.querySelector('#staticBackdrop')
   modalElement.addEventListener('hidden.bs.modal', resetFormState)
 }
 
 const setupEventListeners = () => {
-  const cardsContainers = document.querySelectorAll('.cards') // Selecciona ambos contenedores
+  const cardsContainers = document.querySelectorAll('.cards')
 
   cardsContainers.forEach(container => {
     container.addEventListener('click', (event) => {
@@ -231,7 +228,6 @@ const setupEventListeners = () => {
   })
 }
 
-// init
 renderModalContentForm()
 
 const form = document.querySelector('#scheduleForm')

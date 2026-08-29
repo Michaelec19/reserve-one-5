@@ -36,6 +36,11 @@ export const ScheduleCard = (classItem) => {
           </div>
         </div>
 
+        <div class="class-item d-flex align-items-center gap-2 text-warning mt-1">
+            <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
+            <span class="small fw-semibold">Profesor: ${classItem.professor || 'Sin asignar'}</span>
+        </div>
+
         <hr class="my-2 opacity-25">
 
         <div class="d-flex justify-content-end gap-2">

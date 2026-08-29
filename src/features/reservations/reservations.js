@@ -12,7 +12,7 @@ function renderizarReservas() {
 
   if (!contenedor) return
 
-  const misReservas = reservationsService.getReservations()
+  const misReservas = reservationsService.getPendingReservations()
   contenedor.innerHTML = ''
 
   if (misReservas.length === 0) {
@@ -140,17 +140,22 @@ function confirmarReservas() {
     title: '¡Reservas confirmadas!',
     text: '¡Tus reservas han sido registradas con éxito en el sistema del club!',
     icon: 'success',
-    confirmButtonText: 'Entendido',
+    confirmButtonText: 'Ir a Mi Agenda',
+    showCancelButton: true,
+    cancelButtonText: 'Seguir aquí',
     customClass: {
-      confirmButton: 'btn btn-success px-4'
+      confirmButton: 'btn btn-success px-4',
+      cancelButton: 'btn btn-secondary px-4'
     }
-  }).then(() => {
-    reservationsService.removeAllReservations()
+  }).then((result) => {
+    reservationsService.confirmUserReservations()
     renderizarReservas()
+    if (result.isConfirmed) {
+      window.location.href = '../daylie/daylie.html';
+    }
   })
 }
 
-// Exponer funciones al objeto window para que puedan ser llamadas desde HTML
 window.eliminarItem = eliminarItem
 window.vaciarReservas = vaciarReservas
 window.confirmarReservas = confirmarReservas
