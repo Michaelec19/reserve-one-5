@@ -8,12 +8,17 @@ const getSession = () => {
   }
 }
 
+const showBody = () => {
+  document.body.style.visibility = 'visible'
+}
+
 export const requireAuth = () => {
   const session = getSession()
   if (!session) {
     window.location.href = '/src/features/auth/auth.html'
     return false
   }
+  showBody()
   return true
 }
 
@@ -24,18 +29,10 @@ export const requireAdmin = () => {
     return false
   }
   if (session.role !== 'admin') {
-    Swal.fire({
-      icon: 'error',
-      title: 'Acceso Denegado',
-      text: 'No tienes permisos para acceder a esta sección.',
-      confirmButtonColor: '#f2be22',
-      background: '#212529',
-      color: '#fff'
-    }).then(() => {
-      window.location.href = '/src/index.html'
-    })
+    window.location.href = '/src/index.html'
     return false
   }
+  showBody()
   return true
 }
 
@@ -45,6 +42,7 @@ export const redirectIfAdmin = () => {
     window.location.href = '/src/features/dashboard/dashboard.html'
     return true
   }
+  showBody()
   return false
 }
 
@@ -54,5 +52,6 @@ export const redirectIfNotAdmin = () => {
     window.location.href = '/src/features/catalog_users/catalog_user.html'
     return true
   }
+  showBody()
   return false
 }
