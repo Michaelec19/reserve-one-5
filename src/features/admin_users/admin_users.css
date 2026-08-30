@@ -1,0 +1,47 @@
+.table-column {
+  background-color: #edeff2 !important;
+}
+
+.btnAddSchedule {
+  background: var(--primary-color);
+  color: white !important;
+  padding: 0.5rem 1.6rem;
+  border-radius: 8px;
+  border: none;
+  border: 1px solid transparent;
+}
+
+.btnAddSchedule:hover {
+  background: var(--primary-color);
+  transform: scale(1.01);
+  background-color: white;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color);
+}
+
+.table-soft-border {
+  border-collapse: collapse;
+}
+
+.table-soft-border th,
+.table-soft-border td {
+  border: 1px solid #dddfe2;
+}
+
+.btnEditUser {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  background-color: #fff;
+  color: #6c757d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.btnEditUser:hover {
+  background-color: #f1f3f5;
+  color: #212529;
+}

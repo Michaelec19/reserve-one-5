@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault()
 
       const nombre = document.getElementById('regNombre').value.trim()
+      const apellido = document.getElementById('regApellido').value.trim()
       const correo = document.getElementById('regCorreo').value.trim().toLowerCase()
       const password = document.getElementById('regPassword').value
       const confirmPassword = document.getElementById('regConfirmPassword').value
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newUser = {
           id: crypto.randomUUID(),
           nombre,
+          apellido,
           email: correo,
           password,
           role: 'user',

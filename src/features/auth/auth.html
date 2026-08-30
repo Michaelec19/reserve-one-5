@@ -100,10 +100,17 @@
             <p class="small text-secondary mb-0">Comienza tu camino marcial hoy</p>
           </div>
           <form id="registerForm">
-            <div class="mb-3">
-              <label for="regNombre" class="form-label small text-warning">Nombre completo</label>
-              <input type="text" class="form-control bg-secondary text-white border-0" id="regNombre"
-                placeholder="Ej. Sebastian Cardona" required />
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label for="regNombre" class="form-label small text-warning">Nombre</label>
+                <input type="text" class="form-control bg-secondary text-white border-0" id="regNombre"
+                  placeholder="Ej. Sebastian" required />
+              </div>
+              <div class="col-6">
+                <label for="regApellido" class="form-label small text-warning">Apellido</label>
+                <input type="text" class="form-control bg-secondary text-white border-0" id="regApellido"
+                  placeholder="Ej. Cardona" required />
+              </div>
             </div>
             <div class="mb-3">
               <label for="regCorreo" class="form-label small text-warning">Correo electrónico</label>

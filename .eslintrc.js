@@ -1,6 +1,6 @@
 module.exports = {
   extends: 'standard',
   rules: {
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': ['error', 'never']
   }
 }
