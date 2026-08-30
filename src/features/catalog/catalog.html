@@ -36,13 +36,11 @@
             LAN HUA
           </span>
         </a>
-
         <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbar">
+          data-bs-target="#adminNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+        <div class="collapse navbar-collapse justify-content-between" id="adminNavbar">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
               <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
@@ -53,16 +51,20 @@
             </li>
 
             <li class="nav-item">
+              <a class="nav-link" href="../daylie/daylie.html">Agenda</a>
+            </li>
+
+            <li class="nav-item">
               <a class="nav-link" href="../admin_users/admin_users.html">Usuarios</a>
             </li>
 
           </ul>
 
           <div class="d-flex flex-column flex-lg-row gap-3">
-            <div id="authNavContainer"></div>
+            <div class="flex-fill" id="authNavContainerAdmin" style="min-width: 120px; min-height: 40px;"></div>
           </div>
-        </div>
 
+        </div>
       </nav>
     </div>
   </header>
@@ -100,16 +102,11 @@
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
   <script src="catalog.js" type="module"></script>
-  <script type="module">
-    import { loadFooter } from '../../shared/components/Footer/Footer.js';
-    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
-    import { requireAdmin } from '../../shared/js/authGuard.js';
 
+  <script type="module">
+    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
     document.addEventListener("DOMContentLoaded", () => {
-      if (requireAdmin()) {
-        loadFooter();
-        loadUserMenu();
-      }
+      loadUserMenu('authNavContainerAdmin');
     });
   </script>
 </body>
