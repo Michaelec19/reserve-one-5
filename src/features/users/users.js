@@ -12,7 +12,7 @@ const seedDefaultAdmin = () => {
     const provisionalAdmin = {
       id: 'admin-provisional-01',
       nombre: 'Administrador',
-      apellidos: 'Sistema Lan Hua',
+      apellido: 'Sistema Lan Hua',
       email: defaultAdminEmail,
       password: 'Admin1234',
       role: 'admin',
@@ -64,12 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-function populateProfileForm(session) {
+function populateProfileForm (session) {
   const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session
 
   document.getElementById('inputFirstName').value = fullUserData.nombre || ''
-  document.getElementById('inputLastName').value = fullUserData.apellidos || ''
+  document.getElementById('inputLastName').value = fullUserData.apellido || ''
   document.getElementById('inputDocumentId').value = fullUserData.documento || ''
   document.getElementById('inputAddress').value = fullUserData.direccion || ''
   document.getElementById('inputPhone').value = fullUserData.telefono || ''
@@ -87,7 +87,7 @@ function populateProfileForm(session) {
   }
 }
 
-function handleAvatarPreview(event) {
+function handleAvatarPreview (event) {
   const file = event.target.files[0]
   if (file) {
     const reader = new FileReader()
@@ -98,7 +98,7 @@ function handleAvatarPreview(event) {
   }
 }
 
-function saveProfileConfiguration(session) {
+function saveProfileConfiguration (session) {
   const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
   const userIndex = allUsers.findIndex(user => user.id === session.id)
 
@@ -110,7 +110,7 @@ function saveProfileConfiguration(session) {
   const updatedUser = {
     ...allUsers[userIndex],
     nombre: document.getElementById('inputFirstName').value.trim(),
-    apellidos: document.getElementById('inputLastName').value.trim(),
+    apellido: document.getElementById('inputLastName').value.trim(),
     documento: document.getElementById('inputDocumentId').value.trim(),
     direccion: document.getElementById('inputAddress').value.trim(),
     telefono: document.getElementById('inputPhone').value.trim(),
@@ -141,7 +141,7 @@ function saveProfileConfiguration(session) {
   })
 }
 
-function setupAdminLogout() {
+function setupAdminLogout () {
   const adminLogoutBtn = document.getElementById('adminLogoutBtn')
   if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', () => {

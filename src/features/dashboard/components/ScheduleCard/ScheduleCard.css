@@ -2,13 +2,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
+  padding: 16px
 }
 
 .class-card {
   border-color: var(--surface-color) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 12px;
-  padding: 16px
 }
 
 .card-img-top {
