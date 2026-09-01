@@ -28,10 +28,6 @@ export const CatalogItemModal = (item = null) => {
               </select>
             </div>
             <div class="mb-3">
-              <label for="price" class="form-label fw-semibold small">Precio</label>
-              <input type="number" class="form-control" id="price" name="price" placeholder="Ej. 120000" min="0" value="${item?.price ?? ''}" required>
-            </div>
-            <div class="mb-3">
               <label for="image" class="form-label fw-semibold small">Imagen</label>
               <input
                 type="file"

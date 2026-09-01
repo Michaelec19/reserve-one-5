@@ -17,11 +17,6 @@ export const CatalogItemCard = (classItem) => {
 
           <div class="d-flex flex-column gap-2 fs-6">
 
-            <div class="class-item d-flex align-items-center gap-2">
-              <i class="fa-solid fa-cart-shopping"></i>
-              <span>${formatPrice(classItem.price)}</span>
-            </div>
-
           </div>
 
           <div>
