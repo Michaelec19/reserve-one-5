@@ -124,5 +124,7 @@ export const reservationsService = {
   addReservation,
   removeReservation,
   removeAllPendingReservations,
+  removeAllReservations: removeAllPendingReservations,
+  clearPendingReservations: removeAllPendingReservations,
   confirmUserReservations
 }
