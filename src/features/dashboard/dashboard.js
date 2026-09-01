@@ -19,6 +19,14 @@ const deleteClass = (id) => {
 
   setClasses(updatedClasses)
   renderClasses()
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Eliminado',
+    text: 'La clase se eliminó correctamente.',
+    timer: 1500,
+    showConfirmButton: false
+  })
 }
 
 const renderModalContentForm = () => {
@@ -139,7 +147,8 @@ const handleSubmitSchedule = () => {
           icon: 'success',
           title: 'Horario Actualizado',
           text: 'El horario se actualizó correctamente.',
-          confirmButtonText: 'Aceptar'
+          timer: 1500,
+          showConfirmButton: false
         })
       }
     } else {
@@ -168,7 +177,8 @@ const handleSubmitSchedule = () => {
         icon: 'success',
         title: 'Horario agregado',
         text: 'El horario se agregó correctamente.',
-        confirmButtonText: 'Aceptar'
+        timer: 1500,
+        showConfirmButton: false
       })
     }
 
@@ -203,10 +213,22 @@ const setupEventListeners = () => {
       const deleteBtn = event.target.closest('.delete-btn')
       if (deleteBtn) {
         const classId = deleteBtn.getAttribute('data-id')
-        const isConfirmed = confirm('¿Estás seguro de que deseas eliminar esta clase?')
-        if (isConfirmed) {
-          deleteClass(classId)
-        }
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: '¿Estás seguro de que deseas eliminar esta clase?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            confirmButton: 'btn btn-primary px-3',
+            cancelButton: 'btn btn-secondary px-3'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteClass(classId)
+          }
+        })
         return
       }
 

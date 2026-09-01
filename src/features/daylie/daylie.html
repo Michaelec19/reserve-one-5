@@ -20,7 +20,15 @@
   <link rel="stylesheet" href="daylie.css">
 </head>
 
-<body class="bg-dark text-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
+  <script>
+    try {
+      const session = JSON.parse(localStorage.getItem('lanhua_session'))
+      document.body.classList.add(session?.role === 'admin' ? 'agenda-admin' : 'agenda-user')
+    } catch {
+      document.body.classList.add('agenda-user')
+    }
+  </script>
 
   <div id="headerWrapper">
     <header id="clientHeader" class="header sticky-top d-none">
@@ -53,10 +61,10 @@
       </div>
     </header>
 
-    <header id="adminHeader" class="header sticky-top d-none">
+    <header class="header sticky-top d-none" id="adminHeader">
       <div class="container">
         <nav class="navbar navbar-expand-lg px-0">
-          <a class="navbar-brand d-flex align-items-center">
+          <a class="navbar-brand d-flex align-items-center" href="../dashboard/dashboard.html">
             <img src="../../assets/LogoSinFondo.png" class="logo" alt="Logo Lan Hua">
             <span class="ms-2 fw-semibold brand-name">LAN HUA ADMIN</span>
           </a>
@@ -66,13 +74,28 @@
           </button>
           <div class="collapse navbar-collapse justify-content-between" id="adminNavbar">
             <ul class="navbar-nav mx-auto">
-              <li class="nav-item"><a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a></li>
-              <li class="nav-item"><a class="nav-link" href="../catalog/catalog.html">Catalogo</a></li>
-              <li class="nav-item"><a class="nav-link active" href="daylie.html">Agenda</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../catalog/catalog.html">Catálogo</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="daylie.html">Agenda</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../admin_users/admin_users.html">Usuarios</a>
+              </li>
+
             </ul>
+
             <div class="d-flex flex-column flex-lg-row gap-3">
-              <div class="flex-fill" id="authNavContainerAdmin" style="min-width: 120px; min-height: 40px;"></div>
+              <div id="authNavContainerAdmin"></div>
             </div>
+
           </div>
         </nav>
       </div>
@@ -80,15 +103,15 @@
   </div>
 
   <main class="container py-4 flex-grow-1">
-    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3 daylie-header">
       <h2 class="text-warning fw-bold m-0" id="daylieTitle">Mi Agenda de Entrenamiento</h2>
     </div>
 
     <div class="row g-4">
       <div class="col-lg-4 order-2 order-lg-1">
-        <div class="card p-4 shadow-sm border-warning bg-card-custom h-100">
+        <div class="card p-4 shadow-sm border-warning bg-card-custom h-100" id="classesCard">
           <h4 class="text-warning mb-2">Clases del Día</h4>
-          <p class="text-light small mb-3 border-bottom border-secondary pb-2" id="selectedDateText">Selecciona un día
+          <p class="small mb-3 border-bottom pb-2 daylie-subtitle" id="selectedDateText">Selecciona un día
           </p>
 
           <div id="agendaList" class="d-flex flex-column gap-3 overflow-auto" style="max-height: 600px;">
@@ -97,12 +120,12 @@
       </div>
 
       <div class="col-lg-8 order-1 order-lg-2">
-        <div class="card bg-dark border-secondary p-3">
+        <div class="card calendar-panel p-3" id="calendarCard">
 
           <div class="d-flex justify-content-between align-items-center mb-3">
             <button class="btn btn-outline-warning btn-sm" id="prevMonth"><i
                 class="fa-solid fa-chevron-left"></i></button>
-            <h5 class="m-0 fw-bold text-light" id="monthYearDisplay">Mes Año</h5>
+            <h5 class="m-0 fw-bold daylie-month" id="monthYearDisplay">Mes Año</h5>
             <button class="btn btn-outline-warning btn-sm" id="nextMonth"><i
                 class="fa-solid fa-chevron-right"></i></button>
           </div>
@@ -134,9 +157,7 @@
     import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
     import { initWarningUpdate } from '../../shared/components/WarningUpdate/WarningUpdate.js';
 
-    document.addEventListener("DOMContentLoaded", () => {
-      loadFooter();
-
+    document.addEventListener('DOMContentLoaded', () => {
       const session = JSON.parse(localStorage.getItem('lanhua_session'));
       if (session) {
         if (session.role === 'admin') {
@@ -144,9 +165,10 @@
         } else {
           loadUserMenu('authNavContainer');
           initWarningUpdate();
+          loadFooter();
         }
       }
-    });
+    })
   </script>
 
   <script src="daylie.js" type="module"></script>
