@@ -8,7 +8,7 @@ const seedDefaultAdmin = () => {
   const defaultAdminEmail = 'admin@lanhua.com'
   const adminExists = users.some(u => u.email === defaultAdminEmail)
 
-  if (!adminExists) {
+ if (!adminExists) {
     const provisionalAdmin = {
       id: 'admin-provisional-01',
       nombre: 'Administrador',
@@ -25,11 +25,12 @@ const seedDefaultAdmin = () => {
       eps: 'Sura',
       rh: 'O+',
       condicionesMedicas: 'Ninguna',
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      lastEpsUpdateDate: new Date().toISOString().split('T')[0] 
     }
 
     users.push(provisionalAdmin)
-    localStorage.setItem(USERS_KEY, JSON.stringify(users))
+    localStorage.setItem(USERS_COLLECTION, JSON.stringify(users))
   }
 }
 
@@ -46,24 +47,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminHeaderNode = document.getElementById('adminHeader')
 
   if (currentSessionData.role === 'admin') {
-    adminHeaderNode.classList.remove('d-none')
+    adminHeaderNode?.classList.remove('d-none')
     setupAdminLogout()
   } else {
-    clientHeaderNode.classList.remove('d-none')
+    clientHeaderNode?.classList.remove('d-none')
   }
 
   populateProfileForm(currentSessionData)
+  checkEpsCertificateExpiration(currentSessionData)
 
   const imageUploader = document.getElementById('profileImageInput')
-  imageUploader.addEventListener('change', handleAvatarPreview)
+  if (imageUploader) {
+    imageUploader.addEventListener('change', handleAvatarPreview)
+  }
 
   const profileForm = document.getElementById('profileConfigurationForm')
-  profileForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    saveProfileConfiguration(currentSessionData)
-  })
+  if (profileForm) {
+    profileForm.addEventListener('submit', (event) => {
+      event.preventDefault()
+      saveProfileConfiguration(currentSessionData)
+    })
+  }
 })
 
+<<<<<<< HEAD
+function checkEpsCertificateExpiration (session) {
+  const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
+  const fullUserData = allUsers.find(user => user.id === session.id) || session
+
+  if (!fullUserData.lastEpsUpdateDate) return
+
+  const [year, month, day] = fullUserData.lastEpsUpdateDate.split('T')[0].split('-')
+  const lastUpdate = new Date(year, month - 1, day)
+  const currentDate = new Date()
+
+  const diffTime = Math.abs(currentDate - lastUpdate)
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+  if (diffDays >= 90) {
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Certificado de EPS Vencido!',
+      html: 'Han pasado más de 3 meses desde tu última actualización de EPS.<br><br>Por favor <strong>actualiza la fecha y adjunta tu certificado de afiliación vigente</strong>.',
+      confirmButtonText: 'Actualizar Ahora',
+      confirmButtonColor: '#f2be22',
+      background: '#212529',
+      color: '#fff'
+    })
+  }
+}
+
+=======
 const btnCancelUpdates = document.getElementById('btnCancelUpdates')
   if (btnCancelUpdates) {
     btnCancelUpdates.addEventListener('click', () => {
@@ -87,6 +121,7 @@ const btnCancelUpdates = document.getElementById('btnCancelUpdates')
     })
   }
         
+>>>>>>> 63f31a7755b7f9084bf626b9686559352aeaa2bc
 function populateProfileForm (session) {
   const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session
@@ -105,8 +140,15 @@ function populateProfileForm (session) {
   document.getElementById('selectBloodType').value = fullUserData.rh || ''
   document.getElementById('textareaMedicalConditions').value = fullUserData.condicionesMedicas || ''
 
+  const epsDateField = document.getElementById('inputEpsUpdateDate')
+  if (epsDateField) {
+    const rawDate = fullUserData.lastEpsUpdateDate || new Date().toISOString()
+    epsDateField.value = rawDate.split('T')[0]
+  }
+
   if (fullUserData.fotoPerfil) {
-    document.getElementById('avatarPreview').src = fullUserData.fotoPerfil
+    const avatarPreview = document.getElementById('avatarPreview')
+    if (avatarPreview) avatarPreview.src = fullUserData.fotoPerfil
   }
 }
 
@@ -115,7 +157,8 @@ function handleAvatarPreview (event) {
   if (file) {
     const reader = new FileReader()
     reader.onload = function (e) {
-      document.getElementById('avatarPreview').src = e.target.result
+      const avatarPreview = document.getElementById('avatarPreview')
+      if (avatarPreview) avatarPreview.src = e.target.result
     }
     reader.readAsDataURL(file)
   }
@@ -130,6 +173,14 @@ function saveProfileConfiguration (session) {
     return
   }
 
+  const currentEps = document.getElementById('selectHealthProvider').value.trim()
+  const epsDateField = document.getElementById('inputEpsUpdateDate')
+  const avatarPreview = document.getElementById('avatarPreview')
+  
+  const lastEpsUpdateDate = epsDateField && epsDateField.value 
+    ? epsDateField.value 
+    : new Date().toISOString().split('T')[0]
+
   const updatedUser = {
     ...allUsers[userIndex],
     nombre: document.getElementById('inputFirstName').value.trim(),
@@ -142,10 +193,12 @@ function saveProfileConfiguration (session) {
     contactoEmergenciaParentesco: document.getElementById('inputEmergencyRelation').value.trim(),
     contactoEmergenciaTelefono: document.getElementById('inputEmergencyPhone').value.trim(),
 
-    eps: document.getElementById('selectHealthProvider').value.trim(),
+    eps: currentEps,
     rh: document.getElementById('selectBloodType').value,
     condicionesMedicas: document.getElementById('textareaMedicalConditions').value.trim(),
-    fotoPerfil: document.getElementById('avatarPreview').src
+    fotoPerfil: avatarPreview ? avatarPreview.src : '',
+    
+    lastEpsUpdateDate: lastEpsUpdateDate
   }
 
   allUsers[userIndex] = updatedUser
@@ -157,7 +210,7 @@ function saveProfileConfiguration (session) {
   Swal.fire({
     icon: 'success',
     title: '¡Perfil Actualizado!',
-    text: 'Tus datos se han guardado correctamente.',
+    text: 'Tus datos y la fecha de tu certificado de EPS se han guardado correctamente.',
     confirmButtonColor: '#f2be22',
     background: '#212529',
     color: '#fff'
