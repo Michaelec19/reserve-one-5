@@ -238,3 +238,39 @@ setupModalReset()
 setMinDateToday('#fecha')
 handleSubmitSchedule()
 validateForm()
+
+const LOCALSTORAGE_PROGRAMS_KEY = 'lanhua_programs'
+
+const renderDashboardDisciplines = () => {
+  const container = document.querySelector('#dashboardDisciplinesContainer')
+  if (!container) return
+
+  const savedPrograms = window.localStorage.getItem(LOCALSTORAGE_PROGRAMS_KEY)
+  const programs = savedPrograms ? JSON.parse(savedPrograms) : []
+
+  container.innerHTML = ''
+
+  if (programs.length === 0) {
+    container.innerHTML = '<p class="text-muted small">No hay disciplinas registradas en el catálogo.</p>'
+    return
+  }
+
+  programs.forEach(program => {
+    container.innerHTML += `
+      <div class="col-md-6 col-lg-4">
+        <div class="card bg-dark border-secondary text-white p-3 h-100">
+          <div class="d-flex align-items-center gap-3">
+            <img src="${program.image}" alt="${program.title}" class="rounded-circle object-fit-cover bg-secondary" style="width: 50px; height: 50px;">
+            <div>
+              <h5 class="h6 mb-1 text-warning text-uppercase fw-bold">${program.title}</h5>
+              <span class="badge bg-secondary mb-1">${program.category}</span>
+              <p class="small text-light mb-0" style="font-size: 12px;">${program.description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  })
+}
+
+renderDashboardDisciplines()
