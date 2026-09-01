@@ -1,10 +1,19 @@
 /* eslint-disable no-undef */
 
-const USER_SESSION_KEY = 'lanhua_users'
+const CURRENT_SESSION_KEY = 'lanhua_session'
+const USERS_COLLECTION_KEY = 'lanhua_users'
 
 const isAuthenticated = () => {
-  const user = localStorage.getItem(USER_SESSION_KEY) || sessionStorage.getItem(USER_SESSION_KEY)
-  return Boolean(user)
+  const session = localStorage.getItem(CURRENT_SESSION_KEY) || sessionStorage.getItem(CURRENT_SESSION_KEY)
+  
+  if (!session) return false
+
+  try {
+    const user = JSON.parse(session)
+    return Boolean(user && user.id)
+  } catch (e) {
+    return false
+  }
 }
 
 const formatCurrency = (amount) => {
@@ -16,10 +25,13 @@ const formatCurrency = (amount) => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  setupLogoutEvents()
+
   const planTriggers = document.querySelectorAll('.select-plan-trigger')
 
   planTriggers.forEach(button => {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
+      event.preventDefault()
 
       if (!isAuthenticated()) {
         Swal.fire({
@@ -41,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return
       }
 
-      const planName = this.getAttribute('data-plan')
-      const planPrice = parseInt(this.getAttribute('data-price'))
+      const planName = this.getAttribute('data-plan') || 'Plan Lan Hua'
+      const planPrice = parseInt(this.getAttribute('data-price')) || 0
 
       Swal.fire({
         title: `¿Elegir Plan ${planName}?`,
@@ -57,25 +69,35 @@ document.addEventListener('DOMContentLoaded', () => {
         color: '#fff'
       }).then((result) => {
         if (result.isConfirmed) {
-          
           Swal.fire({
             title: '¡Excelente elección!',
             text: 'Te estamos redirigiendo a la pasarela de pagos segura...',
             icon: 'success',
             background: '#1c1f26',
             color: '#fff',
-            showConfirmButton: false, 
-            timer: 2000,              
+            showConfirmButton: false,
+            timer: 2000,
             timerProgressBar: true,
             willClose: () => {
-              const paymentUrl = `https://checkout.tu-pasarela.com/`
-              
+              const paymentUrl = 'https://checkout.tu-pasarela.com/'
               window.location.href = paymentUrl
             }
           })
-
         }
       })
     })
   })
 })
+
+function setupLogoutEvents () {
+  const logoutButtons = document.querySelectorAll('#clientLogoutBtn, #adminLogoutBtn')
+  
+  logoutButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault()
+      localStorage.removeItem(CURRENT_SESSION_KEY)
+      sessionStorage.removeItem(CURRENT_SESSION_KEY)
+      window.location.replace('../auth/auth.html')
+    })
+  })
+}

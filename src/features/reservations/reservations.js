@@ -20,7 +20,7 @@ function renderizarReservas() {
             <div class="card p-5 text-center bg-dark text-muted border-secondary">
                 <h5 class="text-warning mb-2">No tienes reservas activas</h5>
                 <p class="small mb-3">Parece que aún no has agendado ninguna clase en el club.</p>
-                <a href="../landing/catalog_users/catalog_user.html" class="btn btn-outline-warning btn-sm w-50 mx-auto fw-bold">Ver Cartelera de Clases</a>
+                <a href="../catalog_users/catalog_user.html" class="btn btn-outline-warning btn-sm w-50 mx-auto fw-bold">Ver Cartelera de Clases</a>
             </div>`
     totalElemento.textContent = '0'
     contadorBadge.textContent = '0 clases'
