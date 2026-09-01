@@ -20,12 +20,23 @@
 }
 
 .table-soft-border {
+  width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table-soft-border th,
 .table-soft-border td {
   border: 1px solid #dddfe2;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .btnEditUser {
@@ -44,4 +55,17 @@
 .btnEditUser:hover {
   background-color: #f1f3f5;
   color: #212529;
+}
+
+@media (max-width: 576px) {
+  .table-soft-border {
+    min-width: 680px;
+  }
+
+  .table-soft-border th,
+  .table-soft-border td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
 }

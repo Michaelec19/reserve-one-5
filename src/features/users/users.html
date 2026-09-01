@@ -59,7 +59,7 @@
     <header id="adminHeader" class="header sticky-top d-none">
       <div class="container">
         <nav class="navbar navbar-expand-lg px-0">
-          <a class="navbar-brand d-flex align-items-center">
+          <a class="navbar-brand d-flex align-items-center" href="../dashboard/dashboard.html">
             <img src="../../assets/LogoSinFondo.png" class="logo" alt="Logo Lan Hua">
             <span class="ms-2 fw-semibold brand-name">LAN HUA ADMIN</span>
           </a>
@@ -72,6 +72,7 @@
               <li class="nav-item"><a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a></li>
               <li class="nav-item"><a class="nav-link" href="../catalog/catalog.html">Catalogo</a></li>
               <li class="nav-item"><a class="nav-link" href="../daylie/daylie.html">Agenda</a></li>
+              <li class="nav-item"><a class="nav-link" href="../admin_users/admin_users.html">Usuarios</a></li>
             </ul>
             <div class="d-flex flex-column flex-lg-row gap-3">
               <div class="flex-fill" id="authNavContainerAdmin" style="min-width: 120px; min-height: 40px;"></div>
@@ -231,7 +232,6 @@
     import { initWarningUpdate } from '../../shared/components/WarningUpdate/WarningUpdate.js';
 
     document.addEventListener("DOMContentLoaded", () => {
-      loadFooter();
       const session = JSON.parse(localStorage.getItem('lanhua_session'));
       if (session) {
         if (session.role === 'admin') {
@@ -240,6 +240,7 @@
           initAuthNav();
           loadUserMenu('authNavContainer');
           initWarningUpdate();
+          loadFooter();
         }
       }
     });

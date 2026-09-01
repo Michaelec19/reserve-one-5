@@ -151,7 +151,7 @@ function confirmarReservas() {
     reservationsService.confirmUserReservations()
     renderizarReservas()
     if (result.isConfirmed) {
-      window.location.href = '../daylie/daylie.html';
+      window.location.href = '../daylie/daylie.html'
     }
   })
 }

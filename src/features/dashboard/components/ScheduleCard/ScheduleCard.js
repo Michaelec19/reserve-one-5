@@ -34,13 +34,15 @@ export const ScheduleCard = (classItem) => {
             <i class="fa-solid fa-shoe-prints" aria-hidden="true"></i>
             <span>Modalidad: ${capitalize(classItem.modality)}</span>
           </div>
-        </div>
 
-        <div class="class-item d-flex align-items-center gap-2 text-warning mt-1">
+           <div class="class-item d-flex align-items-center gap-2">
             <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
-            <span class="small fw-semibold">Profesor: ${classItem.professor || 'Sin asignar'}</span>
+            <span class="${classItem.professor ? '' : 'text-warning fw-bold'}">Profesor: ${classItem.professor || 'Sin asignar'}</span>
+          </div>
+
         </div>
 
+     
         <hr class="my-2 opacity-25">
 
         <div class="d-flex justify-content-end gap-2">

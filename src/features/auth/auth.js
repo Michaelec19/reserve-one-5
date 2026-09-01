@@ -1,12 +1,10 @@
 /* eslint-disable no-undef */
+import { usersService } from '../../services/userService.js'
 
 const USERS_KEY = 'lanhua_users'
 const SESSION_KEY = 'lanhua_session'
 
-const getUsers = () => {
-  const users = localStorage.getItem(USERS_KEY)
-  return users ? JSON.parse(users) : []
-}
+const getUsers = () => usersService.getAllUsers()
 
 const saveUsers = (users) => {
   localStorage.setItem(USERS_KEY, JSON.stringify(users))
