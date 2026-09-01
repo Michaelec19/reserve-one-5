@@ -156,7 +156,8 @@ const handleCreate = async () => {
     icon: 'success',
     title: 'Programa agregado',
     text: 'El programa se agregó correctamente.',
-    confirmButtonText: 'Aceptar'
+    timer: 1500,
+    showConfirmButton: false
   })
 }
 
@@ -180,16 +181,37 @@ const handleEdit = async (editId) => {
     icon: 'success',
     title: 'Programa actualizado',
     text: 'El programa se actualizó correctamente.',
-    confirmButtonText: 'Aceptar'
+    timer: 1500,
+    showConfirmButton: false
   })
 }
 
 const handleDelete = (id) => {
-  const isConfirmed = confirm('¿Estás seguro de que deseas eliminar este programa?')
-  if (!isConfirmed) return
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: '¿Estás seguro de que deseas eliminar este programa?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar',
+    customClass: {
+      confirmButton: 'btn btn-primary px-3',
+      cancelButton: 'btn btn-secondary px-3'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteItemCatalog(id)
+      renderItemsCatalog()
 
-  deleteItemCatalog(id)
-  renderItemsCatalog()
+      Swal.fire({
+        icon: 'success',
+        title: 'Eliminado',
+        text: 'El programa se eliminó correctamente.',
+        timer: 1500,
+        showConfirmButton: false
+      })
+    }
+  })
 }
 
 const handleSubmit = async (e) => {

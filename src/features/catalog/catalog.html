@@ -39,7 +39,7 @@
         <a class="navbar-brand d-flex align-items-center" href="../dashboard/dashboard.html">
           <img src="../../assets/LogoSinFondo.png" class="logo">
           <span class="ms-2 fw-semibold brand-name">
-            LAN HUA
+            LAN HUA ADMIN
           </span>
         </a>
         <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
@@ -67,7 +67,7 @@
           </ul>
 
           <div class="d-flex flex-column flex-lg-row gap-3">
-            <div class="flex-fill" id="authNavContainerAdmin" style="min-width: 120px; min-height: 40px;"></div>
+            <div id="authNavContainer"></div>
           </div>
 
         </div>
@@ -110,10 +110,14 @@
   <script src="catalog.js" type="module"></script>
 
   <script type="module">
-    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js';
-    document.addEventListener("DOMContentLoaded", () => {
-      loadUserMenu('authNavContainerAdmin');
-    });
+    import { loadUserMenu } from '../../shared/components/UserMenu/UserMenu.js'
+    import { requireAdmin } from '../../shared/js/authGuard.js'
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (requireAdmin()) {
+        loadUserMenu()
+      }
+    })
   </script>
 </body>
 

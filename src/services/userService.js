@@ -1,6 +1,48 @@
 const USERS_KEY = 'lanhua_users'
 const SESSION_KEY = 'lanhua_session'
 
+const defaultAdmins = [
+  {
+    id: 'admin-demo-01',
+    nombre: 'Administrador',
+    apellido: 'Lan Hua',
+    email: 'admin@lanhua.com',
+    password: 'Admin1234',
+    role: 'admin',
+    createdAt: '2026-01-15T10:00:00.000Z'
+  },
+  {
+    id: 'admin-demo-02',
+    nombre: 'María',
+    apellido: 'López',
+    email: 'maria.lopez@lanhua.com',
+    password: 'Admin1234',
+    role: 'admin',
+    createdAt: '2026-02-01T10:00:00.000Z'
+  },
+  {
+    id: 'admin-demo-03',
+    nombre: 'Juan',
+    apellido: 'Mendoza',
+    email: 'juan.mendoza@lanhua.com',
+    password: 'Admin1234',
+    role: 'admin',
+    createdAt: '2026-02-15T10:00:00.000Z'
+  }
+]
+
+const seedDefaultAdmins = (users) => {
+  const adminsToAdd = defaultAdmins.filter(
+    (admin) => !users.some((user) => user.email.toLowerCase() === admin.email.toLowerCase())
+  )
+
+  if (adminsToAdd.length === 0) return users
+
+  const updatedUsers = [...users, ...adminsToAdd]
+  saveAllUsers(updatedUsers)
+  return updatedUsers
+}
+
 const getCurrentUserId = () => {
   const session = window.localStorage.getItem(SESSION_KEY)
   if (!session) return null
@@ -9,7 +51,20 @@ const getCurrentUserId = () => {
 
 const getAllUsers = () => {
   const savedData = window.localStorage.getItem(USERS_KEY)
-  return savedData ? JSON.parse(savedData) : []
+
+  if (!savedData) {
+    window.localStorage.setItem(USERS_KEY, JSON.stringify(defaultAdmins))
+    return [...defaultAdmins]
+  }
+
+  const users = JSON.parse(savedData)
+  const hasAdmins = users.some((user) => user.role === 'admin')
+
+  if (!hasAdmins) {
+    return seedDefaultAdmins(users)
+  }
+
+  return users
 }
 
 const saveAllUsers = (users) => {

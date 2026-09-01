@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   isAdmin = session.role === 'admin'
+  setupTheme()
   setupHeaders()
   loadData()
   setupCalendarControls()
@@ -25,10 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAgenda(selectedDate)
 })
 
+function setupTheme() {
+  document.body.classList.toggle('agenda-admin', isAdmin)
+  document.body.classList.toggle('agenda-user', !isAdmin)
+}
+
 function setupHeaders() {
   const clientHeader = document.getElementById('clientHeader')
   const adminHeader = document.getElementById('adminHeader')
   const title = document.getElementById('daylieTitle')
+
+  clientHeader.classList.add('d-none')
+  adminHeader.classList.add('d-none')
 
   if (isAdmin) {
     adminHeader.classList.remove('d-none')
@@ -143,13 +152,20 @@ function renderAgenda(dateObj) {
 
   if (dailyEvents.length === 0) {
     agendaList.innerHTML = `
-      <div class="text-center text-muted p-4 border border-secondary rounded border-dashed">
+      <div class="text-center text-muted p-4 border rounded border-dashed agenda-empty">
         <i class="fa-regular fa-calendar-xmark fs-2 mb-2"></i>
         <p class="small m-0">No hay clases programadas para este día.</p>
       </div>
     `
     return
   }
+
+  const cardTitleClass = isAdmin ? 'text-dark' : 'text-white'
+  const professorTextClass = isAdmin ? 'text-muted' : 'text-light'
+  const attendeesListClass = isAdmin ? 'text-dark' : 'text-light'
+  const attendeesBoxClass = isAdmin
+    ? 'mt-1 bg-white p-2 rounded border'
+    : 'mt-1 bg-dark p-2 rounded border border-secondary'
 
   const allUsers = JSON.parse(localStorage.getItem('lanhua_users')) || []
 
@@ -169,7 +185,7 @@ function renderAgenda(dateObj) {
 
       let attendeesListHTML = '<p class="text-muted small mb-0 fst-italic">Nadie ha reservado aún.</p>'
       if (attendeeNames.length > 0) {
-        attendeesListHTML = `<ul class="mb-0 ps-3 small text-light" style="list-style-type: circle;">
+        attendeesListHTML = `<ul class="mb-0 ps-3 small ${attendeesListClass}" style="list-style-type: circle;">
           ${attendeeNames.map(name => `<li>${name}</li>`).join('')}
         </ul>`
       }
@@ -178,11 +194,11 @@ function renderAgenda(dateObj) {
       <div class="mt-3 pt-2 border-top border-secondary">
         <div class="mb-2">
           <span class="text-warning small fw-bold"><i class="fa-solid fa-chalkboard-user me-1"></i> Profesor:</span>
-          <span class="text-light small">${professorName}</span>
+          <span class="${professorTextClass} small">${professorName}</span>
         </div>
         <div>
           <span class="text-info small fw-bold"><i class="fa-solid fa-users me-1"></i> Confirmados (${classReservations.length}/${event.capacity}):</span>
-          <div class="mt-1 bg-dark p-2 rounded border border-secondary" style="max-height: 100px; overflow-y: auto;">
+          <div class="${attendeesBoxClass}" style="max-height: 100px; overflow-y: auto;">
             ${attendeesListHTML}
           </div>
         </div>
@@ -193,7 +209,7 @@ function renderAgenda(dateObj) {
     agendaList.innerHTML += `
       <div class="card agenda-card p-3 shadow-sm">
         <div class="d-flex justify-content-between align-items-start mb-1">
-          <h6 class="fw-bold m-0 text-white">${capitalize(event.title)}</h6>
+          <h6 class="fw-bold m-0 ${cardTitleClass}">${capitalize(event.title)}</h6>
           <span class="badge bg-warning text-dark">${timeString}</span>
         </div>
         <p class="text-secondary small mb-1"><i class="fa-solid fa-location-dot me-1"></i> ${event.location}</p>
