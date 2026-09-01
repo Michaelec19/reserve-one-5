@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })
 
+<<<<<<< HEAD
 function checkEpsCertificateExpiration (session) {
   const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session
@@ -96,6 +97,31 @@ function checkEpsCertificateExpiration (session) {
   }
 }
 
+=======
+const btnCancelUpdates = document.getElementById('btnCancelUpdates')
+  if (btnCancelUpdates) {
+    btnCancelUpdates.addEventListener('click', () => {
+      Swal.fire({
+        title: '¿Estás seguro de cancelar?',
+        text: 'Si cancelas ahora, perderás los cambios no guardados en tu información de perfil.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, continuar más tarde',
+        cancelButtonText: 'No, seguir ahora',
+        reverseButtons: true,
+        background: '#212529',
+        color: '#fff',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#343a40'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../catalog_users/catalog_user.html'
+        }
+      })
+    })
+  }
+        
+>>>>>>> 63f31a7755b7f9084bf626b9686559352aeaa2bc
 function populateProfileForm (session) {
   const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session

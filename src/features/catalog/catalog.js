@@ -11,7 +11,6 @@ const defaultPrograms = [
     id: crypto.randomUUID(),
     title: 'full pass',
     category: 'Membresía',
-    price: 190000,
     description: 'Acceso libre a clases generales y especializadas.',
     image: '../../assets/LogoSinFondo.png'
   },
@@ -19,7 +18,6 @@ const defaultPrograms = [
     id: crypto.randomUUID(),
     title: 'wushu',
     category: 'Clase',
-    price: 130000,
     description: 'Mensualidad especializada con acceso exclusivo a clases de Wushu.',
     image: '../../assets/LogoSinFondo.png'
   },
@@ -27,7 +25,6 @@ const defaultPrograms = [
     id: crypto.randomUUID(),
     title: 'taichi',
     category: 'Clase',
-    price: 100000,
     description: 'Mensualidad especializada con acceso exclusivo a clases de Taichi.',
     image: '../../assets/LogoSinFondo.png'
   }
@@ -148,7 +145,6 @@ const handleCreate = async () => {
     title: form.title.value.toLowerCase(),
     description: form.description.value,
     category: form.category.value,
-    price: Number(form.price.value),
     image: imageBase64
   })
 
@@ -168,7 +164,6 @@ const handleEdit = async (editId) => {
     title: form.title.value.toLowerCase(),
     description: form.description.value,
     category: form.category.value,
-    price: Number(form.price.value)
   }
 
   if (imageFile && imageFile.size > 0) {
