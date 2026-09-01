@@ -2,6 +2,7 @@ const SESSION_KEY = 'lanhua_session'
 const DEFAULT_AVATAR = '/src/assets/default-avatar.png'
 const LOGIN_URL = '/src/features/auth/auth.html'
 const RESERVATIONS_URL = '/src/features/reservations/reservations.html'
+const AGENDA_URL = '/src/features/daylie/daylie.html'
 const PROFILE_URL = '/src/features/users/users.html'
 
 const LOGOUT_REDIRECT = LOGIN_URL
@@ -40,9 +41,26 @@ const logoutItem = () => `
 
 const userMenuItems = () => {
   return `
-    ${menuItem(RESERVATIONS_URL, '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>', 'Mis reservas')}
-    ${menuItem(PROFILE_URL, '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>', 'Mi Perfil')}
+    ${menuItem(
+    RESERVATIONS_URL,
+    '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+    'Mis reservas'
+  )}
+
+    ${menuItem(
+    AGENDA_URL,
+    '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+    'Mi Agenda'
+  )}
+
+    ${menuItem(
+    PROFILE_URL,
+    '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    'Mi Perfil'
+  )}
+
     <li><hr class="user-menu-panel__divider"></li>
+
     ${logoutItem()}
   `
 }
