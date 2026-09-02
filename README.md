@@ -9,7 +9,7 @@ Para explorar el sistema y probar las diferentes vistas según el rol, dirígete
 ### Probar como Administrador
 Si deseas explorar las vistas y herramientas de administración sin necesidad de registrarte, puedes utilizar las siguientes credenciales provisionales preconfiguradas:
 * **Correo electrónico:** `admin@lanhua.com`
-* **Contraseña:** `Admin1234!`
+* **Contraseña:** `Admin1234`
 
 ### Probar como Usuario Regular (Estudiante / Cliente)
 Para probar la experiencia de un usuario común y el sistema de reservas:
