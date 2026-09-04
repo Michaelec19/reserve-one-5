@@ -81,17 +81,22 @@ const setupEventListeners = () => {
         Swal.fire({
           icon: 'warning',
           title: 'Iniciar Sesión Requerido',
-          text: 'Debes ingresar a tu cuenta o registrarte para poder reservar una clase.',
+          text: 'Debes Iniciar Sesión y tener una Mensualidad activas.',
           showCancelButton: true,
-          confirmButtonText: 'Iniciar Sesión / Registrarse',
+          showDenyButton: true,
+          confirmButtonText: 'Iniciar Sesión',
+          denyButtonText: 'Mensualidades',
           cancelButtonText: 'Cancelar',
           customClass: {
             confirmButton: 'btn btn-primary px-3',
-            cancelButton: 'btn btn-secondary px-3'
+            cancelButton: 'btn btn-secondary px-3',
+            denyButton: 'btn btn-warning px-3 text-dark'
           }
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = '../auth/auth.html'
+          } else if (result.isDenied) {
+            window.location.href = '../pricing/pricing.html'
           }
         })
         return
@@ -104,7 +109,7 @@ const setupEventListeners = () => {
       if (!selectedClass) return
 
       Swal.fire({
-        title: '<strong>Confirmar Reserva</strong>',
+        title: '<strong>Agregar Reserva</strong>',
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
@@ -116,7 +121,7 @@ const setupEventListeners = () => {
           </div>
         `,
         showCancelButton: true,
-        confirmButtonText: 'Confirmar Reserva',
+        confirmButtonText: 'Agregar',
         cancelButtonText: 'Cancelar',
         buttonsStyling: true,
         customClass: {
@@ -129,12 +134,12 @@ const setupEventListeners = () => {
 
           if (reservationResult.success) {
             Swal.fire({
-              title: '¡Reserva Confirmada!',
-              text: `Has reservado tu cupo para la clase de ${capitalize(selectedClass.title)}.`,
+              title: '¡Reserva Agregada!',
+              text: `Has reservado tu cupo momentaneamente para la clase de ${capitalize(selectedClass.title)}, para completar la reserva ir a Mis Reservas y alli confirmarla.`,
               icon: 'success',
               showCancelButton: true,
-              confirmButtonText: 'Ver mis reservas',
-              cancelButtonText: 'Continuar reservando',
+              confirmButtonText: 'Ver Mis  Reservas',
+              cancelButtonText: 'Continuar Agregando',
               reverseButtons: true,
               customClass: {
                 confirmButton: 'btn btn-success px-3',
@@ -147,7 +152,7 @@ const setupEventListeners = () => {
             })
           } else {
             Swal.fire({
-              title: 'Clase ya reservada',
+              title: 'Clase ya agregada',
               text: reservationResult.message,
               icon: 'warning',
               confirmButtonText: 'Entendido',

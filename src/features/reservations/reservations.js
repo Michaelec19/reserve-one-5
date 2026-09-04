@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { reservationsService } from '../../services/reservationsService.js'
 import { getImagePath } from '../../shared/js/config.js'
 import { capitalize } from '../../shared/js/utils.js'

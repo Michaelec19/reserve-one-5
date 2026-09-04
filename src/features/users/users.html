@@ -200,10 +200,11 @@
                   </div>
                 </div>
               </div>
-                <div class="col-md-6 mb-3">
-                  <label for="inputEpsUpdateDate" class="form-label fw-semibold small">Fecha Del Certificado De EPS</label>
-                  <input type="date" class="form-control bg-light" id="inputEpsUpdateDate">
-                </div>
+              <div class="col-md-6 mb-3">
+                <label for="inputEpsUpdateDate" class="form-label fw-semibold small">Fecha Del Certificado De
+                  EPS</label>
+                <input type="date" class="form-control bg-light" id="inputEpsUpdateDate">
+              </div>
               <div class="d-flex justify-content-end gap-3 mt-4">
                 <button type="button" id="btnCancelUpdates" class="btn btn-outline-secondary px-4 fw-semibold"
                   data-bs-toggle="modal" data-bs-target="#modalCancelarEdicion">
@@ -235,10 +236,16 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const session = JSON.parse(localStorage.getItem('lanhua_session'));
+
+      const clientHeader = document.getElementById('clientHeader');
+      const adminHeader = document.getElementById('adminHeader');
+
       if (session) {
         if (session.role === 'admin') {
+          adminHeader.classList.remove('d-none');
           loadUserMenu('authNavContainerAdmin');
         } else {
+          clientHeader.classList.remove('d-none');
           initAuthNav();
           loadUserMenu('authNavContainer');
           initWarningUpdate();
