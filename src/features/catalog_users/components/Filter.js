@@ -4,9 +4,9 @@ const getClasses = () => {
   return classesService.getClasses()
 }
 
-const getUniqueValues = (classes, field) => {
-  const values = classes.map(classItem => classItem[field])
-  return [...new Set(values)].sort()
+const getUniqueValues = (classes, property) => {
+  if (!Array.isArray(classes)) return []
+  return [...new Set(classes.map(item => item[property]))]
 }
 
 const renderFilterOptions = () => {

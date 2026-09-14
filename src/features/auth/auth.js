@@ -1,18 +1,19 @@
 /* eslint-disable no-undef */
-import { usersService } from '../../services/userService.js'
+import api from '../../services/axiosConfig.js'
 
-const USERS_KEY = 'lanhua_users'
 const SESSION_KEY = 'lanhua_session'
+const TOKEN_KEY = 'lanhua_token'
 
-const getUsers = () => usersService.getAllUsers()
-
-const saveUsers = (users) => {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users))
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]))
+  } catch (e) {
+    return null
+  }
 }
 
-const setSession = (user) => {
-  const { password, ...safeUser } = user
-  localStorage.setItem(SESSION_KEY, JSON.stringify(safeUser))
+const setSession = (userEmail, role) => {
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: userEmail, role, isLoggedIn: true }))
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (hash) {
     const triggerEl = document.querySelector(`button[data-bs-target="${hash}"]`)
-
     if (triggerEl) {
       const tab = new bootstrap.Tab(triggerEl)
       tab.show()
@@ -47,10 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  // --- LOGIN ---
   const loginForm = document.getElementById('loginForm')
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault()
 
       const email = document.getElementById('loginCorreo').value.trim().toLowerCase()
@@ -61,26 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
       spinner.classList.remove('d-none')
       btn.disabled = true
 
-      setTimeout(() => {
+      try {
+        const response = await api.post('/auth/login', {
+          email,
+          password
+        })
+
+        const token = response.data.token
+        localStorage.setItem(TOKEN_KEY, token)
+
+        const tokenData = parseJwt(token)
+        const userRole = tokenData.rol
+
+        setSession(email, userRole)
+
         spinner.classList.add('d-none')
         btn.disabled = false
-
-        const users = getUsers()
-        const foundUser = users.find(u => u.email === email && u.password === password)
-
-        if (!foundUser) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Credenciales incorrectas',
-            text: 'El correo o la contraseña no coinciden con ningún usuario registrado.',
-            confirmButtonColor: '#f2be22',
-            background: '#212529',
-            color: '#fff'
-          })
-          return
-        }
-
-        setSession(foundUser)
 
         Swal.fire({
           icon: 'success',
@@ -90,20 +85,33 @@ document.addEventListener('DOMContentLoaded', () => {
           background: '#212529',
           color: '#fff'
         }).then(() => {
-          if (foundUser.role === 'admin') {
+          if (userRole === 'ADMIN') {
             window.location.href = '../dashboard/dashboard.html'
           } else {
             window.location.href = '../catalog_users/catalog_user.html'
           }
         })
-      }, 1500)
+      } catch (error) {
+        spinner.classList.add('d-none')
+        btn.disabled = false
+
+        console.error('Error en login:', error)
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Credenciales incorrectas',
+          text: 'El correo o la contraseña son incorrectos.',
+          confirmButtonColor: '#f2be22',
+          background: '#212529',
+          color: '#fff'
+        })
+      }
     })
   }
 
-  // --- REGISTRO ---
   const registerForm = document.getElementById('registerForm')
   if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault()
 
       const nombre = document.getElementById('regNombre').value.trim()
@@ -121,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
           background: '#212529',
           color: '#fff'
         })
-
         return
       }
 
@@ -137,44 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return
       }
 
-      const users = getUsers()
-      const alreadyExists = users.some(u => u.email === correo)
-
-      if (alreadyExists) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Correo ya registrado',
-          text: 'Ya existe una cuenta con ese correo electrónico. Intenta iniciar sesión.',
-          confirmButtonColor: '#f2be22',
-          background: '#212529',
-          color: '#fff'
-        })
-
-        return
-      }
-
       const btn = registerForm.querySelector('button[type="submit"]')
       const spinner = document.getElementById('registerSpinner')
 
       spinner.classList.remove('d-none')
       btn.disabled = true
 
-      setTimeout(() => {
+      try {
+        await api.post('/users', {
+          nameUser: nombre,
+          lastNameUser: apellido,
+          emailUser: correo,
+          passwordUser: password
+        })
+
         spinner.classList.add('d-none')
         btn.disabled = false
-
-        const newUser = {
-          id: crypto.randomUUID(),
-          nombre,
-          apellido,
-          email: correo,
-          password,
-          role: 'user',
-          createdAt: new Date().toISOString()
-        }
-
-        users.push(newUser)
-        saveUsers(users)
 
         Swal.fire({
           icon: 'success',
@@ -188,7 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
           const loginTab = new bootstrap.Tab(document.getElementById('login-tab'))
           loginTab.show()
         })
-      }, 1500)
+      } catch (error) {
+        spinner.classList.add('d-none')
+        btn.disabled = false
+
+        console.error('Error en registro:', error)
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al registrar',
+          text: 'Puede que el correo ya esté registrado o haya un problema en el servidor.',
+          confirmButtonColor: '#f2be22',
+          background: '#212529',
+          color: '#fff'
+        })
+      }
     })
   }
 })
