@@ -12,8 +12,8 @@ const parseJwt = (token) => {
   }
 }
 
-const setSession = (userEmail, role) => {
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: userEmail, role, isLoggedIn: true }))
+const setSession = (userEmail, role, userId) => {
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ id: userId, email: userEmail, role, isLoggedIn: true }))
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,13 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         const token = response.data.token
+        const userId = response.data.id
         localStorage.setItem(TOKEN_KEY, token)
 
         const tokenData = parseJwt(token)
-        const userRole = tokenData.rol
+        const userRole = tokenData.rol || response.data.role
 
-        setSession(email, userRole)
-
+        setSession(email, userRole, userId)
         spinner.classList.add('d-none')
         btn.disabled = false
 

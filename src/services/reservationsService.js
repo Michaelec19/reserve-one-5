@@ -1,130 +1,112 @@
-const LOCALSTORAGE_KEY = 'lanhua_reservations'
+import api from './axiosConfig.js'
+
 const SESSION_KEY = 'lanhua_session'
 
-const getCurrentUserId = () => {
-  const session = localStorage.getItem(SESSION_KEY)
-  if (!session) return null
-  return JSON.parse(session).id
-}
-
-const getAllReservations = () => {
-  const savedData = localStorage.getItem(LOCALSTORAGE_KEY)
-  return savedData ? JSON.parse(savedData) : []
-}
-
-const saveAllReservations = (reservations) => {
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(reservations))
-}
-
-const getReservations = () => {
-  const userId = getCurrentUserId()
-  if (!userId) return []
-
-  const allReservations = getAllReservations()
-  return allReservations.filter(reservation => reservation.userId === userId)
-}
-
-const getPendingReservations = () => {
-  return getReservations().filter(res => res.status !== 'confirmed')
-}
-
-const getConfirmedReservations = () => {
-  return getReservations().filter(res => res.status === 'confirmed')
-}
-
-const addReservation = (classItem) => {
-  const userId = getCurrentUserId()
-
-  if (!userId) {
-    return {
-      success: false,
-      message: 'Debes iniciar sesión para reservar una clase'
-    }
-  }
-
-  const allReservations = getAllReservations()
-
-  const isAlreadyReserved = allReservations.some(
-    reservation => reservation.id === classItem.id && reservation.userId === userId
-  )
-
-  if (isAlreadyReserved) {
-    return {
-      success: false,
-      message: 'Ya tienes una reserva para esta clase'
-    }
-  }
-
-  const newReservation = {
-    ...classItem,
-    userId,
-    status: 'pending',
-    reservedAt: new Date().toISOString()
-  }
-
-  allReservations.push(newReservation)
-  saveAllReservations(allReservations)
-
-  return {
-    success: true,
-    message: 'Reserva confirmada exitosamente'
-  }
-}
-
-const removeReservation = (classId) => {
-  const userId = getCurrentUserId()
-  if (!userId) return
-
-  const allReservations = getAllReservations()
-
-  const updatedReservations = allReservations.filter(
-    reservation => !(reservation.id === classId && reservation.userId === userId)
-  )
-
-  saveAllReservations(updatedReservations)
-}
-
-const removeAllPendingReservations = () => {
-  const userId = getCurrentUserId()
-  if (!userId) return
-
-  const allReservations = getAllReservations()
-  const updatedReservations = allReservations.filter(
-    reservation => !(reservation.userId === userId && reservation.status !== 'confirmed')
-  )
-
-  saveAllReservations(updatedReservations)
-}
-
-const confirmUserReservations = () => {
-  const userId = getCurrentUserId()
-  if (!userId) return
-
-  const allReservations = getAllReservations()
-  const updatedReservations = allReservations.map(reservation => {
-    if (reservation.userId === userId && reservation.status !== 'confirmed') {
-      return { ...reservation, status: 'confirmed' }
-    }
-    return reservation
-  })
-
-  saveAllReservations(updatedReservations)
-}
-
-const getAllConfirmedReservationsAdmin = () => {
-  const allReservations = getAllReservations()
-  return allReservations.filter(res => res.status === 'confirmed')
+const getCurrentUser = () => {
+  const session = localStorage.getItem('lanhua_session')
+  return session ? JSON.parse(session) : null
 }
 
 export const reservationsService = {
-  getReservations,
-  getPendingReservations,
-  getConfirmedReservations,
-  getAllConfirmedReservationsAdmin,
-  addReservation,
-  removeReservation,
-  removeAllPendingReservations,
-  removeAllReservations: removeAllPendingReservations,
-  clearPendingReservations: removeAllPendingReservations,
-  confirmUserReservations
+
+  getReservations: async () => {
+    try {
+      const user = getCurrentUser()
+      console.log('Usuario actual en sesión:', user)
+
+      if (!user) {
+        console.warn('No hay sesión de usuario activa en localStorage.')
+        return []
+      }
+
+      const userId = user.id || user.idUser || 1
+      console.log(`Haciendo petición GET a /reservations/user/${userId}`)
+
+      const response = await api.get(`/reservations/user/${userId}`)
+      console.log('Respuesta cruda del backend:', response.data)
+
+      return Array.isArray(response.data) ? response.data : []
+    } catch (error) {
+      console.error('Error detallado al obtener las reservas:', error)
+      return []
+    }
+  },
+
+  getPendingReservations: async () => {
+    const reservations = await reservationsService.getReservations()
+
+    console.log('Reservas devueltas antes de filtrar:', reservations)
+
+    const filtered = reservations.filter(res => {
+      const state = (res.reservationState || '').toUpperCase()
+      return state === 'PENDIENTE' || state === 'PENDING'
+    })
+
+    console.log('Reservas filtradas (pendientes):', filtered)
+    return filtered
+  },
+
+  getConfirmedReservations: async () => {
+    const reservations = await reservationsService.getReservations()
+    return reservations.filter(res => res.reservationState === 'CONFIRMED' || res.reservationState === 'confirmed')
+  },
+
+  addReservation: async (selectedClass) => {
+    try {
+      const user = getCurrentUser()
+      if (!user) {
+        return { success: false, message: 'Debes iniciar sesión para reservar una clase' }
+      }
+
+      const reservationData = {
+        idSchedule: selectedClass.id || selectedClass.idSchedule,
+        idUsers: [user.id || user.idUser || 5]
+      }
+
+      const response = await api.post('/reservations', reservationData)
+      return {
+        success: true,
+        message: 'Reserva agregada temporalmente',
+        data: response.data
+      }
+    } catch (error) {
+      console.error('Error al agregar la reserva:', error)
+      const errorMsg = error.response?.data?.message || 'Ya tienes una reserva para esta clase o hubo un error.'
+      return { success: false, message: errorMsg }
+    }
+  },
+
+  removeReservation: async (reservationId) => {
+    try {
+      const token = localStorage.getItem('lanhua_token')
+
+      console.log('Token enviado para cancelar:', token)
+
+      await api.put(`/reservations/${reservationId}/cancel`, {}, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined
+        }
+      })
+      return { success: true }
+    } catch (error) {
+      console.error('Error al cancelar la reserva:', error)
+      return { success: false }
+    }
+  },
+
+  confirmUserReservations: async () => {
+    try {
+      const user = getCurrentUser()
+      if (!user) return { success: false }
+
+      const userId = user.id || user.idUser || 1
+
+      await api.put(`/reservations/user/${userId}/confirm`)
+
+      return { success: true }
+    } catch (error) {
+      console.error('Error al confirmar las reservas:', error)
+      return { success: false }
+    }
+  }
 }
