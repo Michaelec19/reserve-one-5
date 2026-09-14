@@ -42,7 +42,7 @@ export const ScheduleCardUser = (classItem) => {
             <button class="btn btn-action w-100 py-2 d-flex align-items-center justify-content-center gap-2 reserve-btn"
               type="button" aria-label="Reservar clase" data-id="${classItem.id}">
               <i class="fa-solid fa-calendar-check"></i>
-              <span>Reservar Clase</span>
+              <span>Agregar Clase</span>
             </button>
           </div>
         </div>
