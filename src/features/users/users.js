@@ -1,21 +1,22 @@
+/* eslint-disable no-undef */
 const USERS_COLLECTION = 'lanhua_users'
 const CURRENT_SESSION = 'lanhua_session'
 
 const seedDefaultAdmin = () => {
   const USERS_KEY = 'lanhua_users'
-  const users = JSON.parse(localStorage.getItem(USERS_KEY)) || []
+  const users = JSON.parse(window.localStorage.getItem(USERS_KEY)) || []
 
   const defaultAdminEmail = 'admin@lanhua.com'
   const adminExists = users.some(u => u.email === defaultAdminEmail)
 
- if (!adminExists) {
+  if (!adminExists) {
     const provisionalAdmin = {
       id: 'admin-provisional-01',
       nombre: 'Administrador',
       apellido: 'Sistema Lan Hua',
       email: defaultAdminEmail,
       password: 'Admin1234',
-      role: 'admin',
+      role: 'ADMIN',
       documento: '1000000000',
       direccion: 'Sede Principal Laureles',
       telefono: '3130000000',
@@ -26,17 +27,17 @@ const seedDefaultAdmin = () => {
       rh: 'O+',
       condicionesMedicas: 'Ninguna',
       createdAt: new Date().toISOString(),
-      lastEpsUpdateDate: new Date().toISOString().split('T')[0] 
+      lastEpsUpdateDate: new Date().toISOString().split('T')[0]
     }
 
     users.push(provisionalAdmin)
-    localStorage.setItem(USERS_COLLECTION, JSON.stringify(users))
+    window.localStorage.setItem(USERS_COLLECTION, JSON.stringify(users))
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   seedDefaultAdmin()
-  const currentSessionData = JSON.parse(localStorage.getItem(CURRENT_SESSION))
+  const currentSessionData = JSON.parse(window.localStorage.getItem(CURRENT_SESSION))
 
   if (!currentSessionData) {
     window.location.href = '../auth/auth.html'
@@ -70,9 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-<<<<<<< HEAD
-function checkEpsCertificateExpiration (session) {
-  const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
+function checkEpsCertificateExpiration(session) {
+  const allUsers = JSON.parse(window.localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session
 
   if (!fullUserData.lastEpsUpdateDate) return
@@ -97,33 +97,31 @@ function checkEpsCertificateExpiration (session) {
   }
 }
 
-=======
 const btnCancelUpdates = document.getElementById('btnCancelUpdates')
-  if (btnCancelUpdates) {
-    btnCancelUpdates.addEventListener('click', () => {
-      Swal.fire({
-        title: '¿Estás seguro de cancelar?',
-        text: 'Si cancelas ahora, perderás los cambios no guardados en tu información de perfil.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, continuar más tarde',
-        cancelButtonText: 'No, seguir ahora',
-        reverseButtons: true,
-        background: '#212529',
-        color: '#fff',
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#343a40'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = '../catalog_users/catalog_user.html'
-        }
-      })
+if (btnCancelUpdates) {
+  btnCancelUpdates.addEventListener('click', () => {
+    Swal.fire({
+      title: '¿Estás seguro de cancelar?',
+      text: 'Si cancelas ahora, perderás los cambios no guardados en tu información de perfil.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, continuar más tarde',
+      cancelButtonText: 'No, seguir ahora',
+      reverseButtons: true,
+      background: '#212529',
+      color: '#fff',
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#343a40'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '../catalog_users/catalog_user.html'
+      }
     })
-  }
-        
->>>>>>> 63f31a7755b7f9084bf626b9686559352aeaa2bc
-function populateProfileForm (session) {
-  const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
+  })
+}
+
+function populateProfileForm(session) {
+  const allUsers = JSON.parse(window.localStorage.getItem(USERS_COLLECTION)) || []
   const fullUserData = allUsers.find(user => user.id === session.id) || session
 
   document.getElementById('inputFirstName').value = fullUserData.nombre || ''
@@ -152,7 +150,7 @@ function populateProfileForm (session) {
   }
 }
 
-function handleAvatarPreview (event) {
+function handleAvatarPreview(event) {
   const file = event.target.files[0]
   if (file) {
     const reader = new FileReader()
@@ -164,8 +162,8 @@ function handleAvatarPreview (event) {
   }
 }
 
-function saveProfileConfiguration (session) {
-  const allUsers = JSON.parse(localStorage.getItem(USERS_COLLECTION)) || []
+function saveProfileConfiguration(session) {
+  const allUsers = JSON.parse(window.localStorage.getItem(USERS_COLLECTION)) || []
   const userIndex = allUsers.findIndex(user => user.id === session.id)
 
   if (userIndex === -1) {
@@ -176,9 +174,9 @@ function saveProfileConfiguration (session) {
   const currentEps = document.getElementById('selectHealthProvider').value.trim()
   const epsDateField = document.getElementById('inputEpsUpdateDate')
   const avatarPreview = document.getElementById('avatarPreview')
-  
-  const lastEpsUpdateDate = epsDateField && epsDateField.value 
-    ? epsDateField.value 
+
+  const lastEpsUpdateDate = epsDateField && epsDateField.value
+    ? epsDateField.value
     : new Date().toISOString().split('T')[0]
 
   const updatedUser = {
@@ -197,15 +195,15 @@ function saveProfileConfiguration (session) {
     rh: document.getElementById('selectBloodType').value,
     condicionesMedicas: document.getElementById('textareaMedicalConditions').value.trim(),
     fotoPerfil: avatarPreview ? avatarPreview.src : '',
-    
-    lastEpsUpdateDate: lastEpsUpdateDate
+
+    lastEpsUpdateDate
   }
 
   allUsers[userIndex] = updatedUser
-  localStorage.setItem(USERS_COLLECTION, JSON.stringify(allUsers))
+  window.localStorage.setItem(USERS_COLLECTION, JSON.stringify(allUsers))
 
   const { password, ...safeSession } = updatedUser
-  localStorage.setItem(CURRENT_SESSION, JSON.stringify(safeSession))
+  window.localStorage.setItem(CURRENT_SESSION, JSON.stringify(safeSession))
 
   Swal.fire({
     icon: 'success',
@@ -217,11 +215,11 @@ function saveProfileConfiguration (session) {
   })
 }
 
-function setupAdminLogout () {
+function setupAdminLogout() {
   const adminLogoutBtn = document.getElementById('adminLogoutBtn')
   if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', () => {
-      localStorage.removeItem(CURRENT_SESSION)
+      window.localStorage.removeItem(CURRENT_SESSION)
       window.location.href = '../auth/auth.html'
     })
   }

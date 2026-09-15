@@ -1,7 +1,7 @@
-import { classesService } from '../../../services/classesService.js'
+import { schedulesService } from '../../../services/schedulesService.js'
 
 const getClasses = () => {
-  return classesService.getClasses()
+  return schedulesService.getClasses()
 }
 
 const getUniqueValues = (classes, property) => {

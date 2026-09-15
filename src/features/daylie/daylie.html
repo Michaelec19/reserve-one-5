@@ -103,8 +103,11 @@
   </div>
 
   <main class="container py-4 flex-grow-1">
-    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3 daylie-header">
+    <div class="mb-4 daylie-header">
       <h2 class="text-warning fw-bold m-0" id="daylieTitle">Mi Agenda de Entrenamiento</h2>
+      <p class="fst-italic small text-muted mb-0 mt-1" id="daylieDescription">
+        Consulta las clases que has reservado en el Club LanHua.
+      </p>
     </div>
 
     <div class="row g-4">
@@ -158,9 +161,9 @@
     import { initWarningUpdate } from '../../shared/components/WarningUpdate/WarningUpdate.js';
 
     document.addEventListener('DOMContentLoaded', () => {
-      const session = JSON.parse(localStorage.getItem('lanhua_session'));
+      const session = JSON.parse(window.localStorage.getItem('lanhua_session'));
       if (session) {
-        if (session.role === 'admin') {
+        if (session.role === 'ADMIN') {
           loadUserMenu('authNavContainerAdmin');
         } else {
           loadUserMenu('authNavContainer');

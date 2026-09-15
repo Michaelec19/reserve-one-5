@@ -28,7 +28,7 @@ export const requireAdmin = () => {
     window.location.href = '/src/features/auth/auth.html'
     return false
   }
-  if (session.role !== 'admin') {
+  if (session.role !== 'ADMIN') {
     window.location.href = '/src/index.html'
     return false
   }
@@ -38,7 +38,7 @@ export const requireAdmin = () => {
 
 export const redirectIfAdmin = () => {
   const session = getSession()
-  if (session && session.role === 'admin') {
+  if (session && session.role === 'ADMIN') {
     window.location.href = '/src/features/dashboard/dashboard.html'
     return true
   }
@@ -48,7 +48,7 @@ export const redirectIfAdmin = () => {
 
 export const redirectIfNotAdmin = () => {
   const session = getSession()
-  if (session && session.role !== 'admin') {
+  if (session && session.role !== 'ADMIN') {
     window.location.href = '/src/features/catalog_users/catalog_user.html'
     return true
   }

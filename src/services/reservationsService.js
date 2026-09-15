@@ -1,9 +1,8 @@
+/* eslint-disable space-before-function-paren */
 import api from './axiosConfig.js'
 
-const SESSION_KEY = 'lanhua_session'
-
 const getCurrentUser = () => {
-  const session = localStorage.getItem('lanhua_session')
+  const session = window.localStorage.getItem('lanhua_session')
   return session ? JSON.parse(session) : null
 }
 
@@ -12,7 +11,6 @@ export const reservationsService = {
   getReservations: async () => {
     try {
       const user = getCurrentUser()
-      console.log('Usuario actual en sesión:', user)
 
       if (!user) {
         console.warn('No hay sesión de usuario activa en localStorage.')
@@ -20,14 +18,11 @@ export const reservationsService = {
       }
 
       const userId = user.id || user.idUser || 1
-      console.log(`Haciendo petición GET a /reservations/user/${userId}`)
 
       const response = await api.get(`/reservations/user/${userId}`)
-      console.log('Respuesta cruda del backend:', response.data)
 
       return Array.isArray(response.data) ? response.data : []
     } catch (error) {
-      console.error('Error detallado al obtener las reservas:', error)
       return []
     }
   },
@@ -35,20 +30,32 @@ export const reservationsService = {
   getPendingReservations: async () => {
     const reservations = await reservationsService.getReservations()
 
-    console.log('Reservas devueltas antes de filtrar:', reservations)
-
     const filtered = reservations.filter(res => {
       const state = (res.reservationState || '').toUpperCase()
       return state === 'PENDIENTE' || state === 'PENDING'
     })
 
-    console.log('Reservas filtradas (pendientes):', filtered)
     return filtered
   },
 
   getConfirmedReservations: async () => {
     const reservations = await reservationsService.getReservations()
     return reservations.filter(res => res.reservationState === 'CONFIRMED' || res.reservationState === 'confirmed')
+  },
+
+  getAllConfirmedReservations: async () => {
+    try {
+      const response = await api.get('/reservations')
+      const reservations = Array.isArray(response.data) ? response.data : (response.data.content || [])
+
+      return reservations.filter(res => {
+        const state = (res.reservationState || '').toUpperCase()
+        return state === 'CONFIRMED'
+      })
+    } catch (error) {
+      console.error('Error obteniendo las reservas globales:', error)
+      return []
+    }
   },
 
   addReservation: async (selectedClass) => {
@@ -78,9 +85,7 @@ export const reservationsService = {
 
   removeReservation: async (reservationId) => {
     try {
-      const token = localStorage.getItem('lanhua_token')
-
-      console.log('Token enviado para cancelar:', token)
+      const token = window.localStorage.getItem('lanhua_token')
 
       await api.put(`/reservations/${reservationId}/cancel`, {}, {
         headers: {
