@@ -3,35 +3,15 @@ import { setMinDateToday } from '../../shared/js/dateUtils.js'
 import { fileToBase64 } from '../../shared/js/utils.js'
 import { ScheduleCard } from './components/ScheduleCard/ScheduleCard.js'
 import { ScheduleModal } from './components/ScheduleModal/ScheduleModal.js'
-
-const API_BASE_URL = 'http://localhost:8080/api'
-
+import { scheduleService } from '../../services/scheduleService.js'
+import api from '../../services/axiosConfig.js'
 
 const getClasses = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/schedules`) 
-    if (!response.ok) throw new Error('Error al obtener los horarios')
-    return await response.json()
-  } catch (error) {
-    console.error(error)
-    return []
-  }
-}
-
-const deleteClassAPI = async (id) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/schedules/${id}`, {
-      method: 'DELETE'
-    })
-    return response.ok
-  } catch (error) {
-    console.error('Error al eliminar:', error)
-    return false
-  }
+  return await scheduleService.getClasses()
 }
 
 const deleteClass = async (id) => {
-  const success = await deleteClassAPI(id)
+  const success = await scheduleService.deleteClass(id)
   
   if (success) {
     await renderClasses()
@@ -154,21 +134,12 @@ const handleSubmitSchedule = () => {
     }
 
     try {
-      let url = `${API_BASE_URL}/schedules`
-      let method = 'POST'
-
+      let response
       if (editId) {
-        url = `${API_BASE_URL}/schedules/${editId}`
-        method = 'PUT'
+        response = await api.put(`/schedules/${editId}`, scheduleData)
+      } else {
+        response = await api.post('/schedules', scheduleData)
       }
-
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(scheduleData)
-      })
-
-      if (!response.ok) throw new Error('Error al guardar en el servidor')
 
       await renderClasses()
 
@@ -265,17 +236,8 @@ const renderDashboardDisciplines = async () => {
   if (!container) return
 
   try {
-    const response = await fetch(`${API_BASE_URL}/catalog`)
-    if (!response.ok) throw new Error('No se pudieron cargar las disciplinas')
-    
-    const programs = await response.json()
-
-    container.innerHTML = ''
-
-    if (programs.length === 0) {
-      container.innerHTML = '<p class="text-muted small">No hay disciplinas registradas en el catálogo.</p>'
-      return
-    }
+    const response = await api.get('/catalog')
+    const programs = response.data
 
     programs.forEach(program => {
       container.innerHTML += `
