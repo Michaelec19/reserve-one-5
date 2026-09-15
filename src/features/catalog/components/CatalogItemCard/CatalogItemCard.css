@@ -24,15 +24,23 @@
   color: var(--primary-color);
 }
 
-.class-badge-Clase {
-  background-color: var(--accent-color);
-  font-size: 13px;
+/* CLASES DE CATEGORÍAS */
+.class-badge-Kids,
+.class-badge-Regular,
+.class-badge-Estudiantes,
+.class-badge-Gratis,
+.class-badge-FullPass,
+.class-badge-EspecializadaSinMensualidad,
+.class-badge-EspecializadaAdicional {
+  background-color: #000000;
+  color: #F2BE22;
+  border: 1px solid #F2BE22;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-.class-badge-Membresía {
-  background-color: var(--primary-color);
-
-}
+/* FIN CLASES DE CATEGORÍAS */
 
 .class-item {
   font-size: 14px;
