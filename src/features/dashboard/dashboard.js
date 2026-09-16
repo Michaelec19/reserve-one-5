@@ -12,7 +12,7 @@ const getClasses = async () => {
 
 const deleteClass = async (id) => {
   const success = await scheduleService.deleteClass(id)
-  
+
   if (success) {
     await renderClasses()
     Swal.fire({
@@ -154,7 +154,6 @@ const handleSubmitSchedule = () => {
       const modalElement = document.querySelector('#staticBackdrop')
       const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
       bootstrapModal.hide()
-
     } catch (error) {
       console.error(error)
       Swal.fire({

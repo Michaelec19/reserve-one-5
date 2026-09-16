@@ -18,29 +18,13 @@ const getSession = () => {
   const session = window.localStorage.getItem(SESSION_KEY)
   return session ? JSON.parse(session) : null
 }
-const isAuthenticated = () => Boolean(getSession())
 
-// --- CONEXIÓN AL BACKEND ---
-const getClasses = async () => {
-  try {
-    const response = await api.get('/api/catalog')
-    // Adaptamos los nombres que vienen de Spring Boot
-    return response.data.map(item => ({
-      id: item.idCatalog,
-      title: item.name,
-      description: item.description,
-      category: item.category || [],
-      image: item.image
-    }))
-  } catch (error) {
-    console.error('Error obteniendo el catálogo:', error)
-    return []
-  }
-}
+const isAuthenticated = () => Boolean(getSession())
 
 const renderFilter = () => {
   const container = document.querySelector('#mainContainer')
   if (!container) return
+
   const filterContainer = document.createElement('div')
   filterContainer.innerHTML = Filter()
   container.insertBefore(filterContainer, container.querySelector('#disciplinesContainer'))
@@ -49,12 +33,13 @@ const renderFilter = () => {
 const renderFilteredClasses = (classes) => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
   if (!cardsContainer) return
+
   cardsContainer.innerHTML = ''
 
   if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
-      title: 'No se encontraron programas',
+      title: 'No se encontraron clases',
       text: 'Intenta con otros filtros o borra los filtros actuales.'
     })
     return
@@ -78,8 +63,8 @@ const renderClasses = async () => {
   if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
-      title: 'No hay programas disponibles',
-      text: 'Actualmente no hay disciplinas creadas por el administrador.'
+      title: 'No hay clases disponibles',
+      text: 'Actualmente no hay horarios o clases creadas por el administrador.'
     })
     return
   }
@@ -101,7 +86,7 @@ const setupEventListeners = () => {
         Swal.fire({
           icon: 'warning',
           title: 'Iniciar Sesión Requerido',
-          text: 'Debes Iniciar Sesión y tener una Mensualidad activa.',
+          text: 'Debes Iniciar Sesión y tener una Mensualidad activas.',
           showCancelButton: true,
           showDenyButton: true,
           confirmButtonText: 'Iniciar Sesión',
@@ -129,21 +114,8 @@ const setupEventListeners = () => {
 
       if (!selectedClass) return
 
-      // Mapeamos las categorías para mostrarlas de forma bonita
-      const categoryLabels = {
-        'Kids': 'Kids',
-        'Regular': 'Regular',
-        'Estudiantes': 'Tarifa de Estudiantes',
-        'Gratis': 'Gratis',
-        'FullPass': 'Full Pass',
-        'EspecializadaSinMensualidad': 'Sin Mens. Activa',
-        'EspecializadaAdicional': 'Adicional'
-      };
-
-      const catTexts = selectedClass.category.map(cat => categoryLabels[cat] || cat).join(', ');
-
       Swal.fire({
-        title: '<strong>Me interesa este Programa</strong>',
+        title: '<strong>Agregar Reserva</strong>',
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
@@ -155,7 +127,7 @@ const setupEventListeners = () => {
           </div>
         `,
         showCancelButton: true,
-        confirmButtonText: 'Agregar a mis intereses',
+        confirmButtonText: 'Agregar',
         cancelButtonText: 'Cancelar',
         buttonsStyling: true,
         customClass: {
@@ -164,16 +136,16 @@ const setupEventListeners = () => {
         }
       }).then(async (result) => {
         if (result.isConfirmed) {
-
           const reservationResult = await reservationsService.addReservation(selectedClass)
+
           if (reservationResult.success) {
             Swal.fire({
-              title: '¡Agregado!',
-              text: `Has marcado tu interés por ${capitalize(selectedClass.title)}. Ve a tu perfil para más detalles.`,
+              title: '¡Reserva Agregada!',
+              text: `Has reservado tu cupo momentaneamente para la clase de ${capitalize(selectedClass.title)}, para completar la reserva ir a Mis Reservas y alli confirmarla.`,
               icon: 'success',
               showCancelButton: true,
-              confirmButtonText: 'Ver Mis Reservas',
-              cancelButtonText: 'Continuar Explorando',
+              confirmButtonText: 'Ver Mis  Reservas',
+              cancelButtonText: 'Continuar Agregando',
               reverseButtons: true,
               customClass: {
                 confirmButton: 'btn btn-success px-3',
@@ -186,7 +158,7 @@ const setupEventListeners = () => {
             })
           } else {
             Swal.fire({
-              title: 'Programa ya agregado',
+              title: 'Clase ya agregada',
               text: reservationResult.message,
               icon: 'warning',
               confirmButtonText: 'Entendido',

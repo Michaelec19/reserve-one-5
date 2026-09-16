@@ -6,7 +6,7 @@ export const ScheduleCardUser = (classItem) => {
 
   return `
     <div class="col-12 col-md-6 col-lg-4">
-      <article class="class-card bg-white text-dark border rounded shadow-sm h-100 d-flex flex-column">
+      <article class="class-card bg-white text-dark border rounded shadow-sm h-100">
         <div class="position-relative">
           <img src="${classItem.image}" alt="${classItem?.catalog?.name}" class="card-img-top">
           <span class="badge position-absolute bottom-0 start-0 m-2 class-badge">${capitalize(classItem.level)}</span>
@@ -40,11 +40,12 @@ export const ScheduleCardUser = (classItem) => {
           </div>
 
           <hr class="my-2 opacity-25 border-dark">
-          <div class="d-flex justify-content-end mt-auto">
+
+          <div class="d-flex justify-content-end">
             <button class="btn btn-action w-100 py-2 d-flex align-items-center justify-content-center gap-2 reserve-btn"
               type="button" aria-label="Reservar clase" data-id="${classId}">
               <i class="fa-solid fa-calendar-check"></i>
-              <span>Me Interesa</span>
+              <span>Agregar Clase</span>
             </button>
           </div>
         </div>
