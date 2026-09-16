@@ -1,5 +1,3 @@
-import api from './axiosConfig.js'
-
 const USERS_KEY = 'lanhua_users'
 const SESSION_KEY = 'lanhua_session'
 
@@ -67,16 +65,6 @@ const getAllUsers = () => {
   }
 
   return users
-}
-
-const getAllUsersFromApi = async () => {
-  try {
-    const response = await api.get('/users')
-    return Array.isArray(response.data) ? response.data : (response.data.content || [])
-  } catch (error) {
-    console.error('Error obteniendo los usuarios:', error)
-    return []
-  }
 }
 
 const saveAllUsers = (users) => {
@@ -197,12 +185,11 @@ const deleteUser = (id) => {
 
 const getAdmins = () => {
   const allUsers = getAllUsers()
-  return allUsers.filter(user => user.role === 'ADMIN')
+  return allUsers.filter(user => user.role === 'admin')
 }
 
 export const usersService = {
   getAllUsers,
-  getAllUsersFromApi,
   getUserById,
   getUserByEmail,
   getCurrentUser,

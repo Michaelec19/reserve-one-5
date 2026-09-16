@@ -1,21 +1,14 @@
-/* eslint-disable no-undef */
-/* eslint-disable space-before-function-paren */
-import { schedulesService } from '../../services/schedulesService.js'
 import { reservationsService } from '../../services/reservationsService.js'
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../shared/js/utils.js'
 import { ScheduleCardUser } from './components/ScheduleCardUser.js'
 import { Filter, initFilter } from './components/Filter.js'
 import { initAuthNav } from '../../shared/js/authNav.js'
-import { formatScheduleDate } from '../../shared/js/dateUtils.js'
+import api from '../../services/axiosConfig.js'
 
 const SESSION_KEY = 'lanhua_session'
-let availableClasses = []
-
-const getClassId = (classItem) => classItem.idSchedule ?? classItem.id
-
 const getSession = () => {
-  const session = window.localStorage.getItem(SESSION_KEY)
+  const session = localStorage.getItem(SESSION_KEY)
   return session ? JSON.parse(session) : null
 }
 const isAuthenticated = () => Boolean(getSession())
@@ -67,12 +60,9 @@ const renderFilteredClasses = (classes) => {
 
 const renderClasses = async () => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
-
   if (!cardsContainer) return
 
-  const classes = await schedulesService.getClasses()
-  availableClasses = classes
-
+  const classes = await getClasses()
   cardsContainer.innerHTML = ''
 
   if (!classes || classes.length === 0) {
@@ -91,7 +81,6 @@ const renderClasses = async () => {
 
 const setupEventListeners = () => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
-
   if (!cardsContainer) return
 
   cardsContainer.addEventListener('click', async (event) => {
@@ -123,9 +112,8 @@ const setupEventListeners = () => {
       }
 
       const classId = reserveBtn.getAttribute('data-id')
-      const selectedClass = availableClasses.find(classItem => {
-        return String(getClassId(classItem)) === String(classId)
-      })
+      const classes = await getClasses()
+      const selectedClass = classes.find(c => String(c.id) === String(classId))
 
       if (!selectedClass) return
 
@@ -147,11 +135,9 @@ const setupEventListeners = () => {
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
-            <p class="mb-1"><strong>Clase:</strong> ${capitalize(selectedClass?.catalog?.name)}</p>
-            <p class="mb-1"><strong>Nivel:</strong> ${capitalize(selectedClass.level)}</p>
-            <p class="mb-1"><strong>Horario:</strong> ${formatScheduleDate(selectedClass.scheduleDate)}</p>
-            <p class="mb-1"><strong>Ubicación:</strong> ${selectedClass.location}</p>
-            <p class="mb-0"><strong>Modalidad:</strong> ${capitalize(selectedClass.modality)}</p>
+            <p class="mb-1"><strong>Programa:</strong> ${capitalize(selectedClass.title)}</p>
+            <p class="mb-1"><strong>Descripción:</strong> ${selectedClass.description}</p>
+            <p class="mb-0"><strong>Categorías:</strong> ${catTexts}</p>
           </div>
         `,
         showCancelButton: true,

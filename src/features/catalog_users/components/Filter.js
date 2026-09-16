@@ -1,7 +1,19 @@
-import { schedulesService } from '../../../services/schedulesService.js'
+import api from '../../../services/axiosConfig.js'
 
-const getClasses = () => {
-  return schedulesService.getClasses()
+// Obtenemos los datos directamente del backend para los filtros
+const getClasses = async () => {
+  try {
+    const response = await api.get('/api/catalog');
+    return response.data.map(item => ({
+      id: item.idCatalog,
+      title: item.name,
+      description: item.description,
+      category: item.category || [],
+      image: item.image
+    }));
+  } catch (error) {
+    return [];
+  }
 }
 
 const getUniqueValues = (classes, property) => {

@@ -1,7 +1,5 @@
-/* eslint-disable space-before-function-paren */
 import { reservationsService } from '../../services/reservationsService.js'
-import { schedulesService } from '../../services/schedulesService.js'
-import { usersService } from '../../services/userService.js'
+import { classesService } from '../../services/classesService.js'
 import { capitalize } from '../../shared/js/utils.js'
 
 const SESSION_KEY = 'lanhua_session'
@@ -11,21 +9,21 @@ let selectedDate = new Date()
 let eventsData = []
 let isAdmin = false
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const session = JSON.parse(window.localStorage.getItem(SESSION_KEY))
+document.addEventListener('DOMContentLoaded', () => {
+  const session = JSON.parse(localStorage.getItem(SESSION_KEY))
 
   if (!session) {
     window.location.href = '../auth/auth.html'
     return
   }
 
-  isAdmin = session.role === 'ADMIN'
+  isAdmin = session.role === 'admin'
   setupTheme()
   setupHeaders()
-  await loadData()
+  loadData()
   setupCalendarControls()
   renderCalendar()
-  await renderAgenda(selectedDate)
+  renderAgenda(selectedDate)
 })
 
 function setupTheme() {
@@ -37,38 +35,24 @@ function setupHeaders() {
   const clientHeader = document.getElementById('clientHeader')
   const adminHeader = document.getElementById('adminHeader')
   const title = document.getElementById('daylieTitle')
-  const description = document.getElementById('daylieDescription')
 
   clientHeader.classList.add('d-none')
   adminHeader.classList.add('d-none')
 
   if (isAdmin) {
     adminHeader.classList.remove('d-none')
-    title.textContent = 'Agenda de Clases'
-    description.textContent = 'Consulta y organiza las clases reservadas por los estudiantes.'
+    title.textContent = 'Programación General de Clases'
   } else {
     clientHeader.classList.remove('d-none')
     title.textContent = 'Mi Agenda de Entrenamiento'
-    description.textContent = 'Consulta las clases que has reservado en el Club LanHua.'
   }
 }
 
-async function loadData() {
+function loadData() {
   if (isAdmin) {
-    eventsData = await schedulesService.getClasses() || []
+    eventsData = classesService.getClasses() || []
   } else {
-    const reservations = await reservationsService.getConfirmedReservations() || []
-    eventsData = reservations.map(reservation => ({
-      ...reservation,
-      id: reservation.schedule?.idSchedule,
-      title: reservation.catalog?.name || 'Clase sin nombre',
-      scheduleDate: reservation.schedule?.scheduleDate,
-      location: reservation.schedule?.location || 'Sede Principal',
-      image: reservation.schedule?.image || reservation.catalog?.image,
-      level: reservation.schedule?.level || 'General',
-      capacity: reservation.schedule?.quotas || 0,
-      modality: reservation.modality || 'Grupal'
-    }))
+    eventsData = reservationsService.getConfirmedReservations() || []
   }
 }
 
@@ -81,28 +65,9 @@ function formatDateString(dateObj) {
 
 function hasEventsOnDate(dateString) {
   return eventsData.some(event => {
-    if (!event?.scheduleDate) return false
-    const eventDate = event.scheduleDate.split('T')[0]
+    const eventDate = event.date.split('T')[0]
     return eventDate === dateString
   })
-}
-
-function getEventCapacity(event) {
-  return event.capacity ?? event.quotas ?? 0
-}
-
-function getReservationUserId(reservation) {
-  return reservation.userId ?? reservation.idUser ?? reservation.user?.id ?? reservation.user?.idUser
-}
-
-function getUserFullName(user) {
-  if (!user) return null
-
-  const firstName = user.nombre || user.name || user.nameUser || ''
-  const lastName = user.apellidos || user.apellido || user.lastName || user.lastNameUser || ''
-  const fullName = `${firstName} ${lastName}`.trim()
-
-  return fullName || user.email || user.emailUser || null
 }
 
 function setupCalendarControls() {
@@ -159,19 +124,19 @@ function renderCalendar() {
 
     dayCell.innerHTML = cellHTML
 
-    dayCell.addEventListener('click', async () => {
+    dayCell.addEventListener('click', () => {
       document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('active'))
       dayCell.classList.add('active')
 
       selectedDate = cellDateObj
-      await renderAgenda(selectedDate)
+      renderAgenda(selectedDate)
     })
 
     grid.appendChild(dayCell)
   }
 }
 
-async function renderAgenda(dateObj) {
+function renderAgenda(dateObj) {
   const agendaList = document.getElementById('agendaList')
   const selectedDateText = document.getElementById('selectedDateText')
   const targetDateString = formatDateString(dateObj)
@@ -180,7 +145,7 @@ async function renderAgenda(dateObj) {
   selectedDateText.textContent = capitalize(dateObj.toLocaleDateString('es-ES', options))
 
   const dailyEvents = eventsData.filter(event => {
-    return event?.scheduleDate && event.scheduleDate.split('T')[0] === targetDateString
+    return event.date.split('T')[0] === targetDateString
   })
 
   agendaList.innerHTML = ''
@@ -202,26 +167,20 @@ async function renderAgenda(dateObj) {
     ? 'mt-1 bg-white p-2 rounded border'
     : 'mt-1 bg-dark p-2 rounded border border-secondary'
 
-  const allUsers = isAdmin ? await usersService.getAllUsersFromApi() : []
+  const allUsers = JSON.parse(localStorage.getItem('lanhua_users')) || []
 
-  const allConfirmed = isAdmin
-    ? await reservationsService.getAllConfirmedReservations()
-    : []
-
-  for (const event of dailyEvents) {
-    const timeString = event.scheduleDate.split('T')[1]
+  dailyEvents.forEach(event => {
+    const timeString = event.date.split('T')[1]
     const professorName = event.professor ? event.professor : 'Profesor sin asignar'
 
     let adminDetails = ''
 
     if (isAdmin) {
-      const classReservations = allConfirmed.filter(res => {
-        return String(res.schedule?.idSchedule ?? res.idSchedule) === String(event.idSchedule ?? event.id)
-      })
+      const allConfirmed = reservationsService.getAllConfirmedReservationsAdmin()
+      const classReservations = allConfirmed.filter(res => res.id === event.id)
       const attendeeNames = classReservations.map(res => {
-        const userId = getReservationUserId(res)
-        const user = allUsers.find(u => String(u.id ?? u.idUser) === String(userId))
-        return getUserFullName(user) || getUserFullName(res.user) || 'Usuario sin nombre'
+        const user = allUsers.find(u => u.id === res.userId)
+        return user ? `${user.nombre} ${user.apellidos}` : 'Usuario desconocido'
       })
 
       let attendeesListHTML = '<p class="text-muted small mb-0 fst-italic">Nadie ha reservado aún.</p>'
@@ -238,7 +197,7 @@ async function renderAgenda(dateObj) {
           <span class="${professorTextClass} small">${professorName}</span>
         </div>
         <div>
-          <span class="text-info small fw-bold"><i class="fa-solid fa-users me-1"></i> Confirmados (${classReservations.length}/${getEventCapacity(event)}):</span>
+          <span class="text-info small fw-bold"><i class="fa-solid fa-users me-1"></i> Confirmados (${classReservations.length}/${event.capacity}):</span>
           <div class="${attendeesBoxClass}" style="max-height: 100px; overflow-y: auto;">
             ${attendeesListHTML}
           </div>
@@ -261,5 +220,5 @@ async function renderAgenda(dateObj) {
         ${adminDetails}
       </div>
     `
-  }
+  })
 }
