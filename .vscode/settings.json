@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "standard.autoFixOnSave": true,
+  "liveServer.settings.port": 5502
+}

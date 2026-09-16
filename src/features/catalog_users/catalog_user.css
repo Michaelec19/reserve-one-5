@@ -1,0 +1,19 @@
+.filters-section .card {
+  background-color: var(--background-color);
+  border: 1px solid var(--primary-color);
+}
+
+.filters-section .form-label {
+  color: var(--primary-color);
+}
+
+.filters-section .form-select,
+.filters-section .form-control {
+  border-color: var(--accent-color);
+}
+
+.filters-section #clearFilters {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}

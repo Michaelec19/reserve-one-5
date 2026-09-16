@@ -1,0 +1,45 @@
+.warning-update-banner {
+  background-color: #BF2A37;
+  color: #F2BE22;
+  border-bottom: 1px solid #a3222e;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.warning-update-banner.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.warning-update-banner a {
+  color: #F2BE22;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.warning-update-banner a:hover {
+  color: #ffffff;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

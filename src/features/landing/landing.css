@@ -1,0 +1,215 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* tarjetas mision vision valores */
+.custom-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 10px 20px rgba(191, 42, 55, 0.15) !important;
+}
+
+.contact {
+  background-color: rgb(7, 7, 6);
+}
+
+.programas-section {
+  background-color: #F4F4F4;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Tipografía de la Cabecera */
+.programas-title {
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: #111111;
+}
+
+.programas-sub {
+  font-size: 0.95rem;
+  color: #333333;
+  max-width: 480px;
+  line-height: 1.4;
+}
+
+.link-ver-todos {
+  color: #B82835;
+  /* Rojo vino / carmesí */
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.link-ver-todos:hover {
+  color: #8E1F28;
+  text-decoration: underline;
+}
+
+/* Estructura de las Tarjetas */
+.programa-card {
+  height: 420px;
+  border-radius: 18px !important;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  /* Borde dorado / marrón sutil como la imagen */
+  border: 2px solid #997B30 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.programa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Oscurecimiento graduado sobre la imagen */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.1) 100%);
+  border-radius: 16px;
+}
+
+/* Badges de Niveles */
+.badge-nivel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.badge-principiante {
+  background-color: #C02938;
+  /* Rojo Carmesí */
+  color: #FFFFFF;
+}
+
+.badge-intermedio {
+  background-color: #7D5C06;
+  /* Mostaza / Marrón dorado */
+  color: #FFFFFF;
+}
+
+/* Textos dentro de la Card */
+.programa-card .card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.programa-card .card-text {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Si tienes una navbar fija en la parte superior, evita que tape el inicio de la sección */
+section {
+  scroll-margin-top: 80px;
+}
+
+/** ----- Inicio Hero ----- */
+.hero {
+  height: calc(100vh - 80px);
+  min-height: 500px;
+  position: relative;
+}
+
+.hero-carousel,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.25) 45%,
+      rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 12%;
+  left: 9%;
+  max-width: 600px;
+  color: var(--surface-color);
+  z-index: 10;
+}
+
+.hero-badge {
+  background: var(--primary-color);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.btn-hero-solid {
+  background: var(--primary-color);
+  color: var(--text-light);
+  padding: 0.75rem 1.6rem;
+  border-radius: 8px;
+}
+
+.btn-hero-solid:hover {
+  background: #9D202C;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(191, 42, 55, 0.35);
+}
+
+.btn-hero-glass {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-light);
+  padding: 0.75rem 1.6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-hero-glass:hover {
+  background: rgba(255, 255, 255, .22);
+  border-color: rgba(242, 190, 34, .65);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, .25),
+    0 0 20px rgba(242, 190, 34, .18);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
