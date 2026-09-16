@@ -11,7 +11,7 @@ const seedDefaultAdmin = () => {
 
   if (!adminExists) {
     const provisionalAdmin = {
-      id: 'admin-provisional-01',
+      id: 1, 
       nombre: 'Administrador',
       apellido: 'Sistema Lan Hua',
       email: defaultAdminEmail,
@@ -33,36 +33,35 @@ const seedDefaultAdmin = () => {
     users.push(provisionalAdmin)
     window.localStorage.setItem(USERS_COLLECTION, JSON.stringify(users))
   }
-}
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   seedDefaultAdmin()
   const currentSessionData = JSON.parse(window.localStorage.getItem(CURRENT_SESSION))
 
   if (!currentSessionData) {
-    window.location.href = '../auth/auth.html'
-    return
+    window.location.href = '../auth/auth.html';
+    return;
   }
 
-  const clientHeaderNode = document.getElementById('clientHeader')
-  const adminHeaderNode = document.getElementById('adminHeader')
+  const clientHeaderNode = document.getElementById('clientHeader');
+  const adminHeaderNode = document.getElementById('adminHeader');
 
   if (currentSessionData.role === 'admin') {
-    adminHeaderNode?.classList.remove('d-none')
-    setupAdminLogout()
+    adminHeaderNode?.classList.remove('d-none');
+    setupAdminLogout();
   } else {
-    clientHeaderNode?.classList.remove('d-none')
+    clientHeaderNode?.classList.remove('d-none');
   }
 
-  populateProfileForm(currentSessionData)
-  checkEpsCertificateExpiration(currentSessionData)
+  populateProfileForm(currentSessionData);
 
-  const imageUploader = document.getElementById('profileImageInput')
+  const imageUploader = document.getElementById('profileImageInput');
   if (imageUploader) {
-    imageUploader.addEventListener('change', handleAvatarPreview)
+    imageUploader.addEventListener('change', handleAvatarPreview);
   }
 
-  const profileForm = document.getElementById('profileConfigurationForm')
+  const profileForm = document.getElementById('profileConfigurationForm');
   if (profileForm) {
     profileForm.addEventListener('submit', (event) => {
       event.preventDefault()
@@ -95,7 +94,6 @@ function checkEpsCertificateExpiration(session) {
       color: '#fff'
     })
   }
-}
 
 const btnCancelUpdates = document.getElementById('btnCancelUpdates')
 if (btnCancelUpdates) {
@@ -143,10 +141,27 @@ function populateProfileForm(session) {
     const rawDate = fullUserData.lastEpsUpdateDate || new Date().toISOString()
     epsDateField.value = rawDate.split('T')[0]
   }
+});
 
-  if (fullUserData.fotoPerfil) {
-    const avatarPreview = document.getElementById('avatarPreview')
-    if (avatarPreview) avatarPreview.src = fullUserData.fotoPerfil
+function checkEpsCertificateExpiration(dateEpsStr) {
+  if (!dateEpsStr) return;
+
+  const [year, month, day] = dateEpsStr.split('-');
+  const lastUpdate = new Date(year, month - 1, day);
+  const currentDate = new Date();
+  const diffTime = Math.abs(currentDate - lastUpdate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays >= 90) {
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Certificado de EPS Vencido!',
+      html: 'Han pasado más de 3 meses desde tu última actualización de EPS.<br><br>Por favor <strong>actualiza la fecha y adjunta tu certificado de afiliación vigente</strong>.',
+      confirmButtonText: 'Actualizar Ahora',
+      confirmButtonColor: '#f2be22',
+      background: '#212529',
+      color: '#fff'
+    });
   }
 }
 
@@ -158,7 +173,8 @@ function handleAvatarPreview(event) {
       const avatarPreview = document.getElementById('avatarPreview')
       if (avatarPreview) avatarPreview.src = e.target.result
     }
-    reader.readAsDataURL(file)
+  } catch (error) {
+    console.error('Error de conexión con el backend:', error);
   }
 }
 
@@ -170,6 +186,7 @@ function saveProfileConfiguration(session) {
     Swal.fire('Error', 'Usuario no encontrado en la base de datos.', 'error')
     return
   }
+}
 
   const currentEps = document.getElementById('selectHealthProvider').value.trim()
   const epsDateField = document.getElementById('inputEpsUpdateDate')
@@ -205,14 +222,21 @@ function saveProfileConfiguration(session) {
   const { password, ...safeSession } = updatedUser
   window.localStorage.setItem(CURRENT_SESSION, JSON.stringify(safeSession))
 
-  Swal.fire({
-    icon: 'success',
-    title: '¡Perfil Actualizado!',
-    text: 'Tus datos y la fecha de tu certificado de EPS se han guardado correctamente.',
-    confirmButtonColor: '#f2be22',
-    background: '#212529',
-    color: '#fff'
-  })
+      Swal.fire({
+        icon: 'success',
+        title: '¡Perfil Actualizado!',
+        text: 'Tus datos médicos y personales se han guardado en el servidor correctamente.',
+        confirmButtonColor: '#f2be22',
+        background: '#212529',
+        color: '#fff'
+      });
+    } else {
+      throw new Error("Fallo al guardar en alguna de las tablas del servidor.");
+    }
+  } catch (error) {
+    Swal.fire('Error', 'Hubo un problema al conectar con el servidor backend.', 'error');
+    console.error(error);
+  }
 }
 
 function setupAdminLogout() {
