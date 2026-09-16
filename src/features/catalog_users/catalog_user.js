@@ -1,4 +1,3 @@
-import { classesService } from '../../services/classesService.js'
 import { reservationsService } from '../../services/reservationsService.js'
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { capitalize } from '../../shared/js/utils.js'
@@ -8,22 +7,33 @@ import { initAuthNav } from '../../shared/js/authNav.js'
 import api from '../../services/axiosConfig.js'
 
 const SESSION_KEY = 'lanhua_session'
-
 const getSession = () => {
   const session = localStorage.getItem(SESSION_KEY)
   return session ? JSON.parse(session) : null
 }
-
 const isAuthenticated = () => Boolean(getSession())
 
+// --- CONEXIÓN AL BACKEND ---
 const getClasses = async () => {
-  return await classesService.getClasses()
+  try {
+    const response = await api.get('/api/catalog')
+    // Adaptamos los nombres que vienen de Spring Boot
+    return response.data.map(item => ({
+      id: item.idCatalog,
+      title: item.name,
+      description: item.description,
+      category: item.category || [],
+      image: item.image
+    }))
+  } catch (error) {
+    console.error('Error obteniendo el catálogo:', error)
+    return []
+  }
 }
 
 const renderFilter = () => {
   const container = document.querySelector('#mainContainer')
   if (!container) return
-
   const filterContainer = document.createElement('div')
   filterContainer.innerHTML = Filter()
   container.insertBefore(filterContainer, container.querySelector('#disciplinesContainer'))
@@ -32,13 +42,12 @@ const renderFilter = () => {
 const renderFilteredClasses = (classes) => {
   const cardsContainer = document.querySelector('#disciplinesContainer')
   if (!cardsContainer) return
-
   cardsContainer.innerHTML = ''
 
   if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
-      title: 'No se encontraron clases',
+      title: 'No se encontraron programas',
       text: 'Intenta con otros filtros o borra los filtros actuales.'
     })
     return
@@ -59,8 +68,8 @@ const renderClasses = async () => {
   if (!classes || classes.length === 0) {
     cardsContainer.innerHTML = Alert({
       variant: 'info',
-      title: 'No hay clases disponibles',
-      text: 'Actualmente no hay horarios o clases creadas por el administrador.'
+      title: 'No hay programas disponibles',
+      text: 'Actualmente no hay disciplinas creadas por el administrador.'
     })
     return
   }
@@ -81,7 +90,7 @@ const setupEventListeners = () => {
         Swal.fire({
           icon: 'warning',
           title: 'Iniciar Sesión Requerido',
-          text: 'Debes Iniciar Sesión y tener una Mensualidad activas.',
+          text: 'Debes Iniciar Sesión y tener una Mensualidad activa.',
           showCancelButton: true,
           showDenyButton: true,
           confirmButtonText: 'Iniciar Sesión',
@@ -108,20 +117,31 @@ const setupEventListeners = () => {
 
       if (!selectedClass) return
 
+      // Mapeamos las categorías para mostrarlas de forma bonita
+      const categoryLabels = {
+        'Kids': 'Kids',
+        'Regular': 'Regular',
+        'Estudiantes': 'Tarifa de Estudiantes',
+        'Gratis': 'Gratis',
+        'FullPass': 'Full Pass',
+        'EspecializadaSinMensualidad': 'Sin Mens. Activa',
+        'EspecializadaAdicional': 'Adicional'
+      };
+
+      const catTexts = selectedClass.category.map(cat => categoryLabels[cat] || cat).join(', ');
+
       Swal.fire({
-        title: '<strong>Agregar Reserva</strong>',
+        title: '<strong>Me interesa este Programa</strong>',
         icon: 'question',
         html: `
           <div class="text-start mt-3 d-flex flex-column gap-2 fs-6">
-            <p class="mb-1"><strong>Clase:</strong> ${capitalize(selectedClass.title)}</p>
-            <p class="mb-1"><strong>Nivel:</strong> ${capitalize(selectedClass.level)}</p>
-            <p class="mb-1"><strong>Horario:</strong> ${selectedClass.dateText}</p>
-            <p class="mb-1"><strong>Ubicación:</strong> ${selectedClass.location}</p>
-            <p class="mb-0"><strong>Modalidad:</strong> ${capitalize(selectedClass.modality)}</p>
+            <p class="mb-1"><strong>Programa:</strong> ${capitalize(selectedClass.title)}</p>
+            <p class="mb-1"><strong>Descripción:</strong> ${selectedClass.description}</p>
+            <p class="mb-0"><strong>Categorías:</strong> ${catTexts}</p>
           </div>
         `,
         showCancelButton: true,
-        confirmButtonText: 'Agregar',
+        confirmButtonText: 'Agregar a mis intereses',
         cancelButtonText: 'Cancelar',
         buttonsStyling: true,
         customClass: {
@@ -130,16 +150,16 @@ const setupEventListeners = () => {
         }
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const reservationResult = await reservationsService.addReservation(selectedClass)
 
+          const reservationResult = await reservationsService.addReservation(selectedClass)
           if (reservationResult.success) {
             Swal.fire({
-              title: '¡Reserva Agregada!',
-              text: `Has reservado tu cupo momentaneamente para la clase de ${capitalize(selectedClass.title)}, para completar la reserva ir a Mis Reservas y alli confirmarla.`,
+              title: '¡Agregado!',
+              text: `Has marcado tu interés por ${capitalize(selectedClass.title)}. Ve a tu perfil para más detalles.`,
               icon: 'success',
               showCancelButton: true,
-              confirmButtonText: 'Ver Mis  Reservas',
-              cancelButtonText: 'Continuar Agregando',
+              confirmButtonText: 'Ver Mis Reservas',
+              cancelButtonText: 'Continuar Explorando',
               reverseButtons: true,
               customClass: {
                 confirmButton: 'btn btn-success px-3',
@@ -152,7 +172,7 @@ const setupEventListeners = () => {
             })
           } else {
             Swal.fire({
-              title: 'Clase ya agregada',
+              title: 'Programa ya agregado',
               text: reservationResult.message,
               icon: 'warning',
               confirmButtonText: 'Entendido',
