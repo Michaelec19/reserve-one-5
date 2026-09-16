@@ -1,18 +1,17 @@
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { setMinDateToday } from '../../shared/js/dateUtils.js'
-import { fileToBase64 } from '../../shared/js/utils.js'
 import { ScheduleCard } from './components/ScheduleCard/ScheduleCard.js'
 import { ScheduleModal } from './components/ScheduleModal/ScheduleModal.js'
-import { scheduleService } from '../../services/scheduleService.js'
+import { schedulesService } from '../../services/schedulesService.js'
 import api from '../../services/axiosConfig.js'
 
 const getClasses = async () => {
-  return await scheduleService.getClasses()
+  return await schedulesService.getClasses()
 }
 
 const deleteClass = async (id) => {
-  const success = await scheduleService.deleteClass(id)
-  
+  const success = await schedulesService.deleteClass(id)
+
   if (success) {
     await renderClasses()
     Swal.fire({
@@ -78,33 +77,65 @@ const resetFormState = () => {
   form.reset()
   delete form.dataset.editId
   form.image.required = true
-  document.querySelector('#imageHelpText').classList.add('d-none')
   document.querySelector('#staticBackdropLabel').textContent = 'Agregar Horario'
 
   const submitBtn = document.querySelector('#addSchedule')
   submitBtn.textContent = 'Agregar Horario'
 }
 
-const fillFormForEdit = (classToEdit, classId) => {
-  form.modality.value = classToEdit.modality ? classToEdit.modality.toLowerCase() : 'grupal'
-  form.title.value = classToEdit.title.toLowerCase()
-  form.level.value = classToEdit.level.toLowerCase()
-  form.capacity.value = classToEdit.capacity
-  form.location.value = classToEdit.location
-  form.professor.value = classToEdit.professor || ''
+const setSelectValue = (select, value, label = value) => {
+  if (!value) {
+    const matchingOption = Array.from(select.options).find(option =>
+      label && option.textContent.trim().toLowerCase() === String(label).trim().toLowerCase()
+    )
+    select.value = matchingOption ? matchingOption.value : ''
+    return
+  }
 
-  const [dateStr, timeStr] = classToEdit.date.split('T')
-  form.date.value = dateStr
-  form.time.value = timeStr
+  const optionExists = Array.from(select.options).some(option => String(option.value) === String(value))
+
+  if (!optionExists) {
+    const option = document.createElement('option')
+    option.value = value
+    option.textContent = label
+    option.selected = true
+    select.add(option)
+  } else {
+    select.value = value
+  }
+}
+
+const normalizeId = (value) => {
+  if (value === undefined || value === null || value === '') return value
+  return /^\d+$/.test(String(value)) ? Number(value) : value
+}
+
+const fillFormForEdit = (classToEdit, classId) => {
+  const modality = classToEdit.modality?.toLowerCase() ?? 'grupal'
+  const level = classToEdit.level?.toLowerCase() ?? ''
+  setSelectValue(form.modality, modality)
+
+  const catalogId = classToEdit.idCatalog ?? classToEdit.catalogId ?? classToEdit.catalog?.idCatalog ?? classToEdit.catalog?.id
+  const catalogName = classToEdit.catalog?.name ?? classToEdit.catalog?.title ?? 'Disciplina actual'
+  setSelectValue(form.idCatalog, catalogId, catalogName)
+  setSelectValue(form.level, level)
+  form.quotas.value = classToEdit.quotas ?? classToEdit.capacity ?? ''
+  setSelectValue(form.location, classToEdit.location)
+  const userId = classToEdit.idUser ?? classToEdit.userId ?? classToEdit.user?.idUser ?? classToEdit.user?.id ?? classToEdit.professor?.idUser ?? classToEdit.professor?.id
+  const userName = classToEdit.userName ?? classToEdit.user?.name ?? classToEdit.professor?.name ?? ''
+  setSelectValue(form.idUser, userId, userName)
+  form.image.value = classToEdit.image ?? classToEdit.catalog?.image ?? ''
+
+  const scheduleDate = classToEdit.date ?? classToEdit.scheduleDate ?? ''
+  form.scheduleDate.value = scheduleDate.replace(' ', 'T').slice(0, 16)
   form.dataset.editId = classId
 
   form.image.required = false
-  document.querySelector('#imageHelpText').classList.remove('d-none')
   document.querySelector('#staticBackdropLabel').textContent = 'Actualizar Horario'
 
   const submitBtn = document.querySelector('#addSchedule')
   submitBtn.textContent = 'Actualizar Horario'
-  submitBtn.disabled = false
+  submitBtn.disabled = !form.checkValidity()
 }
 
 const handleSubmitSchedule = () => {
@@ -112,33 +143,27 @@ const handleSubmitSchedule = () => {
     event.preventDefault()
 
     const formData = new FormData(form)
-    const imageFile = formData.get('image')
-    const hasNewImage = imageFile && imageFile.size > 0
     const schedule = Object.fromEntries(formData)
     const editId = form.dataset.editId
 
-    const image = hasNewImage
-      ? await fileToBase64(imageFile)
-      : (editId ? null : '../../assets/lanhua-banner-1.png')
-
     const scheduleData = {
-      title: schedule.title,
+      idCatalog: normalizeId(schedule.idCatalog),
       level: schedule.level,
-      capacity: Number(schedule.capacity),
-      date: `${schedule.date}T${schedule.time}`,
-      dateText: `${schedule.date} — ${schedule.time}`,
+      quotas: Number(schedule.quotas),
+      scheduleDate: schedule.scheduleDate,
       location: schedule.location,
       modality: schedule.modality,
-      professor: schedule.professor,
-      ...(image && { image })
+      idUser: normalizeId(schedule.idUser),
+      image: schedule.image
     }
 
+    console.log('Datos del horario a enviar al servidor:', scheduleData)
+
     try {
-      let response
       if (editId) {
-        response = await api.put(`/schedules/${editId}`, scheduleData)
+        await api.put(`/schedules/${editId}`, scheduleData)
       } else {
-        response = await api.post('/schedules', scheduleData)
+        await api.post('/schedules', scheduleData)
       }
 
       await renderClasses()
@@ -154,13 +179,17 @@ const handleSubmitSchedule = () => {
       const modalElement = document.querySelector('#staticBackdrop')
       const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
       bootstrapModal.hide()
-
     } catch (error) {
-      console.error(error)
+      console.log(error)
+      const serverError = error.response?.data
+      const responseMessage = typeof serverError === 'string' ? serverError.trim() : ''
+      const errorMessage = responseMessage || serverError?.message || serverError?.error || `Error HTTP ${error.response?.status || 'desconocido'}`
+
+      console.error('Error guardando el horario:', errorMessage, serverError)
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Hubo un problema al guardar los datos.'
+        text: errorMessage
       })
     }
   })
@@ -217,7 +246,7 @@ const setupEventListeners = () => {
       if (editBtn) {
         const classId = editBtn.getAttribute('data-id')
         const currentClasses = await getClasses()
-        const classToEdit = currentClasses.find(c => c.id == classId)
+        const classToEdit = currentClasses.find(c => String(c.idSchedule ?? c.id) === String(classId))
 
         if (classToEdit) {
           fillFormForEdit(classToEdit, classId)
@@ -236,17 +265,26 @@ const renderDashboardDisciplines = async () => {
   if (!container) return
 
   try {
-    const response = await api.get('/catalog')
-    const programs = response.data
+    const savedPrograms = window.localStorage.getItem('lanhua_programs')
+    const programs = savedPrograms ? JSON.parse(savedPrograms) : []
+
+    container.innerHTML = ''
+
+    if (programs.length === 0) {
+      container.innerHTML = '<p class="text-muted small">No hay disciplinas o programas registrados.</p>'
+      return
+    }
 
     programs.forEach(program => {
+      const programTitle = program.title ?? program.name ?? 'Programa sin nombre'
+
       container.innerHTML += `
         <div class="col-md-6 col-lg-4">
           <div class="card bg-dark border-secondary text-white p-3 h-100">
             <div class="d-flex align-items-center gap-3">
-              <img src="${program.image || '../../assets/lanhua-banner-1.png'}" alt="${program.title}" class="rounded-circle object-fit-cover bg-secondary" style="width: 50px; height: 50px;">
+              <img src="${program.image || '../../assets/lanhua-banner-1.png'}" alt="${programTitle}" class="rounded-circle object-fit-cover bg-secondary" style="width: 50px; height: 50px;">
               <div>
-                <h5 class="h6 mb-1 text-warning text-uppercase fw-bold">${program.title}</h5>
+                <h5 class="h6 mb-1 text-warning text-uppercase fw-bold">${programTitle}</h5>
                 <span class="badge bg-secondary mb-1">${program.category || 'General'}</span>
                 <p class="small text-light mb-0" style="font-size: 12px;">${program.description || ''}</p>
               </div>
@@ -269,7 +307,7 @@ if (form) {
   renderClasses()
   setupEventListeners()
   setupModalReset()
-  setMinDateToday('#fecha')
+  setMinDateToday('#scheduleDate')
   handleSubmitSchedule()
   validateForm()
 }

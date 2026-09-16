@@ -23,10 +23,8 @@ export const schedulesService = {
 
   deleteClass: async (id) => {
     try {
-      const response = await api.delete(`/schedules/${id}`, {
-        method: 'DELETE'
-      })
-      return response.ok
+      await api.delete(`/schedules/${id}`)
+      return true
     } catch (error) {
       console.error('Error al eliminar:', error)
       return false
