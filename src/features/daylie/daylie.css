@@ -168,3 +168,106 @@
 .agenda-admin .agenda-empty {
   border-color: #dee2e6 !important;
 }
+
+.agenda-admin {
+  background-color: #f7f7f7;
+  color: #212529;
+}
+
+.agenda-admin .daylie-header,
+.agenda-admin .daylie-subtitle {
+  border-color: var(--primary-color) !important;
+  color: #212529;
+}
+
+.agenda-admin .daylie-header .text-warning,
+.agenda-admin .daylie-subtitle .text-warning,
+.agenda-admin .daylie-title,
+.agenda-admin .daylie-month,
+.agenda-admin .text-warning {
+  color: var(--primary-color) !important;
+}
+
+.agenda-admin .calendar-panel,
+.agenda-admin .bg-card-custom {
+  background-color: #ffffff !important;
+  border-color: #212529;
+}
+
+.agenda-admin .calendar-days-header {
+  color: #212529;
+  border-bottom-color: #212529;
+}
+
+.agenda-admin .calendar-day {
+  background-color: #ffffff;
+  border-color: #ced4da;
+}
+
+.agenda-admin .calendar-day:hover {
+  border-color: var(--primary-color);
+  background-color: #fff5f6;
+}
+
+.agenda-admin .calendar-day.active {
+  border-color: var(--primary-color);
+  background-color: #fff0f1;
+}
+
+.agenda-admin .day-number {
+  color: #212529;
+}
+
+.agenda-admin .calendar-day.today .day-number {
+  color: var(--primary-color);
+}
+
+.agenda-admin .agenda-card {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  border-left: 4px solid var(--primary-color);
+}
+
+.agenda-admin .agenda-card:hover {
+  border-color: var(--primary-color);
+}
+
+.agenda-admin .agenda-card .badge.bg-warning {
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+.agenda-admin .agenda-card .badge.bg-secondary {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+}
+
+.agenda-admin .agenda-empty {
+  border-color: #212529 !important;
+}
+
+.agenda-admin .btn-outline-warning {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.agenda-admin .btn-outline-warning:hover,
+.agenda-admin .btn-outline-warning:focus {
+  color: #ffffff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.agenda-admin #daylieTitle {
+  color: #212529 !important;
+}
+
+.agenda-admin #classesCard>h4,
+.agenda-admin .daylie-month {
+  color: #212529 !important;
+  font-weight: 700;
+}
+
+.agenda-admin .calendar-panel {
+  border-color: var(--secondary-color) !important;
+}
