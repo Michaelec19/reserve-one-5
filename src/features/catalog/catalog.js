@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Alert } from '../../shared/components/Alert/Alert.js'
 import { fileToBase64 } from '../../shared/js/utils.js'
 import { CatalogItemCard } from './components/CatalogItemCard/CatalogItemCard.js'
@@ -18,7 +17,7 @@ let form
 
 const getItemsCatalog = async () => {
   try {
-    // CORREGIDO: Le quitamos el /api inicial
+
     const response = await api.get('/catalog')
     return response.data.map(item => ({
       id: item.idCatalog,
@@ -35,7 +34,7 @@ const getItemsCatalog = async () => {
 
 const createItemCatalog = async (item) => {
   try {
-    // CORREGIDO
+
     const response = await api.post('/catalog', item)
     return response.data
   } catch (error) {
@@ -46,7 +45,7 @@ const createItemCatalog = async (item) => {
 
 const updateItemCatalog = async (id, updatedFields) => {
   try {
-    // CORREGIDO
+
     const response = await api.put(`/catalog/${id}`, updatedFields)
     return response.data
   } catch (error) {
@@ -57,7 +56,7 @@ const updateItemCatalog = async (id, updatedFields) => {
 
 const deleteItemCatalog = async (id) => {
   try {
-    // CORREGIDO
+
     await api.delete(`/catalog/${id}`)
     return true
   } catch (error) {
@@ -66,9 +65,8 @@ const deleteItemCatalog = async (id) => {
   }
 }
 
-// ==========================================
+
 // RENDERS
-// ==========================================
 
 const renderItemsCatalog = async () => {
   currentPrograms = await getItemsCatalog()
@@ -98,9 +96,9 @@ const renderModalContentForm = (item = null) => {
   validateForm()
 }
 
-// ==========================================
+
 // VALIDACIONES Y FORMULARIO
-// ==========================================
+
 
 const resetFormState = () => {
   renderModalContentForm()
@@ -133,9 +131,9 @@ const getSelectedCategories = () => {
   return Array.from(checkboxes).map(cb => cb.value)
 }
 
-// ==========================================
+
 // MANEJADORES DE EVENTOS
-// ==========================================
+
 
 const handleCreate = async () => {
   const imageFile = form.image.files[0]
@@ -245,9 +243,9 @@ const handleSubmit = async (e) => {
   await renderItemsCatalog()
 }
 
-// ==========================================
+
 // INICIALIZACIÓN
-// ==========================================
+
 
 const setupModalReset = () => {
   modalElement.addEventListener('hidden.bs.modal', resetFormState)
