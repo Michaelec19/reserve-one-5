@@ -25,9 +25,9 @@ const isProfileComplete = (user) => {
 }
 
 export const initWarningUpdate = () => {
-  const session = JSON.parse(window.localStorage.getItem(SESSION_KEY))
-  if (!session || session.role === 'ADMIN') return
-  const allUsers = JSON.parse(window.localStorage.getItem(USERS_KEY)) || []
+  const session = JSON.parse(localStorage.getItem(SESSION_KEY))
+  if (!session || session.role === 'admin') return
+  const allUsers = JSON.parse(localStorage.getItem(USERS_KEY)) || []
   const fullUser = allUsers.find(u => u.id === session.id) || session
   if (isProfileComplete(fullUser)) return
   if (document.getElementById('warningUpdateBanner')) return
