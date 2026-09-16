@@ -9,23 +9,30 @@ const LOCALSTORAGE_KEY = 'lanhua_programs'
 const defaultPrograms = [
   {
     id: crypto.randomUUID(),
-    title: 'full pass',
-    category: 'Membresía',
-    description: 'Acceso libre a clases generales y especializadas.',
+    title: 'rutina',
+    category: 'Mensualidad FullPass',
+    description: 'Acceso a rutinas guiadas y clases generales de acondicionamiento corporal.',
     image: '../../assets/LogoSinFondo.png'
   },
   {
     id: crypto.randomUUID(),
-    title: 'wushu',
-    category: 'Clase',
-    description: 'Mensualidad especializada con acceso exclusivo a clases de Wushu.',
+    title: 'combate',
+    category: 'Mensualidad FullPass',
+    description: 'Entrenamiento enfocado en técnicas de combate, defensa y sparring.',
+    image: '../../assets/LogoSinFondo.png'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'acondicionamiento',
+    category: 'Mensualidad FullPass',
+    description: 'Programa orientado a mejorar la resistencia, fuerza y condición física general.',
     image: '../../assets/LogoSinFondo.png'
   },
   {
     id: crypto.randomUUID(),
     title: 'taichi',
-    category: 'Clase',
-    description: 'Mensualidad especializada con acceso exclusivo a clases de Taichi.',
+    category: 'Mensualidad FullPass',
+    description: 'Mensualidad especializada con acceso exclusivo a clases de Taichi y formas tradicionales.',
     image: '../../assets/LogoSinFondo.png'
   }
 ]
@@ -163,7 +170,7 @@ const handleEdit = async (editId) => {
   const updatedItem = {
     title: form.title.value.toLowerCase(),
     description: form.description.value,
-    category: form.category.value,
+    category: form.category.value
   }
 
   if (imageFile && imageFile.size > 0) {
