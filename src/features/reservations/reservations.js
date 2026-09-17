@@ -1,5 +1,8 @@
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-undef */
 import { reservationsService } from '../../services/reservationsService.js'
 import { getImagePath } from '../../shared/js/config.js'
+import { formatScheduleDate } from '../../shared/js/dateUtils.js'
 import { capitalize } from '../../shared/js/utils.js'
 
 async function renderizarReservas() {
@@ -12,6 +15,7 @@ async function renderizarReservas() {
   if (!contenedor) return
 
   const misReservas = await reservationsService.getPendingReservations()
+
   contenedor.innerHTML = ''
 
   if (!misReservas || misReservas.length === 0) {
@@ -25,48 +29,52 @@ async function renderizarReservas() {
     if (contadorBadge) contadorBadge.textContent = '0 clases'
     if (resumenCantidad) resumenCantidad.textContent = '0'
     if (contenedorVaciar) contenedorVaciar.classList.add('d-none')
+
     return
   }
 
   if (contenedorVaciar) contenedorVaciar.classList.remove('d-none')
 
   misReservas.forEach((item) => {
-    const claseInfo = item.schedule || item
-
-    const titulo = claseInfo.title || claseInfo.name || 'Clase de Artes Marciales'
-    const imagen = claseInfo.image || 'lanhua-banner-1.png'
+    const claseInfo = item.schedule || {}
+    const catalogoInfo = item.catalog || {}
+    const titulo = catalogoInfo.name || 'Clase sin nombre'
+    const imagen = claseInfo.image || catalogoInfo.image || 'lanhua-banner-1.png'
     const nivel = claseInfo.level || 'General'
-    const fechaText = claseInfo.dateText || claseInfo.scheduleDate || 'Horario programado'
+
+    const fechaText =
+      claseInfo.scheduleDate ? formatScheduleDate(claseInfo.scheduleDate) : 'Fecha por confirmar'
+
     const ubicacion = claseInfo.location || 'Sede Principal'
-    const modalidad = claseInfo.modality || 'grupal'
-    const cupos = claseInfo.capacity || claseInfo.quotas || 15
+    const modalidad = item.modality || 'grupal'
+    const cupos = claseInfo.quotas || claseInfo.capacity || 0
     const idReserva = item.idReservation || item.id
 
     contenedor.innerHTML += `
-            <div class="card p-3 bg-dark border-secondary mb-2">
-                <div class="row align-items-center">
-                    <div class="col-md-3 mb-2 mb-md-0">
-                        <img src="${getImagePath(imagen.split('/').pop())}" class="img-fluid rounded object-fit-cover" alt="${titulo}" style="height: 80px; width: 100%;">
+        <div class="card p-3 bg-dark border-secondary mb-2">
+            <div class="row align-items-center">
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <img src="${getImagePath(imagen.split('/').pop())}" class="img-fluid rounded object-fit-cover" alt="${titulo}" style="height: 80px; width: 100%;">
+                </div>
+                <div class="col-md-5">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <h5 class="text-light m-0 fs-6 fw-bold">${capitalize(titulo)}</h5>
+                        <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">${capitalize(nivel)}</span>
                     </div>
-                    <div class="col-md-5">
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <h5 class="text-light m-0 fs-6 fw-bold">${capitalize(titulo)}</h5>
-                            <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">${capitalize(nivel)}</span>
-                        </div>
-                        <p class="text-light small mb-1">${fechaText}</p>
-                        <p class="text-light small mb-1">Ubicación: ${ubicacion}</p>
-                        <p class="text-light small mb-0">Modalidad: ${capitalize(modalidad)}</p>
-                    </div>
-                    <div class="col-md-2 my-2 my-md-0">
-                        <label class="text-light small d-block mb-1">Cupos:</label>
-                        <div class="form-control text-center bg-secondary text-light border-0 fw-bold" style="font-size: 0.75rem;">${cupos}</div>
-                    </div>
-                    <div class="col-md-2 text-end">
-                        <button class="btn btn-sm btn-outline-danger px-2 py-1" onclick="eliminarItem('${idReserva}')">Cancelar</button>
-                    </div>
+                    <p class="text-light small mb-1">${fechaText}</p>
+                    <p class="text-light small mb-1">Ubicación: ${ubicacion}</p>
+                    <p class="text-light small mb-0">Modalidad: ${capitalize(modalidad)}</p>
+                </div>
+                <div class="col-md-2 my-2 my-md-0">
+                    <label class="text-light small d-block mb-1">Cupos:</label>
+                    <div class="form-control text-center bg-secondary text-light border-0 fw-bold" style="font-size: 0.75rem;">${cupos}</div>
+                </div>
+                <div class="col-md-2 text-end">
+                    <button class="btn btn-sm btn-outline-danger px-2 py-1" onclick="eliminarItem('${idReserva}')">Quitar</button>
                 </div>
             </div>
-        `
+        </div>
+    `
   })
 
   if (totalElemento) totalElemento.textContent = misReservas.length
@@ -178,9 +186,5 @@ window.confirmarReservas = async function () {
     }
   })
 }
-
-window.eliminarItem = eliminarItem
-window.vaciarReservas = vaciarReservas
-window.confirmarReservas = confirmarReservas
 
 document.addEventListener('DOMContentLoaded', renderizarReservas)

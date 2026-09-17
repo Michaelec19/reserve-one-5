@@ -2,18 +2,46 @@ import { Alert } from '../../shared/components/Alert/Alert.js'
 import { fileToBase64 } from '../../shared/js/utils.js'
 import { CatalogItemCard } from './components/CatalogItemCard/CatalogItemCard.js'
 import { CatalogItemModal } from './components/CatalogItemModal/CatalogItemModal.js'
-import api from '../../services/axiosConfig.js'
 
-let currentPrograms = []
+const LOCALSTORAGE_KEY = 'lanhua_programs'
 
+const defaultPrograms = [
+  {
+    id: crypto.randomUUID(),
+    title: 'rutina',
+    category: 'Mensualidad FullPass',
+    description: 'Acceso a rutinas guiadas y clases generales de acondicionamiento corporal.',
+    image: '../../assets/LogoSinFondo.png'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'combate',
+    category: 'Mensualidad FullPass',
+    description: 'Entrenamiento enfocado en técnicas de combate, defensa y sparring.',
+    image: '../../assets/LogoSinFondo.png'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'acondicionamiento',
+    category: 'Mensualidad FullPass',
+    description: 'Programa orientado a mejorar la resistencia, fuerza y condición física general.',
+    image: '../../assets/LogoSinFondo.png'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'taichi',
+    category: 'Mensualidad FullPass',
+    description: 'Mensualidad especializada con acceso exclusivo a clases de Taichi y formas tradicionales.',
+    image: '../../assets/LogoSinFondo.png'
+  }
+]
+
+// elements
 const modalElement = document.querySelector('#catalogModal')
 const catalogContainer = document.querySelector('#catalogContainer')
 const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement)
+
 let form
-
-
-// CONEXIÓN CON EL BACKEND 
-
 
 const getItemsCatalog = async () => {
   try {
@@ -34,7 +62,6 @@ const getItemsCatalog = async () => {
 
 const createItemCatalog = async (item) => {
   try {
-
     const response = await api.post('/catalog', item)
     return response.data
   } catch (error) {
@@ -45,7 +72,6 @@ const createItemCatalog = async (item) => {
 
 const updateItemCatalog = async (id, updatedFields) => {
   try {
-
     const response = await api.put(`/catalog/${id}`, updatedFields)
     return response.data
   } catch (error) {
@@ -56,7 +82,6 @@ const updateItemCatalog = async (id, updatedFields) => {
 
 const deleteItemCatalog = async (id) => {
   try {
-
     await api.delete(`/catalog/${id}`)
     return true
   } catch (error) {
@@ -67,12 +92,12 @@ const deleteItemCatalog = async (id) => {
 
 
 // RENDERS
-
-const renderItemsCatalog = async () => {
-  currentPrograms = await getItemsCatalog()
+const renderItemsCatalog = () => {
+  const programs = getItemsCatalog()
+  
   catalogContainer.innerHTML = ''
 
-  if (!currentPrograms || currentPrograms.length === 0) {
+  if (programs.length === 0) {
     catalogContainer.innerHTML = Alert({
       variant: 'info',
       title: 'Aún no tienes programas agregados',
@@ -81,7 +106,7 @@ const renderItemsCatalog = async () => {
     return
   }
 
-  currentPrograms.forEach(item => {
+  programs.forEach(item => {
     catalogContainer.innerHTML += CatalogItemCard(item)
   })
 }
@@ -89,39 +114,30 @@ const renderItemsCatalog = async () => {
 const renderModalContentForm = (item = null) => {
   modalElement.innerHTML = CatalogItemModal(item)
   form = document.querySelector('#catalogForm')
+
   if (item) {
     form.dataset.editId = item.id
   }
+
   form.addEventListener('submit', handleSubmit)
   validateForm()
 }
 
 
 // VALIDACIONES Y FORMULARIO
-
-
 const resetFormState = () => {
   renderModalContentForm()
 }
 
 const validateForm = () => {
   const addCatalogItem = document.querySelector('#addCatalogItem')
-  const categoryError = document.querySelector('#categoryError')
 
   const updateButtonState = () => {
-    const checkedCategories = document.querySelectorAll('.category-checkbox:checked').length
-    const hasCategories = checkedCategories > 0
-
-    if (!hasCategories) {
-      if (categoryError) categoryError.classList.remove('d-none')
-    } else {
-      if (categoryError) categoryError.classList.add('d-none')
-    }
-
-    addCatalogItem.disabled = !form.checkValidity() || !hasCategories
+    addCatalogItem.disabled = !form.checkValidity()
   }
 
   updateButtonState()
+
   form.addEventListener('input', updateButtonState)
   form.addEventListener('change', updateButtonState)
 }
@@ -135,64 +151,55 @@ const getSelectedCategories = () => {
 // MANEJADORES DE EVENTOS
 
 
+// handles
 const handleCreate = async () => {
   const imageFile = form.image.files[0]
-  let imageBase64 = '../../assets/LogoSinFondo.png'
+  const imageBase64 = await fileToBase64(imageFile)
 
-  if (imageFile) {
-    imageBase64 = await fileToBase64(imageFile)
-  }
+  createItemCatalog({
+    title: form.title.value.toLowerCase(),
+    description: form.description.value,
+    category: form.category.value,
+    image: imageBase64
+  })
 
-  try {
-    await createItemCatalog({
-      name: form.title.value.toLowerCase(),
-      description: form.description.value,
-      category: getSelectedCategories(),
-      image: imageBase64
-    })
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Programa agregado',
-      text: 'El programa se guardó en la base de datos correctamente.',
-      timer: 1500,
-      showConfirmButton: false
-    })
-  } catch (error) {
-    Swal.fire('Error', 'Hubo un problema al crear el programa. Revisa la consola.', 'error')
-  }
+  Swal.fire({
+    icon: 'success',
+    title: 'Programa agregado',
+    text: 'El programa se agregó correctamente.',
+    timer: 1500,
+    showConfirmButton: false
+  })
 }
 
 const handleEdit = async (editId) => {
   const imageFile = form.image.files[0]
+
   const updatedItem = {
-    name: form.title.value.toLowerCase(),
+    title: form.title.value.toLowerCase(),
     description: form.description.value,
-    category: getSelectedCategories()
+    category: form.category.value
   }
 
   if (imageFile && imageFile.size > 0) {
     updatedItem.image = await fileToBase64(imageFile)
   }
 
-  try {
-    await updateItemCatalog(editId, updatedItem)
-    Swal.fire({
-      icon: 'success',
-      title: 'Programa actualizado',
-      text: 'El programa se actualizó correctamente.',
-      timer: 1500,
-      showConfirmButton: false
-    })
-  } catch (error) {
-    Swal.fire('Error', 'No se pudo actualizar el programa.', 'error')
-  }
+  updateItemCatalog(editId, updatedItem)
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Programa actualizado',
+    text: 'El programa se actualizó correctamente.',
+    timer: 1500,
+    showConfirmButton: false
+  })
 }
 
 const handleDelete = (id) => {
   Swal.fire({
     title: '¿Estás seguro?',
-    text: 'Esta acción eliminará el programa de forma permanente.',
+    text: '¿Estás seguro de que deseas eliminar este programa?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Sí, eliminar',
@@ -201,37 +208,26 @@ const handleDelete = (id) => {
       confirmButton: 'btn btn-primary px-3',
       cancelButton: 'btn btn-secondary px-3'
     }
-  }).then(async (result) => {
+  }).then((result) => {
     if (result.isConfirmed) {
-      try {
-        await deleteItemCatalog(id)
-        await renderItemsCatalog()
-        Swal.fire({
-          icon: 'success',
-          title: 'Eliminado',
-          text: 'El programa se eliminó correctamente.',
-          timer: 1500,
-          showConfirmButton: false
-        })
-      } catch (error) {
-        Swal.fire('Error', 'No se pudo eliminar el programa.', 'error')
-      }
+      deleteItemCatalog(id)
+      renderItemsCatalog()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Eliminado',
+        text: 'El programa se eliminó correctamente.',
+        timer: 1500,
+        showConfirmButton: false
+      })
     }
   })
 }
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-  const editId = form.dataset.editId
 
-  Swal.fire({
-    title: 'Procesando...',
-    text: 'Por favor espera',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading()
-    }
-  })
+  const editId = form.dataset.editId
 
   if (editId) {
     await handleEdit(editId)
@@ -240,13 +236,14 @@ const handleSubmit = async (e) => {
   }
 
   bootstrapModal.hide()
-  await renderItemsCatalog()
+  renderItemsCatalog()
 }
 
 
 // INICIALIZACIÓN
 
 
+// listeners
 const setupModalReset = () => {
   modalElement.addEventListener('hidden.bs.modal', resetFormState)
 }
@@ -260,8 +257,10 @@ const setupEventListeners = () => {
     }
 
     const editBtn = event.target.closest('.edit-btn')
+
     if (editBtn) {
-      const item = currentPrograms.find(i => String(i.id) === String(editBtn.dataset.id))
+      const item = getItemsCatalog().find(i => i.id === editBtn.dataset.id)
+
       renderModalContentForm(item)
       bootstrapModal.show()
     }
@@ -270,12 +269,9 @@ const setupEventListeners = () => {
   form.addEventListener('submit', handleSubmit)
 }
 
-const init = async () => {
-  renderModalContentForm()
-  await renderItemsCatalog()
-  setupEventListeners()
-  setupModalReset()
-  validateForm()
-}
-
-init()
+// init
+renderModalContentForm()
+renderItemsCatalog()
+setupEventListeners()
+setupModalReset()
+validateForm()

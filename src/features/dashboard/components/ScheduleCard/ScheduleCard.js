@@ -1,27 +1,33 @@
 import { capitalize } from '../../../../shared/js/utils.js'
 
 export const ScheduleCard = (classItem) => {
+  const classId = classItem.idSchedule ?? classItem.id
+  const className = classItem.catalog?.name ?? classItem.catalog?.title ?? classItem.title ?? 'Sin nombre'
+  const professorName = classItem.userName ?? classItem.user?.name ?? classItem.professor?.name ?? classItem.professor ?? ''
+
   return `
     <article class="class-card border">
       <div class="position-relative">
-        <img src="${classItem.image}" alt="${classItem.title}" class="card-img-top">
-        <span class="badge position-absolute bottom-0 start-0 m-2 class-badge">${capitalize(classItem.level)}</span>
+        <!-- Usamos classItem.catalog.image y el nombre del catálogo para el alt -->
+        <img src="${classItem.catalog?.image || classItem.image || ''}" alt="${className}" class="card-img-top">
+        <span class="badge position-absolute bottom-0 start-0 m-2 class-badge">${capitalize(classItem.level || '')}</span>
       </div>
 
       <div class="card-body p-3 d-flex flex-column gap-2">
-        <h4 class="class-title h5 m-0 fw-bold">${capitalize(classItem.title)}</h4>
+        <!-- Aquí llamamos al nombre de la disciplina dentro del catálogo -->
+        <h4 class="class-title h5 m-0 fw-bold">${capitalize(className)}</h4>
 
         <div class="d-flex flex-column gap-2 fs-6">
 
           <div class="class-item d-flex align-items-center gap-2">
             <i class="fa-solid fa-users" aria-hidden="true"></i>
-            <span>${classItem.capacity} Cupos disponibles</span>
+            <span>${classItem.quotas} Cupos disponibles</span>
           </div>
 
           <div class="class-item d-flex align-items-center gap-2">
             <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-            <time datetime="${classItem.date}" class="d-flex gap-1">
-              <span>${classItem.dateText}</span>
+            <time datetime="${classItem.scheduleDate}" class="d-flex gap-1">
+              <span>${classItem.scheduleDate}</span>
             </time>
           </div>
 
@@ -37,22 +43,22 @@ export const ScheduleCard = (classItem) => {
 
            <div class="class-item d-flex align-items-center gap-2">
             <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
-            <span class="${classItem.professor ? '' : 'text-warning fw-bold'}">Profesor: ${classItem.professor || 'Sin asignar'}</span>
+            <span class="${professorName ? '' : 'text-warning fw-bold'}">Profesor: ${professorName || 'Sin asignar'}</span>
           </div>
 
         </div>
-
-     
+      
         <hr class="my-2 opacity-25">
 
         <div class="d-flex justify-content-end gap-2">
+          <!-- Usamos idSchedule que es como viene en tu ResponseDto -->
           <button class="btn btn-action rounded-circle p-0 d-flex align-items-center justify-content-center edit-btn"
-            type="button" aria-label="Actualizar clase" title="Actualizar" data-id="${classItem.id}">
+            type="button" aria-label="Actualizar clase" title="Actualizar" data-id="${classId}">
             <i class="fa-solid fa-pen"></i>
           </button>
 
           <button class="btn btn-action-danger rounded-circle p-0 d-flex align-items-center justify-content-center delete-btn"
-            type="button" aria-label="Eliminar clase" title="Eliminar" data-id="${classItem.id}">
+            type="button" aria-label="Eliminar clase" title="Eliminar" data-id="${classId}">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>

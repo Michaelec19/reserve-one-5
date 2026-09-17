@@ -86,7 +86,7 @@ const template = (session) => {
     ? `${session.nombre} ${session.apellido || session.apellidos}`
     : session.nombre || session.name || session.email || 'Mi cuenta'
   const avatar = session.fotoPerfil || DEFAULT_AVATAR
-  const isAdmin = session.role === 'admin'
+  const isAdmin = session.role === 'ADMIN'
 
   return `
     <div class="dropdown w-100" id="userMenu">
