@@ -60,9 +60,9 @@ export const ScheduleModal = (schedule = null) => {
               <!-- Cambiado a idUser o se maneja el usuario correspondiente -->
               <label for="idUser" class="form-label fw-semibold small">Profesor Asignado (Usuario)</label>
               <select class="form-select" id="idUser" name="idUser" required>
-                <option value="" selected disabled>Selecciona un usuario/profesor</option>
-                <option value="1">Ronald Infante Calle</option>
-                <option value="2">Santiago Castrillón Rojo</option>
+                <option value="" selected disabled>Selecciona un profesor</option>
+                <option value="4">Ronald Infante Calle</option>
+                <option value="4">Santiago Castrillón Rojo</option>
               </select>
             </div>
 
